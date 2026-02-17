@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/array-operations.js"></script>
+</head>
+
+<body>
+
+<div class="navbar">
+<h2>Array Operations</h2>
+<a href="/arrays">Back</a>
+</div>
+
+<div class="container">
+
+<div class="card">
+<h3>Traversal</h3>
+<p>Visiting each element sequentially.</p>
+<button onclick="traverse()">Traverse</button>
+</div>
+
+<h4>Java Traversal Code</h4>
+<div class="code-block">
+for(int i=0;i&lt;arr.length;i++){
+    System.out.println(arr[i]);
+}
+</div>
+
+<div class="card">
+<h3>Insertion</h3>
+<input id="insertValue" placeholder="Value">
+<button onclick="insertElement()">Insert</button>
+</div>
+
+<h4>Java Insertion (End)</h4>
+<div class="code-block">
+int[] newArr = new int[arr.length + 1];
+
+for(int i=0;i&lt;arr.length;i++)
+    newArr[i] = arr[i];
+
+newArr[arr.length] = value;
+</div>
+
+<div class="card">
+<h3>Deletion</h3>
+<button onclick="deleteElement()">Delete Last</button>
+</div>
+
+<h4>Java Deletion (Last Element)</h4>
+<div class="code-block">
+int[] newArr = new int[arr.length - 1];
+
+for(int i=0;i&lt;newArr.length;i++)
+    newArr[i] = arr[i];
+</div>
+
+
+<div id="array-container"></div>
+
+</div>
+
+</body>
+</html>

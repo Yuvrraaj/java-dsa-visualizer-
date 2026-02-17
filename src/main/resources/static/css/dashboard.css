@@ -1,0 +1,52 @@
+body{
+    margin:0;
+    font-family:Inter;
+    background:#6d28d9;
+}
+
+.dashboard{
+    display:flex;
+}
+
+/* SIDEBAR */
+.sidebar{
+    width:220px;
+    height:100vh;
+    background:#111827;
+    color:white;
+    padding:30px;
+}
+
+.sidebar a{
+    display:block;
+    color:#cbd5e1;
+    margin-top:20px;
+    text-decoration:none;
+}
+
+/* MAIN */
+.main{
+    flex:1;
+    background:#f8fafc;
+    padding:40px;
+    border-top-left-radius:20px;
+}
+
+.topbar input{
+    padding:10px;
+    width:250px;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    margin-top:30px;
+}
+
+.card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 8px 20px rgba(0,0,0,.1);
+}

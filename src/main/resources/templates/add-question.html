@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<form action="/save" method="post" th:object="${question}">
+    Title: <input type="text" th:field="*{title}"><br>
+    Topic: <input type="text" th:field="*{topic}"><br>
+
+    Description:<br>
+    <textarea th:field="*{description}"></textarea><br>
+
+    Answer:<br>
+    <textarea th:field="*{answer}"></textarea><br>
+
+    <button type="submit">Save</button>
+</form>
+
+</body>
+</html>
