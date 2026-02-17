@@ -1,123 +1,112 @@
-📘 DSA Visualizer & Learning Platform
+# 📘 DSA Visualizer & Learning Platform
 
-An interactive Data Structures & Algorithms learning platform built using Java (Spring Boot) that combines structured theoretical learning, Java implementations, and visual algorithm simulations in one place.
+An interactive **Data Structures & Algorithms learning platform** built using **Java (Spring Boot)** that combines structured theory, Java implementations, and visual algorithm simulations in a single environment.
 
-The goal of this project is to make DSA concepts intuitive, visual, and practice-oriented, helping learners understand how algorithms actually work internally instead of memorizing solutions.
+The objective of this project is to make DSA concepts **intuitive, visual, and implementation-focused**, enabling learners to understand *how algorithms work internally* rather than memorizing solutions.
 
-🚀 Project Overview
+---
 
-This platform is designed as a mini educational ecosystem where users can:
+## 🚀 Overview
 
-📖 Learn data structures through structured explanations
+This platform acts as a mini educational ecosystem where users can:
 
-💻 Study Java implementations alongside concepts
+- 📖 Learn data structures through structured explanations
+- 💻 Study Java implementations alongside theory
+- 🎯 Understand common problem-solving patterns
+- 🎬 Visualize operations interactively
+- 🧠 Practice curated problems
 
-🎯 Understand problem-solving patterns
+Unlike traditional tutorial websites, this project focuses on **visual intuition + practical coding understanding**.
 
-🎬 Visualize operations interactively
+---
 
-🧠 Practice curated problems
+## ✨ Current Features
 
-Unlike traditional tutorial websites, this project focuses on visual intuition + implementation clarity.
+### 🏠 Modern Landing Experience
+- Animated hero landing page
+- Clean platform-style UI
+- Structured navigation between learning and visualization sections
 
-🧩 Current Features
-✅ Modern Landing Experience
+### 📚 Learning Modules (Implemented)
+**Arrays Module**
+- Conceptual introduction
+- Operations explanation
+- Techniques & approaches
+- Problem-solving patterns
+- Java implementation examples
 
-Animated hero landing page
+### 🎬 Visualization Lab
+- Memory-cell style array visualization
+- Animated traversal
+- Insert/Delete simulations
+- Interactive real-time animations using JavaScript
 
-Platform-style UI inspired by modern learning dashboards
+### 🧩 Practice Section
+- Question & solution posting system
+- Backend persistence using Spring Data JPA
 
-Clear navigation between learning and visualization sections
+---
 
-✅ Learning Modules (Currently Implemented)
+## 🏗️ Tech Stack
 
-Arrays module with:
+### Backend
+- Java
+- Spring Boot
+- Spring MVC
+- Spring Data JPA
+- H2 Database
 
-Conceptual introduction
+### Frontend
+- Thymeleaf
+- HTML5
+- CSS3 (Custom UI)
+- Vanilla JavaScript Animations
 
-Operations explanation
+### Architecture
+- MVC (Model–View–Controller)
+- Layered Service Architecture
 
-Techniques & approaches
+---
 
-Problem patterns
-
-Java implementation examples
-
-✅ Interactive Visualization Lab
-
-Memory-cell style array visualization
-
-Animated traversal
-
-Insert/Delete simulation
-
-Real-time interaction using JavaScript animations
-
-✅ Practice Section
-
-Question and solution posting system
-
-Backend persistence using Spring Data JPA
-
-🏗️ Tech Stack
-Backend
-
-Java
-
-Spring Boot
-
-Spring MVC
-
-Spring Data JPA
-
-H2 Database
-
-Frontend
-
-Thymeleaf
-
-HTML5
-
-CSS3 (custom UI system)
-
-Vanilla JavaScript animations
-
-Architecture
-
-MVC (Model–View–Controller)
-
-Layered Service Architecture
-
-📂 Project Structure
 dsa-visualizer/
 │
-├── controller/      → Web routes & page navigation
-├── service/         → Business logic
-├── repository/      → Database interaction
-├── model/           → Entity classes
+├── src/main/java/com/dsa
+│ ├── controller/ # Web routing & controllers
+│ ├── service/ # Business logic layer
+│ ├── repository/ # Database access layer
+│ ├── model/ # Entity classes
+│ └── DsaVisualizerApplication.java
 │
-├── templates/       → Thymeleaf UI pages
-├── static/
-│     ├── css/       → Styling
-│     └── js/        → Visualizations & animations
+├── src/main/resources
+│ ├── templates/ # Thymeleaf UI pages
+│ ├── static/
+│ │ ├── css/ # Styling
+│ │ └── js/ # Visualizations & animations
+│ └── application.properties
 │
-└── application.properties
+└── pom.xml
 
-▶️ Running the Project Locally
-1️⃣ Clone Repository
+
+---
+
+## ▶️ Running the Project Locally
+
+### 1️⃣ Clone Repository
+
+bash
 git clone https://github.com/<your-username>/dsa-visualizer.git
 cd dsa-visualizer
 
-2️⃣ Run Application
+2️⃣ Build & Run
 mvn clean install
 mvn spring-boot:run
 
-3️⃣ Open Browser
+3️⃣ Open in Browser
 http://localhost:8080
 
 🎯 Project Vision
 
-This project aims to evolve into a complete interactive DSA learning platform, combining:
+The long-term goal is to evolve this into a complete interactive DSA learning platform combining:
 
 Visual algorithm simulations
 
@@ -125,20 +114,25 @@ Pattern-based interview preparation
 
 Step-by-step execution playback
 
-Concept-first learning approach
+Concept-first learning methodology
 
-The focus is on helping learners develop deep algorithmic intuition rather than rote learning.
+The focus is on developing deep algorithmic intuition rather than rote memorization.
 
-🛠️ Current Development Status
+| Module                       | Status         |
+| ---------------------------- | -------------- |
+| Platform Architecture        | ✅ Completed    |
+| Landing & Dashboard UI       | ✅ Completed    |
+| Arrays Learning Module       | ✅ Implemented  |
+| Visualization Engine (Basic) | ✅ Implemented  |
+| Practice System              | ✅ Working      |
+| Additional Data Structures   | 🚧 In Progress |
 
-✅ Core platform structure completed
-✅ Learning module architecture implemented
-✅ Visualization framework initialized
-🚧 Continuous feature expansion in progress
 
-🔮 Planned Enhancements (Upcoming)
+🔮 Planned Enhancements
 
-Additional data structures (Stack, Queue, Trees, Graphs)
+Stack, Queue, Linked List modules
+
+Tree & Graph visualizers
 
 Advanced algorithm animations
 
@@ -148,8 +142,8 @@ User progress tracking
 
 Interactive coding playground
 
-Algorithm playback controls
-
 👨‍💻 Author
 
 Yuvraj Jha
+## 📂 Project Structure
+
