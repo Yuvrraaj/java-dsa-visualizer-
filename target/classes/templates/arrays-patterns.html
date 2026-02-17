@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+<h2>Array Question Patterns</h2>
+<a href="/arrays">Back</a>
+</div>
+
+<div class="card">
+
+<h3>Pattern: Reverse Array</h3>
+
+<div class="code-block">
+public static void reverse(int[] arr){
+
+    int left=0, right=arr.length-1;
+
+    while(left&lt;right){
+        int temp = arr[left];
+        arr[left] = arr[right];
+        arr[right] = temp;
+
+        left++;
+        right--;
+    }
+}
+</div>
+
+</div>
+
+<div class="container">
+
+<div class="card">
+<h3>Common Patterns</h3>
+
+<ul>
+<li>Searching Problems</li>
+<li>Subarray Problems</li>
+<li>Rotation Problems</li>
+<li>Frequency Counting</li>
+<li>Greedy + Arrays</li>
+<li>Sorting Based Questions</li>
+</ul>
+
+</div>
+
+<div class="card">
+<h3>When Should You Use Arrays?</h3>
+
+<ul>
+<li>Need fast index access</li>
+<li>Fixed-size data</li>
+<li>Cache-friendly computation</li>
+<li>Sequential processing</li>
+</ul>
+
+</div>
+
+</div>
+
+</body>
+</html>

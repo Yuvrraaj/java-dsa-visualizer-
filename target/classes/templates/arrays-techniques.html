@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+<h2>Array Techniques & Approaches</h2>
+<a href="/arrays">Back</a>
+</div>
+
+<div class="container">
+
+<!-- TWO POINTER -->
+<div class="card">
+
+<h3>Two Pointer Technique</h3>
+
+<p>
+Two pointers are used to traverse an array from different
+directions to reduce nested loops.
+</p>
+
+<div class="example-box">
+Example: Find pair with given sum in sorted array
+
+Input: [1,2,4,6,10], target = 8  
+Output: (2,6)
+</div>
+
+<h4>Java Implementation</h4>
+
+<div class="code-block">
+public static boolean twoSum(int[] arr, int target){
+
+    int left = 0;
+    int right = arr.length - 1;
+
+    while(left &lt; right){
+
+        int sum = arr[left] + arr[right];
+
+        if(sum == target)
+            return true;
+        else if(sum &lt; target)
+            left++;
+        else
+            right--;
+    }
+
+    return false;
+}
+</div>
+
+<p><b>Time Complexity:</b> O(n)</p>
+
+</div>
+
+
+<!-- SLIDING WINDOW -->
+<div class="card">
+
+<h3>Sliding Window Technique</h3>
+
+<p>
+Used when working with subarrays or contiguous ranges.
+Instead of recomputing sums repeatedly, maintain a moving window.
+</p>
+
+<div class="example-box">
+Example: Maximum sum subarray of size k
+
+Array: [2,1,5,1,3,2]  
+k = 3 → Answer = 9 (subarray [5,1,3])
+</div>
+
+<h4>Java Code</h4>
+
+<div class="code-block">
+public static int maxSumSubarray(int[] arr, int k){
+
+    int windowSum = 0;
+
+    for(int i=0;i&lt;k;i++)
+        windowSum += arr[i];
+
+    int maxSum = windowSum;
+
+    for(int i=k;i&lt;arr.length;i++){
+
+        windowSum += arr[i];
+        windowSum -= arr[i-k];
+
+        maxSum = Math.max(maxSum, windowSum);
+    }
+
+    return maxSum;
+}
+</div>
+
+<p><b>Complexity:</b> O(n)</p>
+
+</div>
+
+
+<!-- PREFIX SUM -->
+<div class="card">
+
+<h3>Prefix Sum</h3>
+
+<p>
+Prefix sums allow fast range queries by precomputing cumulative sums.
+</p>
+
+<div class="example-box">
+Query sum from index L to R quickly.
+</div>
+
+<h4>Java Code</h4>
+
+<div class="code-block">
+public static int[] buildPrefix(int[] arr){
+
+    int[] prefix = new int[arr.length];
+    prefix[0] = arr[0];
+
+    for(int i=1;i&lt;arr.length;i++)
+        prefix[i] = prefix[i-1] + arr[i];
+
+    return prefix;
+}
+
+public static int rangeSum(int[] prefix, int L, int R){
+    if(L == 0) return prefix[R];
+    return prefix[R] - prefix[L-1];
+}
+</div>
+
+</div>
+
+
+<!-- KADANE -->
+<div class="card">
+
+<h3>Kadane’s Algorithm</h3>
+
+<p>
+Finds maximum subarray sum efficiently.
+</p>
+
+<div class="example-box">
+Array: [-2,1,-3,4,-1,2,1,-5,4]  
+Maximum Sum = 6 → [4,-1,2,1]
+</div>
+
+<h4>Java Code</h4>
+
+<div class="code-block">
+public static int kadane(int[] arr){
+
+    int maxSoFar = arr[0];
+    int current = arr[0];
+
+    for(int i=1;i&lt;arr.length;i++){
+
+        current = Math.max(arr[i], current + arr[i]);
+        maxSoFar = Math.max(maxSoFar, current);
+    }
+
+    return maxSoFar;
+}
+</div>
+
+<p><b>Complexity:</b> O(n)</p>
+
+</div>
+
+</div>
+
+</body>
+</html>
