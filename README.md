@@ -14,7 +14,7 @@ This platform acts as a mini educational ecosystem where users can:
 - 💻 Study Java implementations alongside theory
 - 🎯 Understand common problem-solving patterns
 - 🎬 Visualize operations interactively
-- 🧠 Practice curated problems
+- 🧠 Practice curated problem
 
 Unlike traditional tutorial websites, this project focuses on **visual intuition + practical coding understanding**.
 
