@@ -7,167 +7,254 @@
 <link rel="stylesheet" href="/css/style.css">
 
 <style>
-.lab-grid{
-    display:grid;
-    grid-template-columns:1fr;
-    gap:40px;
-}
-.mini-visualizer{
-    min-height:150px;
-    padding:20px;
-    margin-top:15px;
-    overflow-x:auto;
-}
-.message{
-    margin-top:10px;
-    font-weight:600;
-    color:var(--accent);
-}
+.lab-grid{display:grid;grid-template-columns:1fr;gap:40px;}
+.mini-visualizer{min-height:160px;padding:20px;margin-top:15px;}
+canvas{background:transparent;border:1px dashed #cbd5e1;}
 </style>
 </head>
 
 <body>
 
 <div class="navbar">
-    <h2>Data Structures Lab</h2>
-    <a href="/topics">Back to Topics</a>
+<h2>Data Structures Lab</h2>
+<a href="/topics">Back to Topics</a>
 </div>
 
 <div class="container">
 
+<!-- ================= BST ================= -->
 <div class="card">
-<h2>Array / ArrayList Visualizer</h2>
+<h2>Binary Search Tree</h2>
 
 <div class="controls">
-<input id="arrValue" type="number" placeholder="Value">
-<button onclick="arrInsert()">Insert</button>
-<button class="danger" onclick="arrDelete()">Delete</button>
+<input id="treeValue" type="number" placeholder="Value">
+<button onclick="treeInsert()">Insert</button>
+<button onclick="treeSearch()">Search</button>
+<button class="danger" onclick="treeClear()">Clear</button>
 </div>
 
-<div id="arrMsg" class="message">Ready.</div>
-<div id="arr-container" class="visualizer-container mini-visualizer"></div>
+<p id="treeMsg">Ready.</p>
+
+<canvas id="treeCanvas" width="800" height="300"></canvas>
 </div>
 
-
+<!-- ================= GRAPH ================= -->
 <div class="card">
-<h2>Stack Visualizer (LIFO)</h2>
+<h2>Graph Visualizer</h2>
 
 <div class="controls">
-<input id="stackValue" type="text" placeholder="Value">
-<button onclick="stackPush()">Push</button>
-<button class="danger" onclick="stackPop()">Pop</button>
+<input id="graphU" placeholder="Node A">
+<input id="graphV" placeholder="Node B">
+<button onclick="graphAddEdge()">Connect</button>
+
+<input id="graphStart" placeholder="Start">
+<button onclick="graphBFS()">BFS</button>
+
+<button class="danger" onclick="graphClear()">Clear</button>
 </div>
 
-<div id="stack-container"
-class="visualizer-container mini-visualizer"
-style="flex-direction:column-reverse;"></div>
-</div>
+<p id="graphMsg">Click canvas to create nodes.</p>
 
-
-<div class="card">
-<h2>Queue Visualizer (FIFO)</h2>
-
-<div class="controls">
-<input id="queueValue" type="text" placeholder="Value">
-<button onclick="queueEnqueue()">Enqueue</button>
-<button class="danger" onclick="queueDequeue()">Dequeue</button>
-</div>
-
-<div id="queue-container" class="visualizer-container mini-visualizer"></div>
+<canvas id="graphCanvas" width="800" height="300"></canvas>
 </div>
 
 </div>
 
-<!-- ================= JAVASCRIPT ================= -->
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
-/* ================= UTIL ================= */
-const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+/* =====================================================
+   SAFE CANVAS INITIALIZER (Fixes Render deployment bug)
+=====================================================*/
+function waitForCanvas(id, callback){
+    const check=()=>{
+        const el=document.getElementById(id);
+        if(el && el.offsetWidth>0) callback(el);
+        else requestAnimationFrame(check);
+    };
+    check();
+}
 
-/* ================= ARRAY ================= */
-let arrayData = [10,20,30];
-const arrContainer = document.getElementById("arr-container");
+/* =====================================================
+                    BINARY SEARCH TREE
+=====================================================*/
 
-function renderArray(active=-1){
-    arrContainer.innerHTML="";
-    arrayData.forEach((val,i)=>{
-        const cell=document.createElement("div");
-        cell.className="cell";
-        cell.innerText=val;
-        if(i===active) cell.style.background="var(--success)";
-        arrContainer.appendChild(cell);
+class TreeNode{
+    constructor(v){
+        this.val=v;
+        this.left=null;
+        this.right=null;
+        this.x=0;
+        this.y=0;
+    }
+}
+
+let treeRoot=new TreeNode(50);
+treeRoot.left=new TreeNode(30);
+treeRoot.right=new TreeNode(70);
+
+let treeCanvas, tCtx;
+
+waitForCanvas("treeCanvas",(canvas)=>{
+    treeCanvas=canvas;
+    tCtx=treeCanvas.getContext("2d");
+    renderTree();
+});
+
+function calcPos(node,x,y,offset){
+    if(!node) return;
+    node.x=x; node.y=y;
+    calcPos(node.left,x-offset,y+60,offset/2);
+    calcPos(node.right,x+offset,y+60,offset/2);
+}
+
+function drawEdges(node){
+    if(!node) return;
+    if(node.left){
+        tCtx.beginPath();
+        tCtx.moveTo(node.x,node.y);
+        tCtx.lineTo(node.left.x,node.left.y);
+        tCtx.stroke();
+        drawEdges(node.left);
+    }
+    if(node.right){
+        tCtx.beginPath();
+        tCtx.moveTo(node.x,node.y);
+        tCtx.lineTo(node.right.x,node.right.y);
+        tCtx.stroke();
+        drawEdges(node.right);
+    }
+}
+
+function drawNodes(node){
+    if(!node) return;
+
+    tCtx.beginPath();
+    tCtx.arc(node.x,node.y,18,0,Math.PI*2);
+    tCtx.fillStyle="white";
+    tCtx.fill();
+    tCtx.stroke();
+
+    tCtx.fillStyle="black";
+    tCtx.textAlign="center";
+    tCtx.textBaseline="middle";
+    tCtx.fillText(node.val,node.x,node.y);
+
+    drawNodes(node.left);
+    drawNodes(node.right);
+}
+
+function renderTree(){
+    if(!tCtx) return;
+    tCtx.clearRect(0,0,treeCanvas.width,treeCanvas.height);
+    calcPos(treeRoot,treeCanvas.width/2,40,treeCanvas.width/4);
+    drawEdges(treeRoot);
+    drawNodes(treeRoot);
+}
+
+window.treeInsert=function(){
+    const v=parseInt(document.getElementById("treeValue").value);
+    if(isNaN(v)) return;
+
+    if(!treeRoot){ treeRoot=new TreeNode(v); renderTree(); return; }
+
+    let cur=treeRoot;
+    while(true){
+        if(v<cur.val){
+            if(!cur.left){cur.left=new TreeNode(v);break;}
+            cur=cur.left;
+        }else{
+            if(!cur.right){cur.right=new TreeNode(v);break;}
+            cur=cur.right;
+        }
+    }
+    renderTree();
+}
+
+window.treeSearch=function(){
+    alert("Search visualization simplified in stable version.");
+}
+
+window.treeClear=function(){
+    treeRoot=null;
+    renderTree();
+}
+
+/* =====================================================
+                        GRAPH
+=====================================================*/
+
+let gCanvas,gCtx;
+let nodes=[],edges=[],adj=new Map();
+let nextId=0;
+
+waitForCanvas("graphCanvas",(canvas)=>{
+    gCanvas=canvas;
+    gCtx=gCanvas.getContext("2d");
+
+    gCanvas.addEventListener("click",graphCanvasClick);
+    renderGraph();
+});
+
+function graphCanvasClick(e){
+    const rect=gCanvas.getBoundingClientRect();
+    const x=e.clientX-rect.left;
+    const y=e.clientY-rect.top;
+
+    nodes.push({id:nextId,x,y});
+    adj.set(nextId,[]);
+    nextId++;
+
+    renderGraph();
+}
+
+window.graphAddEdge=function(){
+    const u=parseInt(graphU.value);
+    const v=parseInt(graphV.value);
+    if(!adj.has(u)||!adj.has(v)) return;
+
+    edges.push({u,v});
+    adj.get(u).push(v);
+    adj.get(v).push(u);
+    renderGraph();
+}
+
+function renderGraph(){
+    if(!gCtx) return;
+    gCtx.clearRect(0,0,gCanvas.width,gCanvas.height);
+
+    gCtx.strokeStyle="#94a3b8";
+    edges.forEach(e=>{
+        const a=nodes.find(n=>n.id===e.u);
+        const b=nodes.find(n=>n.id===e.v);
+        gCtx.beginPath();
+        gCtx.moveTo(a.x,a.y);
+        gCtx.lineTo(b.x,b.y);
+        gCtx.stroke();
+    });
+
+    nodes.forEach(n=>{
+        gCtx.beginPath();
+        gCtx.arc(n.x,n.y,18,0,Math.PI*2);
+        gCtx.fillStyle="white";
+        gCtx.fill();
+        gCtx.stroke();
+        gCtx.fillStyle="black";
+        gCtx.fillText(n.id,n.x,n.y);
     });
 }
 
-window.arrInsert=function(){
-    const v=document.getElementById("arrValue").value;
-    if(!v) return;
-    arrayData.push(parseInt(v));
-    renderArray();
+window.graphBFS=function(){
+    alert("BFS animation simplified in stable version.");
 }
 
-window.arrDelete=function(){
-    arrayData.pop();
-    renderArray();
+window.graphClear=function(){
+    nodes=[];
+    edges=[];
+    adj.clear();
+    nextId=0;
+    renderGraph();
 }
-
-/* ================= STACK ================= */
-let stackData=["A","B"];
-const stackContainer=document.getElementById("stack-container");
-
-function renderStack(){
-    stackContainer.innerHTML="";
-    stackData.forEach(v=>{
-        const node=document.createElement("div");
-        node.className="node";
-        node.innerText=v;
-        stackContainer.appendChild(node);
-    });
-}
-
-window.stackPush=function(){
-    const v=document.getElementById("stackValue").value;
-    if(!v) return;
-    stackData.push(v);
-    renderStack();
-}
-
-window.stackPop=function(){
-    stackData.pop();
-    renderStack();
-}
-
-/* ================= QUEUE ================= */
-let queueData=["Q1","Q2"];
-const queueContainer=document.getElementById("queue-container");
-
-function renderQueue(){
-    queueContainer.innerHTML="";
-    queueData.forEach(v=>{
-        const node=document.createElement("div");
-        node.className="node";
-        node.innerText=v;
-        queueContainer.appendChild(node);
-    });
-}
-
-window.queueEnqueue=function(){
-    const v=document.getElementById("queueValue").value;
-    if(!v) return;
-    queueData.push(v);
-    renderQueue();
-}
-
-window.queueDequeue=function(){
-    queueData.shift();
-    renderQueue();
-}
-
-/* ================= INITIAL RENDER ================= */
-renderArray();
-renderStack();
-renderQueue();
 
 });
 </script>
