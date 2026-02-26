@@ -1,4 +1,4 @@
-<img width="928" height="443" alt="image" src="https://github.com/user-attachments/assets/d57e94a9-7c0c-4bd5-bd18-25053ee5df26" />🚀 Java DSA Visualizer
+🚀 Java DSA Visualizer
 
 An interactive Data Structures & Algorithms Visualization Platform built using Java Spring Boot that helps users understand core data structures through real-time visual interaction.
 
