@@ -1,34 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>All-in-One Visualizer Lab</title>
-    <link rel="stylesheet" href="/css/style.css">
+<meta charset="UTF-8">
+<title>All-in-One Visualizer Lab</title>
 
-    <style>
-        .lab-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 40px;
-        }
-        .mini-visualizer {
-            min-height: 150px;
-            padding: 20px;
-            margin-top: 15px;
-            overflow-x: auto;
-        }
-        .message {
-            margin-top: 10px;
-            font-weight: 600;
-            color: var(--accent);
-            min-height: 24px;
-        }
-        canvas {
-            background-color: transparent;
-            display: block;
-            margin: 0 auto;
-        }
-    </style>
+<link rel="stylesheet" href="/css/style.css">
+
+<style>
+.lab-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:40px;
+}
+.mini-visualizer{
+    min-height:150px;
+    padding:20px;
+    margin-top:15px;
+    overflow-x:auto;
+}
+.message{
+    margin-top:10px;
+    font-weight:600;
+    color:var(--accent);
+}
+</style>
 </head>
 
 <body>
@@ -39,230 +34,142 @@
 </div>
 
 <div class="container">
-<div class="intro-card">
-    <h1>Interactive Quick Lab</h1>
-    <p>Test, compare, and traverse all major data structures side-by-side.</p>
-</div>
 
-<div class="lab-grid">
-
-<!-- ================= ARRAY ================= -->
 <div class="card">
 <h2>Array / ArrayList Visualizer</h2>
+
 <div class="controls">
 <input id="arrValue" type="number" placeholder="Value">
-<input id="arrIndex" type="number" placeholder="Index (optional)">
 <button onclick="arrInsert()">Insert</button>
 <button class="danger" onclick="arrDelete()">Delete</button>
-<button onclick="arrSearch()" style="background: var(--success);">Linear Search</button>
-</div>
-<div id="arrMsg" class="message">Ready.</div>
-<div class="visualizer-container mini-visualizer" id="arr-container"></div>
 </div>
 
-<!-- ================= STACK ================= -->
+<div id="arrMsg" class="message">Ready.</div>
+<div id="arr-container" class="visualizer-container mini-visualizer"></div>
+</div>
+
+
 <div class="card">
-<h2>Stack Visualizer</h2>
+<h2>Stack Visualizer (LIFO)</h2>
+
 <div class="controls">
 <input id="stackValue" type="text" placeholder="Value">
 <button onclick="stackPush()">Push</button>
 <button class="danger" onclick="stackPop()">Pop</button>
-<button onclick="stackPeek()" style="background: var(--success);">Peek</button>
-</div>
-<div id="stackMsg" class="message">Ready.</div>
-<div id="stack-container" class="visualizer-container mini-visualizer"
-     style="flex-direction: column-reverse;"></div>
 </div>
 
-<!-- ================= QUEUE ================= -->
+<div id="stack-container"
+class="visualizer-container mini-visualizer"
+style="flex-direction:column-reverse;"></div>
+</div>
+
+
 <div class="card">
-<h2>Queue Visualizer</h2>
+<h2>Queue Visualizer (FIFO)</h2>
+
 <div class="controls">
 <input id="queueValue" type="text" placeholder="Value">
 <button onclick="queueEnqueue()">Enqueue</button>
 <button class="danger" onclick="queueDequeue()">Dequeue</button>
-<button onclick="queuePeek()" style="background: var(--success);">Peek</button>
 </div>
-<div id="queueMsg" class="message">Ready.</div>
+
 <div id="queue-container" class="visualizer-container mini-visualizer"></div>
 </div>
 
-<!-- ================= LINKED LIST ================= -->
-<div class="card">
-<h2>Singly Linked List</h2>
-<div class="controls">
-<input id="llValue" type="number" placeholder="Value">
-<button onclick="llInsertHead()">Insert Head</button>
-<button onclick="llInsertTail()">Insert Tail</button>
-<button class="danger" onclick="llDeleteHead()">Del Head</button>
-<button class="danger" onclick="llDeleteTail()">Del Tail</button>
-<button onclick="llSearch()" style="background: var(--success);">Search</button>
-</div>
-<div id="llMsg" class="message">Ready.</div>
-<div id="ll-container" class="visualizer-container mini-visualizer"></div>
 </div>
 
-<!-- ================= TREE ================= -->
-<div class="card">
-<h2>Binary Search Tree</h2>
-<div class="controls">
-<input id="treeValue" type="number" placeholder="Value">
-<button onclick="treeInsert()">Insert</button>
-<button onclick="treeSearch()" style="background: var(--success);">Search</button>
-<button class="danger" onclick="treeClear()">Clear</button>
-</div>
-<div id="treeMsg" class="message">Ready.</div>
-<canvas id="treeCanvas" width="800" height="300"></canvas>
-</div>
-
-<!-- ================= GRAPH ================= -->
-<div class="card">
-<h2>Graph Visualizer</h2>
-<div class="controls">
-<input id="graphU" type="number" placeholder="Node A">
-<input id="graphV" type="number" placeholder="Node B">
-<button onclick="graphAddEdge()">Connect</button>
-<input id="graphStart" type="number" placeholder="Start">
-<button onclick="graphBFS()" style="background: var(--success);">BFS</button>
-<button class="danger" onclick="graphClear()">Clear</button>
-</div>
-<div id="graphMsg" class="message">Click canvas to add nodes.</div>
-<canvas id="graphCanvas" width="800" height="300"></canvas>
-</div>
-
-</div>
-</div>
-
+<!-- ================= JAVASCRIPT ================= -->
 <script>
-/* ================= SHARED ================= */
+document.addEventListener("DOMContentLoaded", () => {
+
+/* ================= UTIL ================= */
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
 /* ================= ARRAY ================= */
 let arrayData = [10,20,30];
-const arrContainer=document.getElementById('arr-container');
-const arrMsg=document.getElementById('arrMsg');
+const arrContainer = document.getElementById("arr-container");
 
-function renderArray(active=-1,found=-1){
-arrContainer.innerHTML='';
-arrayData.forEach((v,i)=>{
-const d=document.createElement('div');
-d.className='cell';
-if(i===active)d.style.background='var(--danger)';
-if(i===found)d.style.background='var(--success)';
-d.innerHTML=v;
-arrContainer.appendChild(d);
-});
+function renderArray(active=-1){
+    arrContainer.innerHTML="";
+    arrayData.forEach((val,i)=>{
+        const cell=document.createElement("div");
+        cell.className="cell";
+        cell.innerText=val;
+        if(i===active) cell.style.background="var(--success)";
+        arrContainer.appendChild(cell);
+    });
 }
 
-function arrInsert(){
-const val=document.getElementById('arrValue').value;
-if(!val)return;
-arrayData.push(parseInt(val));
-renderArray();
+window.arrInsert=function(){
+    const v=document.getElementById("arrValue").value;
+    if(!v) return;
+    arrayData.push(parseInt(v));
+    renderArray();
 }
 
-function arrDelete(){
-arrayData.pop();
-renderArray();
-}
-
-async function arrSearch(){
-const val=parseInt(document.getElementById('arrValue').value);
-for(let i=0;i<arrayData.length;i++){
-renderArray(i);
-await sleep(400);
-if(arrayData[i]===val){renderArray(-1,i);return;}
-}
-renderArray();
+window.arrDelete=function(){
+    arrayData.pop();
+    renderArray();
 }
 
 /* ================= STACK ================= */
 let stackData=["A","B"];
-const stackContainer=document.getElementById('stack-container');
+const stackContainer=document.getElementById("stack-container");
 
 function renderStack(){
-stackContainer.innerHTML='';
-stackData.forEach(v=>{
-const n=document.createElement('div');
-n.className='node';
-n.innerText=v;
-stackContainer.appendChild(n);
-});
+    stackContainer.innerHTML="";
+    stackData.forEach(v=>{
+        const node=document.createElement("div");
+        node.className="node";
+        node.innerText=v;
+        stackContainer.appendChild(node);
+    });
 }
 
-function stackPush(){
-const v=document.getElementById('stackValue').value;
-if(v)stackData.push(v);
-renderStack();
+window.stackPush=function(){
+    const v=document.getElementById("stackValue").value;
+    if(!v) return;
+    stackData.push(v);
+    renderStack();
 }
 
-function stackPop(){stackData.pop();renderStack();}
-function stackPeek(){}
+window.stackPop=function(){
+    stackData.pop();
+    renderStack();
+}
 
 /* ================= QUEUE ================= */
 let queueData=["Q1","Q2"];
-const queueContainer=document.getElementById('queue-container');
+const queueContainer=document.getElementById("queue-container");
 
 function renderQueue(){
-queueContainer.innerHTML='';
-queueData.forEach(v=>{
-const n=document.createElement('div');
-n.className='node';
-n.innerText=v;
-queueContainer.appendChild(n);
-});
+    queueContainer.innerHTML="";
+    queueData.forEach(v=>{
+        const node=document.createElement("div");
+        node.className="node";
+        node.innerText=v;
+        queueContainer.appendChild(node);
+    });
 }
 
-function queueEnqueue(){
-const v=document.getElementById('queueValue').value;
-if(v)queueData.push(v);
-renderQueue();
-}
-function queueDequeue(){queueData.shift();renderQueue();}
-function queuePeek(){}
-
-/* ================= LINKED LIST ================= */
-class LLNode{constructor(v){this.val=v;this.next=null;}}
-let head=new LLNode(5);head.next=new LLNode(10);
-const llContainer=document.getElementById('ll-container');
-
-function renderLL(){
-llContainer.innerHTML='';
-let c=head;
-while(c){
-const n=document.createElement('div');
-n.className='node';
-n.innerText=c.val;
-llContainer.appendChild(n);
-c=c.next;
-}
+window.queueEnqueue=function(){
+    const v=document.getElementById("queueValue").value;
+    if(!v) return;
+    queueData.push(v);
+    renderQueue();
 }
 
-function llInsertHead(){
-const v=document.getElementById('llValue').value;
-const n=new LLNode(v);n.next=head;head=n;renderLL();
+window.queueDequeue=function(){
+    queueData.shift();
+    renderQueue();
 }
 
-function llInsertTail(){
-const v=document.getElementById('llValue').value;
-let c=head;while(c.next)c=c.next;
-c.next=new LLNode(v);renderLL();
-}
-
-function llDeleteHead(){if(head)head=head.next;renderLL();}
-function llDeleteTail(){
-let c=head;
-while(c.next&&c.next.next)c=c.next;
-if(c.next)c.next=null;
-renderLL();
-}
-function llSearch(){}
-
-/* Initial Render */
+/* ================= INITIAL RENDER ================= */
 renderArray();
 renderStack();
 renderQueue();
-renderLL();
+
+});
 </script>
 
 </body>
