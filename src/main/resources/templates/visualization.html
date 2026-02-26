@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>All-in-One Visualizer Lab</title>
+<title>DSA Visualizer</title>
 
 <link rel="stylesheet" href="/css/style.css">
 
 <style>
-.lab-grid{display:grid;grid-template-columns:1fr;gap:40px;}
-.mini-visualizer{min-height:160px;padding:20px;margin-top:15px;}
-canvas{background:transparent;border:1px dashed #cbd5e1;}
+.container{width:90%;margin:auto;}
+.card{margin:40px 0;padding:25px;background:#f8fafc;border-radius:12px;}
+canvas{border:1px dashed #cbd5e1;margin-top:15px;}
 </style>
 </head>
 
@@ -22,18 +22,31 @@ canvas{background:transparent;border:1px dashed #cbd5e1;}
 
 <div class="container">
 
-<!-- ================= BST ================= -->
+<!-- ================= ARRAY ================= -->
+<div class="card">
+<h2>Array</h2>
+<div id="arr-container"></div>
+</div>
+
+<!-- ================= STACK ================= -->
+<div class="card">
+<h2>Stack</h2>
+<div id="stack-container"></div>
+</div>
+
+<!-- ================= QUEUE ================= -->
+<div class="card">
+<h2>Queue</h2>
+<div id="queue-container"></div>
+</div>
+
+<!-- ================= TREE ================= -->
 <div class="card">
 <h2>Binary Search Tree</h2>
 
-<div class="controls">
 <input id="treeValue" type="number" placeholder="Value">
 <button onclick="treeInsert()">Insert</button>
-<button onclick="treeSearch()">Search</button>
-<button class="danger" onclick="treeClear()">Clear</button>
-</div>
-
-<p id="treeMsg">Ready.</p>
+<button onclick="treeClear()">Clear</button>
 
 <canvas id="treeCanvas" width="800" height="300"></canvas>
 </div>
@@ -42,18 +55,10 @@ canvas{background:transparent;border:1px dashed #cbd5e1;}
 <div class="card">
 <h2>Graph Visualizer</h2>
 
-<div class="controls">
 <input id="graphU" placeholder="Node A">
 <input id="graphV" placeholder="Node B">
 <button onclick="graphAddEdge()">Connect</button>
-
-<input id="graphStart" placeholder="Start">
-<button onclick="graphBFS()">BFS</button>
-
-<button class="danger" onclick="graphClear()">Clear</button>
-</div>
-
-<p id="graphMsg">Click canvas to create nodes.</p>
+<button onclick="graphClear()">Clear</button>
 
 <canvas id="graphCanvas" width="800" height="300"></canvas>
 </div>
@@ -61,199 +66,141 @@ canvas{background:transparent;border:1px dashed #cbd5e1;}
 </div>
 
 <script>
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded",()=>{
 
-/* =====================================================
-   SAFE CANVAS INITIALIZER (Fixes Render deployment bug)
-=====================================================*/
-function waitForCanvas(id, callback){
-    const check=()=>{
-        const el=document.getElementById(id);
-        if(el && el.offsetWidth>0) callback(el);
-        else requestAnimationFrame(check);
-    };
-    check();
+/* ================= TREE ================= */
+
+class Node{
+constructor(v){this.val=v;this.left=null;this.right=null;this.x=0;this.y=0;}
 }
 
-/* =====================================================
-                    BINARY SEARCH TREE
-=====================================================*/
+let root=new Node(50);
+root.left=new Node(30);
+root.right=new Node(70);
 
-class TreeNode{
-    constructor(v){
-        this.val=v;
-        this.left=null;
-        this.right=null;
-        this.x=0;
-        this.y=0;
-    }
+const canvas=document.getElementById("treeCanvas");
+const ctx=canvas.getContext("2d");
+
+function layout(n,x,y,off){
+if(!n)return;
+n.x=x;n.y=y;
+layout(n.left,x-off,y+60,off/2);
+layout(n.right,x+off,y+60,off/2);
 }
 
-let treeRoot=new TreeNode(50);
-treeRoot.left=new TreeNode(30);
-treeRoot.right=new TreeNode(70);
+function draw(n){
+if(!n)return;
 
-let treeCanvas, tCtx;
-
-waitForCanvas("treeCanvas",(canvas)=>{
-    treeCanvas=canvas;
-    tCtx=treeCanvas.getContext("2d");
-    renderTree();
-});
-
-function calcPos(node,x,y,offset){
-    if(!node) return;
-    node.x=x; node.y=y;
-    calcPos(node.left,x-offset,y+60,offset/2);
-    calcPos(node.right,x+offset,y+60,offset/2);
+if(n.left){
+ctx.beginPath();
+ctx.moveTo(n.x,n.y);
+ctx.lineTo(n.left.x,n.left.y);
+ctx.stroke();
+draw(n.left);
+}
+if(n.right){
+ctx.beginPath();
+ctx.moveTo(n.x,n.y);
+ctx.lineTo(n.right.x,n.right.y);
+ctx.stroke();
+draw(n.right);
 }
 
-function drawEdges(node){
-    if(!node) return;
-    if(node.left){
-        tCtx.beginPath();
-        tCtx.moveTo(node.x,node.y);
-        tCtx.lineTo(node.left.x,node.left.y);
-        tCtx.stroke();
-        drawEdges(node.left);
-    }
-    if(node.right){
-        tCtx.beginPath();
-        tCtx.moveTo(node.x,node.y);
-        tCtx.lineTo(node.right.x,node.right.y);
-        tCtx.stroke();
-        drawEdges(node.right);
-    }
-}
-
-function drawNodes(node){
-    if(!node) return;
-
-    tCtx.beginPath();
-    tCtx.arc(node.x,node.y,18,0,Math.PI*2);
-    tCtx.fillStyle="white";
-    tCtx.fill();
-    tCtx.stroke();
-
-    tCtx.fillStyle="black";
-    tCtx.textAlign="center";
-    tCtx.textBaseline="middle";
-    tCtx.fillText(node.val,node.x,node.y);
-
-    drawNodes(node.left);
-    drawNodes(node.right);
+ctx.beginPath();
+ctx.arc(n.x,n.y,18,0,Math.PI*2);
+ctx.fillStyle="white";
+ctx.fill();
+ctx.stroke();
+ctx.fillStyle="black";
+ctx.textAlign="center";
+ctx.textBaseline="middle";
+ctx.fillText(n.val,n.x,n.y);
 }
 
 function renderTree(){
-    if(!tCtx) return;
-    tCtx.clearRect(0,0,treeCanvas.width,treeCanvas.height);
-    calcPos(treeRoot,treeCanvas.width/2,40,treeCanvas.width/4);
-    drawEdges(treeRoot);
-    drawNodes(treeRoot);
+ctx.clearRect(0,0,canvas.width,canvas.height);
+layout(root,canvas.width/2,40,canvas.width/4);
+draw(root);
 }
 
 window.treeInsert=function(){
-    const v=parseInt(document.getElementById("treeValue").value);
-    if(isNaN(v)) return;
+const v=parseInt(treeValue.value);
+if(isNaN(v))return;
 
-    if(!treeRoot){ treeRoot=new TreeNode(v); renderTree(); return; }
-
-    let cur=treeRoot;
-    while(true){
-        if(v<cur.val){
-            if(!cur.left){cur.left=new TreeNode(v);break;}
-            cur=cur.left;
-        }else{
-            if(!cur.right){cur.right=new TreeNode(v);break;}
-            cur=cur.right;
-        }
-    }
-    renderTree();
+let cur=root;
+while(true){
+if(v<cur.val){
+if(!cur.left){cur.left=new Node(v);break;}
+cur=cur.left;
+}else{
+if(!cur.right){cur.right=new Node(v);break;}
+cur=cur.right;
 }
-
-window.treeSearch=function(){
-    alert("Search visualization simplified in stable version.");
+}
+renderTree();
 }
 
 window.treeClear=function(){
-    treeRoot=null;
-    renderTree();
+root=null;
+ctx.clearRect(0,0,canvas.width,canvas.height);
 }
 
-/* =====================================================
-                        GRAPH
-=====================================================*/
+renderTree();
 
-let gCanvas,gCtx;
-let nodes=[],edges=[],adj=new Map();
+/* ================= GRAPH ================= */
+
+const gCanvas=document.getElementById("graphCanvas");
+const gCtx=gCanvas.getContext("2d");
+
+let nodes=[];
+let edges=[];
 let nextId=0;
 
-waitForCanvas("graphCanvas",(canvas)=>{
-    gCanvas=canvas;
-    gCtx=gCanvas.getContext("2d");
-
-    gCanvas.addEventListener("click",graphCanvasClick);
-    renderGraph();
+gCanvas.addEventListener("click",(e)=>{
+const rect=gCanvas.getBoundingClientRect();
+nodes.push({
+id:nextId++,
+x:e.clientX-rect.left,
+y:e.clientY-rect.top
+});
+renderGraph();
 });
 
-function graphCanvasClick(e){
-    const rect=gCanvas.getBoundingClientRect();
-    const x=e.clientX-rect.left;
-    const y=e.clientY-rect.top;
-
-    nodes.push({id:nextId,x,y});
-    adj.set(nextId,[]);
-    nextId++;
-
-    renderGraph();
-}
-
 window.graphAddEdge=function(){
-    const u=parseInt(graphU.value);
-    const v=parseInt(graphV.value);
-    if(!adj.has(u)||!adj.has(v)) return;
-
-    edges.push({u,v});
-    adj.get(u).push(v);
-    adj.get(v).push(u);
-    renderGraph();
+const u=parseInt(graphU.value);
+const v=parseInt(graphV.value);
+edges.push({u,v});
+renderGraph();
 }
 
 function renderGraph(){
-    if(!gCtx) return;
-    gCtx.clearRect(0,0,gCanvas.width,gCanvas.height);
+gCtx.clearRect(0,0,gCanvas.width,gCanvas.height);
 
-    gCtx.strokeStyle="#94a3b8";
-    edges.forEach(e=>{
-        const a=nodes.find(n=>n.id===e.u);
-        const b=nodes.find(n=>n.id===e.v);
-        gCtx.beginPath();
-        gCtx.moveTo(a.x,a.y);
-        gCtx.lineTo(b.x,b.y);
-        gCtx.stroke();
-    });
+edges.forEach(e=>{
+const a=nodes.find(n=>n.id===e.u);
+const b=nodes.find(n=>n.id===e.v);
+if(!a||!b)return;
+gCtx.beginPath();
+gCtx.moveTo(a.x,a.y);
+gCtx.lineTo(b.x,b.y);
+gCtx.stroke();
+});
 
-    nodes.forEach(n=>{
-        gCtx.beginPath();
-        gCtx.arc(n.x,n.y,18,0,Math.PI*2);
-        gCtx.fillStyle="white";
-        gCtx.fill();
-        gCtx.stroke();
-        gCtx.fillStyle="black";
-        gCtx.fillText(n.id,n.x,n.y);
-    });
-}
-
-window.graphBFS=function(){
-    alert("BFS animation simplified in stable version.");
+nodes.forEach(n=>{
+gCtx.beginPath();
+gCtx.arc(n.x,n.y,18,0,Math.PI*2);
+gCtx.fillStyle="white";
+gCtx.fill();
+gCtx.stroke();
+gCtx.fillStyle="black";
+gCtx.fillText(n.id,n.x,n.y);
+});
 }
 
 window.graphClear=function(){
-    nodes=[];
-    edges=[];
-    adj.clear();
-    nextId=0;
-    renderGraph();
+nodes=[];
+edges=[];
+renderGraph();
 }
 
 });
