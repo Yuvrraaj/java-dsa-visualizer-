@@ -99,20 +99,20 @@ GitHub
 java-dsa-visualizer/
 │
 ├── src/
-│   └── main/
-│       ├── java/
-│       │   └── com/
-│       │       └── dsa/
-│       │           ├── controller/
-│       │           ├── model/
-│       │           └── DsaVisualizerApplication.java
-│       │
-│       └── resources/
-│           ├── templates/        # Thymeleaf HTML pages
-│           ├── static/
-│           │   ├── css/
-│           │   └── js/
-│           └── application.properties
+│ └── main/
+│ ├── java/
+│ │ └── com/
+│ │ └── dsa/
+│ │ ├── controller/
+│ │ ├── model/
+│ │ └── DsaVisualizerApplication.java
+│ │
+│ └── resources/
+│ ├── templates/ # Thymeleaf HTML pages
+│ ├── static/
+│ │ ├── css/
+│ │ └── js/
+│ └── application.properties
 │
 ├── Dockerfile
 ├── pom.xml
