@@ -1,157 +1,177 @@
-# 🚀 Java DSA Visualizer
+🚀 Java DSA Visualizer
 
-An interactive **Data Structures & Algorithms Visualization Platform** built using **Java Spring Boot** that helps users understand core data structures through real-time visual interaction.
+An interactive Data Structures & Algorithms Visualization Platform built using Java Spring Boot, designed to help users understand core data structures through real-time visual interaction.
 
-🌐 **Live Demo:**  
+🌐 Live Demo
 👉 https://java-dsa-visualizer.onrender.com
 
----
+📌 Project Overview
 
-## 📌 Project Overview
+Java DSA Visualizer is a full-stack educational web application that visually demonstrates how fundamental data structures behave during operations such as insertion, deletion, traversal, and search.
 
-**Java DSA Visualizer** is a full-stack educational web application designed to visually demonstrate how fundamental data structures behave during different operations.
-
-Instead of learning algorithms purely through theory, users can perform operations and instantly observe how the internal structure changes.
+Instead of learning algorithms only through theory, users can interact with structures and observe structural changes dynamically.
 
 This project combines:
 
-- Algorithm learning through visualization
-- Spring Boot backend development
-- Interactive frontend rendering
-- Real-world deployment using Docker and cloud hosting
+Algorithm learning through visualization
 
----
+Spring Boot backend development
 
-## ✨ Supported Data Structures
+Interactive frontend rendering
 
-### 📦 Array / ArrayList
-- Insert elements dynamically
-- Delete elements
-- Visual index-based representation
-- Demonstrates contiguous memory behavior
+Real-world cloud deployment
 
----
+✨ Supported Data Structures
+📦 Array / ArrayList
 
-### 📚 Stack (LIFO – Last In First Out)
-- Push operation
-- Pop operation
-- Visual stack growth and shrinkage
-- Highlights top element behavior
+Insert elements dynamically
 
----
+Delete elements
 
-### 🚶 Queue (FIFO – First In First Out)
-- Enqueue operation
-- Dequeue operation
-- Front and rear visualization
-- Sequential processing demonstration
+Index-based visualization
 
----
+Demonstrates contiguous memory behavior
 
-### 🔗 Singly Linked List
-- Insert at tail
-- Delete operations
-- Node-by-node visualization
-- Pointer-based structure understanding
+📚 Stack (LIFO – Last In First Out)
 
----
+Push operation
 
-### 🌳 Binary Search Tree (BST)
-- Insert nodes following BST rules
-- Automatic positioning of nodes
-- Parent–child relationships visualized
-- Tree structure rendered using HTML Canvas
+Pop operation
 
----
+Visual stack growth and shrinkage
 
-### 🕸️ Graph Visualizer
-- Click-to-create graph nodes
-- Connect nodes using edges
-- Interactive canvas rendering
-- Demonstrates adjacency relationships
+Highlights top element behavior
 
----
+🚶 Queue (FIFO – First In First Out)
 
-## 🧠 Concepts Demonstrated
+Enqueue operation
 
-- Data Structure Operations
-- Algorithm Behavior Visualization
-- Event-driven Programming
-- DOM Manipulation
-- Canvas Rendering
-- MVC Web Architecture
-- Interactive UI Design
+Dequeue operation
 
----
+Front and rear visualization
 
-## 🏗️ Tech Stack
+🔗 Singly Linked List
 
-### Backend
-- **Java**
-- **Spring Boot**
-- Spring MVC Architecture
-- Thymeleaf Template Engine
+Insert nodes
 
-### Frontend
-- HTML5
-- CSS3
-- Vanilla JavaScript
-- HTML Canvas API
+Delete nodes
 
-### Deployment & DevOps
-- Docker
-- Render Cloud Platform
-- GitHub Version Control
+Pointer-based visualization
 
+Sequential traversal understanding
+
+🌳 Binary Search Tree (BST)
+
+Node insertion using BST rules
+
+Automatic node positioning
+
+Parent–child visualization
+
+Canvas-based rendering
+
+🕸️ Graph Visualizer
+
+Click-to-create nodes
+
+Connect nodes using edges
+
+Interactive graph rendering
+
+Adjacency relationship visualization
+
+🧠 Concepts Demonstrated
+
+Data Structure Operations
+
+Algorithm Visualization
+
+DOM Manipulation
+
+Event-driven Programming
+
+Canvas Rendering
+
+MVC Architecture
+
+Full-stack Deployment Workflow
+
+🏗️ Tech Stack
+Backend
+
+Java
+
+Spring Boot
+
+Spring MVC
+
+Thymeleaf
+
+Frontend
+
+HTML5
+
+CSS3
+
+Vanilla JavaScript
+
+HTML Canvas API
+
+Deployment & DevOps
+
+Docker
+
+Render Cloud Platform
+
+GitHub
+
+📂 Project Structure
 java-dsa-visualizer/
 │
 ├── src/
-│ └── main/
-│ ├── java/
-│ │ └── com/
-│ │ └── dsa/
-│ │ ├── controller/
-│ │ ├── model/
-│ │ └── DsaVisualizerApplication.java
-│ │
-│ └── resources/
-│ ├── templates/ # Thymeleaf HTML pages
-│ ├── static/
-│ │ ├── css/
-│ │ └── js/
-│ └── application.properties
+│   └── main/
+│       ├── java/
+│       │   └── com/
+│       │       └── dsa/
+│       │           ├── controller/
+│       │           ├── model/
+│       │           └── DsaVisualizerApplication.java
+│       │
+│       └── resources/
+│           ├── templates/        # Thymeleaf HTML pages
+│           ├── static/
+│           │   ├── css/
+│           │   └── js/
+│           └── application.properties
 │
 ├── Dockerfile
 ├── pom.xml
 └── README.md
 
-
----
-
-## ⚙️ Running the Project Locally
-
-### 1️⃣ Clone the Repository
-
-bash
+⚙️ Running the Project Locally
+1️⃣ Clone the Repository
 git clone https://github.com/Yuvrraaj/java-dsa-visualizer-.git
 cd java-dsa-visualizer-
 
 2️⃣ Run Using Maven
 
 Make sure Java 17+ and Maven are installed.
-
 mvn spring-boot:run
+
 3️⃣ Open in Browser
 http://localhost:8080
+
 🐳 Running with Docker
 Build Docker Image
+
 docker build -t dsa-visualizer .
+
 Run Container
 docker run -p 8080:8080 dsa-visualizer
 
 Application runs at:
-
 http://localhost:8080
+
 🌍 Deployment
 
 The application is deployed using Render Cloud Platform with Docker-based hosting.
@@ -166,9 +186,8 @@ HTTPS enabled public access
 
 Continuous deployment workflow
 
-Live URL:
-
-👉 https://java-dsa-visualizer.onrender.com
+🔗 Live URL:
+https://java-dsa-visualizer.onrender.com
 
 🎯 Learning Objectives
 
@@ -190,13 +209,13 @@ Debugging production deployment issues
 
 Tree traversal animations (Inorder / Preorder / Postorder)
 
-BFS and DFS graph traversal visualization
+BFS & DFS graph traversal visualization
 
 Drag-and-drop graph nodes
 
 Step-by-step algorithm animation timeline
 
-Performance comparison between structures
+Performance comparison mode
 
 Dark mode UI
 
@@ -207,7 +226,7 @@ Modular JavaScript architecture
 Yuvraj Jha
 3rd Year Student — Vellore Institute of Technology
 
-Interests:
+Interests
 
 Data Structures & Algorithms
 
@@ -238,6 +257,8 @@ This project is licensed under the MIT License.
 🙌 Acknowledgements
 
 Inspired by interactive algorithm learning platforms that make complex data structures easier to understand through visualization and experimentation.
----
 
-## 📂 Project Structure
+✅ Now just:
+git add README.md
+git commit -m "Final structured README"
+git push
