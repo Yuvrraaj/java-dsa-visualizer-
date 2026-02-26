@@ -2,14 +2,35 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>DSA Visualizer</title>
+<title>DSA Visualizer Lab</title>
 
 <link rel="stylesheet" href="/css/style.css">
 
 <style>
 .container{width:90%;margin:auto;}
-.card{margin:40px 0;padding:25px;background:#f8fafc;border-radius:12px;}
-canvas{border:1px dashed #cbd5e1;margin-top:15px;}
+.card{
+    margin:35px 0;
+    padding:25px;
+    background:#f8fafc;
+    border-radius:12px;
+}
+.visualizer{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-top:15px;
+}
+.box,.node{
+    padding:10px 14px;
+    border:2px solid #2563eb;
+    border-radius:6px;
+    background:white;
+    font-weight:bold;
+}
+canvas{
+    border:1px dashed #94a3b8;
+    margin-top:15px;
+}
 </style>
 </head>
 
@@ -17,7 +38,7 @@ canvas{border:1px dashed #cbd5e1;margin-top:15px;}
 
 <div class="navbar">
 <h2>Data Structures Lab</h2>
-<a href="/topics">Back to Topics</a>
+<a href="/topics">Back</a>
 </div>
 
 <div class="container">
@@ -25,41 +46,55 @@ canvas{border:1px dashed #cbd5e1;margin-top:15px;}
 <!-- ================= ARRAY ================= -->
 <div class="card">
 <h2>Array</h2>
-<div id="arr-container"></div>
+<input id="arrVal" placeholder="Value">
+<button onclick="arrInsert()">Insert</button>
+<button onclick="arrDelete()">Delete Last</button>
+<div id="arrayBox" class="visualizer"></div>
 </div>
 
 <!-- ================= STACK ================= -->
 <div class="card">
-<h2>Stack</h2>
-<div id="stack-container"></div>
+<h2>Stack (LIFO)</h2>
+<input id="stackVal" placeholder="Value">
+<button onclick="stackPush()">Push</button>
+<button onclick="stackPop()">Pop</button>
+<div id="stackBox" class="visualizer"></div>
 </div>
 
 <!-- ================= QUEUE ================= -->
 <div class="card">
-<h2>Queue</h2>
-<div id="queue-container"></div>
+<h2>Queue (FIFO)</h2>
+<input id="queueVal" placeholder="Value">
+<button onclick="queueAdd()">Enqueue</button>
+<button onclick="queueRemove()">Dequeue</button>
+<div id="queueBox" class="visualizer"></div>
+</div>
+
+<!-- ================= LINKED LIST ================= -->
+<div class="card">
+<h2>Singly Linked List</h2>
+<input id="llVal" placeholder="Value">
+<button onclick="llInsert()">Insert Tail</button>
+<button onclick="llDelete()">Delete Tail</button>
+<div id="llBox" class="visualizer"></div>
 </div>
 
 <!-- ================= TREE ================= -->
 <div class="card">
 <h2>Binary Search Tree</h2>
-
-<input id="treeValue" type="number" placeholder="Value">
+<input id="treeVal" placeholder="Value">
 <button onclick="treeInsert()">Insert</button>
 <button onclick="treeClear()">Clear</button>
-
 <canvas id="treeCanvas" width="800" height="300"></canvas>
 </div>
 
 <!-- ================= GRAPH ================= -->
 <div class="card">
 <h2>Graph Visualizer</h2>
-
-<input id="graphU" placeholder="Node A">
-<input id="graphV" placeholder="Node B">
-<button onclick="graphAddEdge()">Connect</button>
-<button onclick="graphClear()">Clear</button>
-
+<input id="edgeU" placeholder="Node A">
+<input id="edgeV" placeholder="Node B">
+<button onclick="addEdge()">Connect</button>
+<button onclick="clearGraph()">Clear</button>
 <canvas id="graphCanvas" width="800" height="300"></canvas>
 </div>
 
@@ -68,8 +103,100 @@ canvas{border:1px dashed #cbd5e1;margin-top:15px;}
 <script>
 document.addEventListener("DOMContentLoaded",()=>{
 
-/* ================= TREE ================= */
+/* ================= ARRAY ================= */
+let arr=[10,20,30];
+const arrayBox=document.getElementById("arrayBox");
 
+function renderArray(){
+arrayBox.innerHTML="";
+arr.forEach(v=>{
+const d=document.createElement("div");
+d.className="box";
+d.innerText=v;
+arrayBox.appendChild(d);
+});
+}
+window.arrInsert=()=>{
+const v=arrVal.value;
+if(v) arr.push(v);
+renderArray();
+}
+window.arrDelete=()=>{
+arr.pop();
+renderArray();
+}
+renderArray();
+
+/* ================= STACK ================= */
+let stack=["A","B"];
+const stackBox=document.getElementById("stackBox");
+
+function renderStack(){
+stackBox.innerHTML="";
+stack.forEach(v=>{
+const d=document.createElement("div");
+d.className="node";
+d.innerText=v;
+stackBox.appendChild(d);
+});
+}
+window.stackPush=()=>{
+if(stackVal.value) stack.push(stackVal.value);
+renderStack();
+}
+window.stackPop=()=>{
+stack.pop();
+renderStack();
+}
+renderStack();
+
+/* ================= QUEUE ================= */
+let queue=["Q1","Q2"];
+const queueBox=document.getElementById("queueBox");
+
+function renderQueue(){
+queueBox.innerHTML="";
+queue.forEach(v=>{
+const d=document.createElement("div");
+d.className="node";
+d.innerText=v;
+queueBox.appendChild(d);
+});
+}
+window.queueAdd=()=>{
+if(queueVal.value) queue.push(queueVal.value);
+renderQueue();
+}
+window.queueRemove=()=>{
+queue.shift();
+renderQueue();
+}
+renderQueue();
+
+/* ================= LINKED LIST ================= */
+let linked=[5,10];
+const llBox=document.getElementById("llBox");
+
+function renderLL(){
+llBox.innerHTML="";
+linked.forEach(v=>{
+const d=document.createElement("div");
+d.className="node";
+d.innerText=v+" →";
+llBox.appendChild(d);
+});
+}
+window.llInsert=()=>{
+if(llVal.value) linked.push(llVal.value);
+renderLL();
+}
+window.llDelete=()=>{
+linked.pop();
+renderLL();
+}
+renderLL();
+
+/* ================= TREE ================= */
 class Node{
 constructor(v){this.val=v;this.left=null;this.right=null;this.x=0;this.y=0;}
 }
@@ -78,8 +205,8 @@ let root=new Node(50);
 root.left=new Node(30);
 root.right=new Node(70);
 
-const canvas=document.getElementById("treeCanvas");
-const ctx=canvas.getContext("2d");
+const tCanvas=document.getElementById("treeCanvas");
+const tCtx=tCanvas.getContext("2d");
 
 function layout(n,x,y,off){
 if(!n)return;
@@ -88,45 +215,44 @@ layout(n.left,x-off,y+60,off/2);
 layout(n.right,x+off,y+60,off/2);
 }
 
-function draw(n){
+function drawTree(n){
 if(!n)return;
 
 if(n.left){
-ctx.beginPath();
-ctx.moveTo(n.x,n.y);
-ctx.lineTo(n.left.x,n.left.y);
-ctx.stroke();
-draw(n.left);
+tCtx.beginPath();
+tCtx.moveTo(n.x,n.y);
+tCtx.lineTo(n.left.x,n.left.y);
+tCtx.stroke();
+drawTree(n.left);
 }
 if(n.right){
-ctx.beginPath();
-ctx.moveTo(n.x,n.y);
-ctx.lineTo(n.right.x,n.right.y);
-ctx.stroke();
-draw(n.right);
+tCtx.beginPath();
+tCtx.moveTo(n.x,n.y);
+tCtx.lineTo(n.right.x,n.right.y);
+tCtx.stroke();
+drawTree(n.right);
 }
 
-ctx.beginPath();
-ctx.arc(n.x,n.y,18,0,Math.PI*2);
-ctx.fillStyle="white";
-ctx.fill();
-ctx.stroke();
-ctx.fillStyle="black";
-ctx.textAlign="center";
-ctx.textBaseline="middle";
-ctx.fillText(n.val,n.x,n.y);
+tCtx.beginPath();
+tCtx.arc(n.x,n.y,18,0,Math.PI*2);
+tCtx.fillStyle="white";
+tCtx.fill();
+tCtx.stroke();
+tCtx.fillStyle="black";
+tCtx.textAlign="center";
+tCtx.textBaseline="middle";
+tCtx.fillText(n.val,n.x,n.y);
 }
 
 function renderTree(){
-ctx.clearRect(0,0,canvas.width,canvas.height);
-layout(root,canvas.width/2,40,canvas.width/4);
-draw(root);
+tCtx.clearRect(0,0,tCanvas.width,tCanvas.height);
+layout(root,tCanvas.width/2,40,tCanvas.width/4);
+drawTree(root);
 }
 
-window.treeInsert=function(){
-const v=parseInt(treeValue.value);
-if(isNaN(v))return;
-
+window.treeInsert=()=>{
+const v=parseInt(treeVal.value);
+if(isNaN(v)) return;
 let cur=root;
 while(true){
 if(v<cur.val){
@@ -140,35 +266,30 @@ cur=cur.right;
 renderTree();
 }
 
-window.treeClear=function(){
+window.treeClear=()=>{
 root=null;
-ctx.clearRect(0,0,canvas.width,canvas.height);
+tCtx.clearRect(0,0,tCanvas.width,tCanvas.height);
 }
 
 renderTree();
 
 /* ================= GRAPH ================= */
-
 const gCanvas=document.getElementById("graphCanvas");
 const gCtx=gCanvas.getContext("2d");
 
 let nodes=[];
 let edges=[];
-let nextId=0;
+let id=0;
 
 gCanvas.addEventListener("click",(e)=>{
 const rect=gCanvas.getBoundingClientRect();
-nodes.push({
-id:nextId++,
-x:e.clientX-rect.left,
-y:e.clientY-rect.top
-});
+nodes.push({id:id++,x:e.clientX-rect.left,y:e.clientY-rect.top});
 renderGraph();
 });
 
-window.graphAddEdge=function(){
-const u=parseInt(graphU.value);
-const v=parseInt(graphV.value);
+window.addEdge=()=>{
+const u=parseInt(edgeU.value);
+const v=parseInt(edgeV.value);
 edges.push({u,v});
 renderGraph();
 }
@@ -197,7 +318,7 @@ gCtx.fillText(n.id,n.x,n.y);
 });
 }
 
-window.graphClear=function(){
+window.clearGraph=()=>{
 nodes=[];
 edges=[];
 renderGraph();
