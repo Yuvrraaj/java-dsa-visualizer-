@@ -1,25 +1,17 @@
 🚀 Java DSA Visualizer
 
-An interactive Data Structures & Algorithms Visualization Platform built using Java Spring Boot, designed to help users understand core data structures through real-time visual interaction.
+An interactive Data Structures & Algorithms Visualization Platform built using Java Spring Boot that helps users understand core data structures through real-time visual interaction.
 
-🌐 Live Demo
-👉 https://java-dsa-visualizer.onrender.com
+🌐 Live Demo:
+https://java-dsa-visualizer.onrender.com
+
+------------------------------------------------------------------------------------------
 
 📌 Project Overview
 
-Java DSA Visualizer is a full-stack educational web application that visually demonstrates how fundamental data structures behave during operations such as insertion, deletion, traversal, and search.
+Java DSA Visualizer is a full-stack educational web application that visually demonstrates how fundamental data structures behave during operations like insertion, deletion, traversal, and searching.
 
-Instead of learning algorithms only through theory, users can interact with structures and observe structural changes dynamically.
-
-This project combines:
-
-Algorithm learning through visualization
-
-Spring Boot backend development
-
-Interactive frontend rendering
-
-Real-world cloud deployment
+Instead of learning algorithms only through theory, users interact with structures and observe how they change dynamically.
 
 ✨ Supported Data Structures
 📦 Array / ArrayList
@@ -30,19 +22,15 @@ Delete elements
 
 Index-based visualization
 
-Demonstrates contiguous memory behavior
-
-📚 Stack (LIFO – Last In First Out)
+📚 Stack (LIFO)
 
 Push operation
 
 Pop operation
 
-Visual stack growth and shrinkage
+Visual stack behavior
 
-Highlights top element behavior
-
-🚶 Queue (FIFO – First In First Out)
+🚶 Queue (FIFO)
 
 Enqueue operation
 
@@ -58,15 +46,11 @@ Delete nodes
 
 Pointer-based visualization
 
-Sequential traversal understanding
-
 🌳 Binary Search Tree (BST)
 
 Node insertion using BST rules
 
-Automatic node positioning
-
-Parent–child visualization
+Automatic positioning
 
 Canvas-based rendering
 
@@ -78,23 +62,7 @@ Connect nodes using edges
 
 Interactive graph rendering
 
-Adjacency relationship visualization
-
-🧠 Concepts Demonstrated
-
-Data Structure Operations
-
-Algorithm Visualization
-
-DOM Manipulation
-
-Event-driven Programming
-
-Canvas Rendering
-
-MVC Architecture
-
-Full-stack Deployment Workflow
+------------------------------------------------------------------------------------------
 
 🏗️ Tech Stack
 Backend
@@ -125,6 +93,8 @@ Render Cloud Platform
 
 GitHub
 
+------------------------------------------------------------------------------------------
+
 📂 Project Structure
 java-dsa-visualizer/
 │
@@ -148,8 +118,11 @@ java-dsa-visualizer/
 ├── pom.xml
 └── README.md
 
+------------------------------------------------------------------------------------------
+
 ⚙️ Running the Project Locally
-1️⃣ Clone the Repository
+1️⃣ Clone Repository
+
 git clone https://github.com/Yuvrraaj/java-dsa-visualizer-.git
 cd java-dsa-visualizer-
 
@@ -163,14 +136,15 @@ http://localhost:8080
 
 🐳 Running with Docker
 Build Docker Image
-
 docker build -t dsa-visualizer .
-
 Run Container
 docker run -p 8080:8080 dsa-visualizer
 
 Application runs at:
+
 http://localhost:8080
+
+------------------------------------------------------------------------------------------
 
 🌍 Deployment
 
@@ -186,12 +160,16 @@ HTTPS enabled public access
 
 Continuous deployment workflow
 
-🔗 Live URL:
+Live URL:
+
 https://java-dsa-visualizer.onrender.com
+
+------------------------------------------------------------------------------------------
+
 
 🎯 Learning Objectives
 
-This project demonstrates practical understanding of:
+This project demonstrates:
 
 Spring Boot MVC architecture
 
@@ -203,23 +181,25 @@ Canvas-based rendering systems
 
 Cloud deployment workflow
 
-Debugging production deployment issues
+Production debugging experience
+
+------------------------------------------------------------------------------------------
 
 🚧 Future Improvements
 
-Tree traversal animations (Inorder / Preorder / Postorder)
+Tree traversal animations
 
 BFS & DFS graph traversal visualization
 
 Drag-and-drop graph nodes
 
-Step-by-step algorithm animation timeline
+Step-by-step algorithm animation
 
 Performance comparison mode
 
 Dark mode UI
 
-Modular JavaScript architecture
+------------------------------------------------------------------------------------------
 
 👨‍💻 Author
 
@@ -238,9 +218,9 @@ Backend Engineering
 
 GitHub: https://github.com/Yuvrraaj
 
-🤝 Contributing
+------------------------------------------------------------------------------------------
 
-Contributions and suggestions are welcome!
+🤝 Contributing
 
 Fork the repository
 
@@ -250,15 +230,19 @@ Commit your changes
 
 Open a Pull Request
 
+------------------------------------------------------------------------------------------
+
 📜 License
 
-This project is licensed under the MIT License.
+Licensed under the MIT License.
+
+------------------------------------------------------------------------------------------
 
 🙌 Acknowledgements
 
-Inspired by interactive algorithm learning platforms that make complex data structures easier to understand through visualization and experimentation.
+Inspired by interactive algorithm learning platforms that make complex data structures easier to understand through visualization.
 
-✅ Now just:
+✅ After pasting:
 git add README.md
-git commit -m "Final structured README"
+git commit -m "Fix README formatting"
 git push
