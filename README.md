@@ -1,149 +1,243 @@
-# 📘 DSA Visualizer & Learning Platform
+# 🚀 Java DSA Visualizer
 
-An interactive **Data Structures & Algorithms learning platform** built using **Java (Spring Boot)** that combines structured theory, Java implementations, and visual algorithm simulations in a single environment.
+An interactive **Data Structures & Algorithms Visualization Platform** built using **Java Spring Boot** that helps users understand core data structures through real-time visual interaction.
 
-The objective of this project is to make DSA concepts **intuitive, visual, and implementation-focused**, enabling learners to understand *how algorithms work internally* rather than memorizing solutions.
-
----
-
-## 🚀 Overview
-
-This platform acts as a mini educational ecosystem where users can:
-
-- 📖 Learn data structures through structured explanations
-- 💻 Study Java implementations alongside theory
-- 🎯 Understand common problem-solving patterns
-- 🎬 Visualize operations interactively
-- 🧠 Practice curated problem
-
-Unlike traditional tutorial websites, this project focuses on **visual intuition + practical coding understanding**.
+🌐 **Live Demo:**  
+👉 https://java-dsa-visualizer.onrender.com
 
 ---
 
-## ✨ Current Features
+## 📌 Project Overview
 
-### 🏠 Modern Landing Experience
-- Animated hero landing page
-- Clean platform-style UI
-- Structured navigation between learning and visualization sections
+**Java DSA Visualizer** is a full-stack educational web application designed to visually demonstrate how fundamental data structures behave during different operations.
 
-### 📚 Learning Modules (Implemented)
-**Arrays Module**
-- Conceptual introduction
-- Operations explanation
-- Techniques & approaches
-- Problem-solving patterns
-- Java implementation examples
+Instead of learning algorithms purely through theory, users can perform operations and instantly observe how the internal structure changes.
 
-### 🎬 Visualization Lab
-- Memory-cell style array visualization
-- Animated traversal
-- Insert/Delete simulations
-- Interactive real-time animations using JavaScript
+This project combines:
 
-### 🧩 Practice Section
-- Question & solution posting system
-- Backend persistence using Spring Data JPA
+- Algorithm learning through visualization
+- Spring Boot backend development
+- Interactive frontend rendering
+- Real-world deployment using Docker and cloud hosting
+
+---
+
+## ✨ Supported Data Structures
+
+### 📦 Array / ArrayList
+- Insert elements dynamically
+- Delete elements
+- Visual index-based representation
+- Demonstrates contiguous memory behavior
+
+---
+
+### 📚 Stack (LIFO – Last In First Out)
+- Push operation
+- Pop operation
+- Visual stack growth and shrinkage
+- Highlights top element behavior
+
+---
+
+### 🚶 Queue (FIFO – First In First Out)
+- Enqueue operation
+- Dequeue operation
+- Front and rear visualization
+- Sequential processing demonstration
+
+---
+
+### 🔗 Singly Linked List
+- Insert at tail
+- Delete operations
+- Node-by-node visualization
+- Pointer-based structure understanding
+
+---
+
+### 🌳 Binary Search Tree (BST)
+- Insert nodes following BST rules
+- Automatic positioning of nodes
+- Parent–child relationships visualized
+- Tree structure rendered using HTML Canvas
+
+---
+
+### 🕸️ Graph Visualizer
+- Click-to-create graph nodes
+- Connect nodes using edges
+- Interactive canvas rendering
+- Demonstrates adjacency relationships
+
+---
+
+## 🧠 Concepts Demonstrated
+
+- Data Structure Operations
+- Algorithm Behavior Visualization
+- Event-driven Programming
+- DOM Manipulation
+- Canvas Rendering
+- MVC Web Architecture
+- Interactive UI Design
 
 ---
 
 ## 🏗️ Tech Stack
 
 ### Backend
-- Java
-- Spring Boot
-- Spring MVC
-- Spring Data JPA
-- H2 Database
+- **Java**
+- **Spring Boot**
+- Spring MVC Architecture
+- Thymeleaf Template Engine
 
 ### Frontend
-- Thymeleaf
 - HTML5
-- CSS3 (Custom UI)
-- Vanilla JavaScript Animations
+- CSS3
+- Vanilla JavaScript
+- HTML Canvas API
 
-### Architecture
-- MVC (Model–View–Controller)
-- Layered Service Architecture
+### Deployment & DevOps
+- Docker
+- Render Cloud Platform
+- GitHub Version Control
 
----
-
-dsa-visualizer/
+java-dsa-visualizer/
 │
-├── src/main/java/com/dsa
-│ ├── controller/ # Web routing & controllers
-│ ├── service/ # Business logic layer
-│ ├── repository/ # Database access layer
-│ ├── model/ # Entity classes
-│ └── DsaVisualizerApplication.java
-│
-├── src/main/resources
-│ ├── templates/ # Thymeleaf UI pages
+├── src/
+│ └── main/
+│ ├── java/
+│ │ └── com/
+│ │ └── dsa/
+│ │ ├── controller/
+│ │ ├── model/
+│ │ └── DsaVisualizerApplication.java
+│ │
+│ └── resources/
+│ ├── templates/ # Thymeleaf HTML pages
 │ ├── static/
-│ │ ├── css/ # Styling
-│ │ └── js/ # Visualizations & animations
+│ │ ├── css/
+│ │ └── js/
 │ └── application.properties
 │
-└── pom.xml
+├── Dockerfile
+├── pom.xml
+└── README.md
 
 
 ---
 
-## ▶️ Running the Project Locally
+## ⚙️ Running the Project Locally
 
-### 1️⃣ Clone Repository
+### 1️⃣ Clone the Repository
 
 bash
-git clone https://github.com/<your-username>/dsa-visualizer.git
-cd dsa-visualizer
+git clone https://github.com/Yuvrraaj/java-dsa-visualizer-.git
+cd java-dsa-visualizer-
 
-2️⃣ Build & Run
-mvn clean install
+2️⃣ Run Using Maven
+
+Make sure Java 17+ and Maven are installed.
+
 mvn spring-boot:run
-
 3️⃣ Open in Browser
 http://localhost:8080
+🐳 Running with Docker
+Build Docker Image
+docker build -t dsa-visualizer .
+Run Container
+docker run -p 8080:8080 dsa-visualizer
 
-🎯 Project Vision
+Application runs at:
 
-The long-term goal is to evolve this into a complete interactive DSA learning platform combining:
+http://localhost:8080
+🌍 Deployment
 
-Visual algorithm simulations
+The application is deployed using Render Cloud Platform with Docker-based hosting.
 
-Pattern-based interview preparation
+Deployment Features
 
-Step-by-step execution playback
+Automatic build on Git push
 
-Concept-first learning methodology
+Containerized Spring Boot execution
 
-The focus is on developing deep algorithmic intuition rather than rote memorization.
+HTTPS enabled public access
 
-| Module                       | Status         |
-| ---------------------------- | -------------- |
-| Platform Architecture        | ✅ Completed    |
-| Landing & Dashboard UI       | ✅ Completed    |
-| Arrays Learning Module       | ✅ Implemented  |
-| Visualization Engine (Basic) | ✅ Implemented  |
-| Practice System              | ✅ Working      |
-| Additional Data Structures   | 🚧 In Progress |
+Continuous deployment workflow
 
+Live URL:
 
-🔮 Planned Enhancements
+👉 https://java-dsa-visualizer.onrender.com
 
-Stack, Queue, Linked List modules
+🎯 Learning Objectives
 
-Tree & Graph visualizers
+This project demonstrates practical understanding of:
 
-Advanced algorithm animations
+Spring Boot MVC architecture
 
-Step-by-step execution engine
+Backend–frontend integration
 
-User progress tracking
+Visualization logic using JavaScript
 
-Interactive coding playground
+Canvas-based rendering systems
+
+Cloud deployment workflow
+
+Debugging production deployment issues
+
+🚧 Future Improvements
+
+Tree traversal animations (Inorder / Preorder / Postorder)
+
+BFS and DFS graph traversal visualization
+
+Drag-and-drop graph nodes
+
+Step-by-step algorithm animation timeline
+
+Performance comparison between structures
+
+Dark mode UI
+
+Modular JavaScript architecture
 
 👨‍💻 Author
 
 Yuvraj Jha
-## 📂 Project Structure
+3rd Year Student — Vellore Institute of Technology
 
+Interests:
+
+Data Structures & Algorithms
+
+Machine Learning
+
+Visualization Systems
+
+Backend Engineering
+
+GitHub: https://github.com/Yuvrraaj
+
+🤝 Contributing
+
+Contributions and suggestions are welcome!
+
+Fork the repository
+
+Create a feature branch
+
+Commit your changes
+
+Open a Pull Request
+
+📜 License
+
+This project is licensed under the MIT License.
+
+🙌 Acknowledgements
+
+Inspired by interactive algorithm learning platforms that make complex data structures easier to understand through visualization and experimentation.
+---
+
+## 📂 Project Structure
