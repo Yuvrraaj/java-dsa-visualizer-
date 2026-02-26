@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack Operations Visualizer</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Stack Operations</h2>
+    <a href="/stack">Back to Stack Theory</a>
+</div>
+
+<div class="container">
+
+    <div class="intro-card">
+        <h1>Interactive Stack Lab</h1>
+        <p>
+            A Stack is a linear data structure that follows the
+            <strong>LIFO (Last In, First Out)</strong> principle.
+            Elements are inserted and removed only from the top.
+        </p>
+
+        <h3>Time Complexities</h3>
+        <ul>
+            <li><strong>Push:</strong> O(1) — Insert at top</li>
+            <li><strong>Pop:</strong> O(1) — Remove from top</li>
+            <li><strong>Peek:</strong> O(1) — View top element</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h2>Visualizer</h2>
+
+        <div class="controls">
+            <input type="text" id="stackInput" placeholder="Enter a value" maxlength="4">
+            <button onclick="pushElement()">Push</button>
+            <button class="danger" onclick="popElement()">Pop</button>
+            <button onclick="peekElement()" style="background: var(--success);">Peek</button>
+        </div>
+
+        <p id="message"
+           style="margin-top:1rem;font-weight:bold;color:var(--accent-color);"></p>
+
+        <div class="visualizer-container"
+             id="stack-container"
+             style="flex-direction:column-reverse;justify-content:flex-start;gap:10px;">
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+const stack = [];
+const container = document.getElementById('stack-container');
+const msg = document.getElementById('message');
+
+function renderStack() {
+
+    container.innerHTML = '';
+
+    stack.forEach((val, index) => {
+
+        const node = document.createElement('div');
+        node.className = 'node';
+        node.innerText = val;
+
+        // Highlight top element
+        if (index === stack.length - 1) {
+            node.style.border = "4px solid white";
+        }
+
+        container.appendChild(node);
+    });
+}
+
+function pushElement() {
+
+    const input = document.getElementById('stackInput');
+    const val = input.value.trim();
+
+    if (!val) {
+        msg.innerText = "Please enter a value!";
+        return;
+    }
+
+    if (stack.length >= 6) {
+        msg.innerText = "Stack Overflow! (Visual limit reached)";
+        msg.style.color = "var(--danger)";
+        return;
+    }
+
+    stack.push(val);
+    input.value = '';
+
+    msg.innerText = `Pushed ${val} to the stack.`;
+    msg.style.color = "var(--text-primary)";
+
+    renderStack();
+
+    // Entry animation
+    const nodes = document.querySelectorAll('.node');
+    const newNode = nodes[nodes.length - 1];
+
+    if (newNode) {
+        newNode.classList.add('hidden');
+        setTimeout(() => newNode.classList.remove('hidden'), 50);
+    }
+}
+
+function popElement() {
+
+    if (stack.length === 0) {
+        msg.innerText = "Stack Underflow! (Stack is empty)";
+        msg.style.color = "var(--danger)";
+        return;
+    }
+
+    const nodes = document.querySelectorAll('.node');
+    const topNode = nodes[nodes.length - 1];
+
+    if (topNode) {
+        topNode.classList.add('hidden');
+    }
+
+    setTimeout(() => {
+
+        const val = stack.pop();
+        msg.innerText = `Popped ${val} from the stack.`;
+        msg.style.color = "var(--text-primary)";
+        renderStack();
+
+    }, 400);
+}
+
+function peekElement() {
+
+    if (stack.length === 0) {
+        msg.innerText = "Stack is empty!";
+        return;
+    }
+
+    msg.innerText = `Top element is ${stack[stack.length - 1]}`;
+}
+
+</script>
+
+</body>
+</html>

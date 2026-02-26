@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree Techniques</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Tree Techniques</h2>
+    <a href="/trees">Back to Trees</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Tree Manipulation & Traversals</h1>
+        <p>Because trees are not linear, you cannot simply use a standard <code>for</code> loop to read all the data. You must use specialized traversal algorithms. Mastering these is non-negotiable for software engineering.</p>
+    </div>
+
+    <div class="card">
+        <h3>1. The Binary Tree Node</h3>
+        <p>Similar to a Linked List, a Tree uses a self-referential class. Instead of a single <code>next</code> pointer, it holds <code>left</code> and <code>right</code> pointers.</p>
+        <pre class="code-block"><code>class TreeNode {
+    int val;
+    TreeNode left;
+    TreeNode right;
+
+    TreeNode(int val) {
+        this.val = val;
+        this.left = null;
+        this.right = null;
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <h3>2. Depth-First Search (DFS) Traversals</h3>
+        <p>DFS plunges as deep as possible down one branch before backing up. It is naturally implemented using <strong>Recursion</strong>. There are three ways to order the visitation of nodes:</p>
+        
+        <h4 style="margin-top: 15px; color: var(--accent);">In-Order Traversal (Left, Root, Right)</h4>
+        <p>In a Binary Search Tree, In-Order traversal retrieves the data in perfectly sorted, ascending order.</p>
+        <pre class="code-block"><code>public void inOrder(TreeNode node) {
+    if (node == null) return;
+    inOrder(node.left);           // 1. Visit Left Subtree
+    System.out.println(node.val); // 2. Print Root
+    inOrder(node.right);          // 3. Visit Right Subtree
+}</code></pre>
+
+        <h4 style="margin-top: 15px; color: var(--accent);">Pre-Order Traversal (Root, Left, Right)</h4>
+        <p>Useful for creating a deep copy of a tree or serializing a tree to save to a file.</p>
+        <pre class="code-block"><code>public void preOrder(TreeNode node) {
+    if (node == null) return;
+    System.out.println(node.val); // 1. Print Root
+    preOrder(node.left);          // 2. Visit Left Subtree
+    preOrder(node.right);         // 3. Visit Right Subtree
+}</code></pre>
+
+        <h4 style="margin-top: 15px; color: var(--accent);">Post-Order Traversal (Left, Right, Root)</h4>
+        <p>Useful for deleting a tree. You must delete the children before you can safely delete the parent.</p>
+        <pre class="code-block"><code>public void postOrder(TreeNode node) {
+    if (node == null) return;
+    postOrder(node.left);         // 1. Visit Left Subtree
+    postOrder(node.right);        // 2. Visit Right Subtree
+    System.out.println(node.val); // 3. Print Root (Delete)
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <h3>3. Breadth-First Search (BFS) / Level Order Traversal</h3>
+        <p>Instead of diving deep, BFS scans the tree horizontally, layer by layer. <strong>BFS cannot be done via simple recursion; it requires a Queue.</strong></p>
+        <pre class="code-block"><code>public void levelOrder(TreeNode root) {
+    if (root == null) return;
+    
+    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+    queue.add(root);
+    
+    while (!queue.isEmpty()) {
+        TreeNode current = queue.poll(); // Dequeue
+        System.out.println(current.val);
+        
+        // Enqueue children for the next layer
+        if (current.left != null) queue.add(current.left);
+        if (current.right != null) queue.add(current.right);
+    }
+}</code></pre>
+    </div>
+    
+    <div class="card">
+        <h3>4. BST Deletion Mechanics</h3>
+        <p>Deleting from a BST is famously tricky because it has 3 distinct cases:</p>
+        <ol>
+            <li><strong>Node is a Leaf:</strong> Simply remove it (set parent's pointer to null).</li>
+            <li><strong>Node has 1 Child:</strong> Bypass the node by linking its parent directly to its single child.</li>
+            <li><strong>Node has 2 Children:</strong> Find the <em>In-Order Successor</em> (the smallest node in the right subtree). Copy its value to the target node, then recursively delete the In-Order Successor.</li>
+        </ol>
+    </div>
+
+</div>
+</body>
+</html>

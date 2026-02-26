@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Trees — Complete Understanding</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .code-block { background: #0f172a; color: #f8fafc; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Trees</h2>
+    <a href="/topics">Back to Topics</a>
+</div>
+
+<div class="container">
+
+    <div class="intro-card">
+        <h1>Trees — Hierarchical Data Structures</h1>
+        <p>While Arrays, Stacks, and Linked Lists are <strong>linear</strong> data structures (data is arranged sequentially), a <strong>Tree</strong> is a <strong>hierarchical</strong> data structure. It represents relationships where one item branches out into multiple items, much like a family tree or a computer's file system.</p>
+        <p>A Tree consists of vertices (called <strong>Nodes</strong>) and edges that connect them. It must have no cycles (no closed loops). The topmost node is called the <strong>Root</strong>.</p>
+        [Image of Tree Data Structure Terminology showing root, branches, and leaves]
+    </div>
+
+    <div class="card">
+        <h3>Core Terminology</h3>
+        <ul>
+            <li><strong>Root:</strong> The absolute top node of the tree. There is only one root.</li>
+            <li><strong>Edge:</strong> The connecting link between two nodes.</li>
+            <li><strong>Parent &amp; Child:</strong> A node that branches down is a Parent. The nodes it connects to are its Children.</li>
+            <li><strong>Leaf:</strong> A node with NO children (the absolute bottom of a branch).</li>
+            <li><strong>Sibling:</strong> Nodes that share the exact same Parent.</li>
+            <li><strong>Depth:</strong> The number of edges from the Root down to a specific node.</li>
+            <li><strong>Height:</strong> The number of edges on the longest path from a specific node down to a Leaf.</li>
+            <li><strong>Subtree:</strong> Any node inside the tree, together with all of its descendants, forms a Subtree.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Major Types of Trees</h3>
+        <ul>
+            <li><strong>Generic Tree (N-ary Tree):</strong> A node can have any number of children.</li>
+            <li><strong>Binary Tree:</strong> A strict rule where a node can have at most <strong>two</strong> children (Left and Right).</li>
+            <li><strong>Binary Search Tree (BST):</strong> A Binary Tree with a sorting property: Everything in the left subtree is <em>smaller</em> than the parent, and everything in the right subtree is <em>larger</em>.</li>
+            <li><strong>Self-Balancing Trees (AVL / Red-Black Trees):</strong> BSTs that automatically reorganize themselves during insertion to ensure the tree never becomes a skewed "straight line" (which would degrade search time to O(n)).</li>
+            <li><strong>Trie (Prefix Tree):</strong> A specialized tree used heavily for auto-complete and string searching.</li>
+        </ul>
+        [Image of a Binary Search Tree data structure]
+    </div>
+
+    <div class="card">
+        <h3>Time Complexity (Binary Search Tree)</h3>
+        <p>The efficiency of a Tree depends entirely on its <strong>Height</strong>. If a tree is perfectly balanced, its height is $\log_2(n)$. If it is highly skewed (looks like a Linked List), its height is $n$.</p>
+        <ul>
+            <li><strong>Search:</strong> Average: $\mathcal{O}(\log n)$ | Worst (Skewed): $\mathcal{O}(n)$</li>
+            <li><strong>Insert:</strong> Average: $\mathcal{O}(\log n)$ | Worst (Skewed): $\mathcal{O}(n)$</li>
+            <li><strong>Delete:</strong> Average: $\mathcal{O}(\log n)$ | Worst (Skewed): $\mathcal{O}(n)$</li>
+        </ul>
+    </div>
+
+    <h2>Explore Trees</h2>
+    <div class="module-grid">
+        <a href="/trees/operations" class="module-card">
+            <h3>Operations Laboratory</h3>
+            <p>Visually insert and search nodes in a BST.</p>
+        </a>
+        <a href="/trees/techniques" class="module-card">
+            <h3>Algorithms &amp; Techniques</h3>
+            <p>DFS, BFS, and Traversal mechanics.</p>
+        </a>
+        <a href="/trees/patterns" class="module-card">
+            <h3>Problem Patterns</h3>
+            <p>Top-down recursion and Lowest Common Ancestor.</p>
+        </a>
+    </div>
+
+</div>
+</body>
+</html>

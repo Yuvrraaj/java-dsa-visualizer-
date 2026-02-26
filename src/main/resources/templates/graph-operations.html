@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Graph Visualizer</title>
+<link rel="stylesheet" href="/css/style.css">
+
+<style>
+.canvas-container{
+    width:100%;
+    overflow-x:auto;
+    background:#f8fafc;
+    border:2px dashed #cbd5e1;
+    border-radius:12px;
+    margin-top:20px;
+    display:flex;
+    justify-content:center;
+    cursor:crosshair;
+}
+canvas{
+    background:transparent;
+    display:block;
+}
+.controls-row{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    align-items:center;
+    margin-bottom:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="navbar">
+<h2>Graph Visualizer</h2>
+<a href="/graph">Back to Theory</a>
+</div>
+
+<div class="container">
+
+<div class="intro-card">
+<h1>Interactive Undirected Graph</h1>
+<p>
+Click anywhere on the canvas to create nodes.
+Connect nodes and visualize BFS traversal.
+</p>
+</div>
+
+<div class="card">
+<h2>Graph Builder & Visualizer</h2>
+
+<div class="controls-row">
+<input id="nodeU" placeholder="Node A ID" type="number">
+<input id="nodeV" placeholder="Node B ID" type="number">
+<button onclick="addEdge()">Connect Nodes</button>
+</div>
+
+<div class="controls-row">
+<input id="startNode" placeholder="Start Node ID" type="number">
+<button onclick="runBFS()" style="background:var(--success)">Run BFS</button>
+<button class="danger" onclick="clearGraph()">Clear Graph</button>
+</div>
+
+<p id="graphMessage">Click on canvas to add nodes!</p>
+
+<div class="canvas-container">
+<canvas id="graphCanvas" width="800" height="450"></canvas>
+</div>
+
+</div>
+</div>
+
+<script type="text/javascript">
+/*<![CDATA[*/
+
+const canvas = document.getElementById('graphCanvas');
+const ctx = canvas.getContext('2d');
+const msg = document.getElementById('graphMessage');
+
+let nodes = [];
+let edges = [];
+let adjacencyList = new Map();
+
+let nextNodeId = 0;
+const nodeRadius = 22;
+
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+/* ---------- Add Node ---------- */
+canvas.addEventListener('click', (e) => {
+
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+
+    for (let node of nodes) {
+        const dist = Math.hypot(node.x - x, node.y - y);
+        if (dist < nodeRadius * 2.5) {
+            msg.innerText = "Too close to another node!";
+            return;
+        }
+    }
+
+    nodes.push({ id: nextNodeId, x, y });
+    adjacencyList.set(nextNodeId, []);
+
+    msg.innerText = `Added Node ${nextNodeId}`;
+    nextNodeId++;
+
+    drawGraph();
+});
+
+/* ---------- Add Edge ---------- */
+function addEdge() {
+
+    const u = parseInt(nodeU.value);
+    const v = parseInt(nodeV.value);
+
+    if (isNaN(u) || isNaN(v))
+        return msg.innerText = "Enter valid node IDs.";
+
+    if (!adjacencyList.has(u) || !adjacencyList.has(v))
+        return msg.innerText = "Node does not exist.";
+
+    if (u === v)
+        return msg.innerText = "Self-loops not allowed.";
+
+    const exists = edges.some(edge =>
+        (edge.u === u && edge.v === v) ||
+        (edge.u === v && edge.v === u)
+    );
+
+    if (exists)
+        return msg.innerText = "Edge already exists.";
+
+    edges.push({ u, v });
+    adjacencyList.get(u).push(v);
+    adjacencyList.get(v).push(u);
+
+    nodeU.value = "";
+    nodeV.value = "";
+
+    drawGraph();
+}
+
+/* ---------- Draw Graph ---------- */
+function drawGraph(visited=new Set(), active=[], currentEdge=null){
+
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+
+    edges.forEach(edge=>{
+        const n1 = nodes.find(n=>n.id===edge.u);
+        const n2 = nodes.find(n=>n.id===edge.v);
+
+        ctx.beginPath();
+        ctx.moveTo(n1.x,n1.y);
+        ctx.lineTo(n2.x,n2.y);
+        ctx.strokeStyle="#cbd5e1";
+        ctx.lineWidth=3;
+        ctx.stroke();
+    });
+
+    nodes.forEach(node=>{
+
+        ctx.beginPath();
+        ctx.arc(node.x,node.y,nodeRadius,0,2*Math.PI);
+
+        if(active.includes(node.id))
+            ctx.fillStyle="#ef4444";
+        else if(visited.has(node.id))
+            ctx.fillStyle="#22c55e";
+        else
+            ctx.fillStyle="#ffffff";
+
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle="#0f172a";
+        ctx.textAlign="center";
+        ctx.textBaseline="middle";
+        ctx.font="bold 16px Inter";
+        ctx.fillText(node.id,node.x,node.y);
+    });
+}
+
+/* ---------- BFS ---------- */
+async function runBFS(){
+
+    const startId = parseInt(startNode.value);
+
+    if(isNaN(startId) || !adjacencyList.has(startId)){
+        msg.innerText="Invalid Start Node";
+        return;
+    }
+
+    let visited = new Set([startId]);
+    let queue = [startId];
+
+    while(queue.length > 0){
+
+        const current = queue.shift();
+        drawGraph(visited,[current]);
+        await sleep(700);
+
+        for(let neighbor of adjacencyList.get(current)){
+            if(!visited.has(neighbor)){
+                visited.add(neighbor);
+                queue.push(neighbor);
+            }
+        }
+    }
+
+    drawGraph(visited,[]);
+    msg.innerText="BFS Complete!";
+}
+
+/* ---------- Clear ---------- */
+function clearGraph(){
+    nodes=[];
+    edges=[];
+    adjacencyList.clear();
+    nextNodeId=0;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    msg.innerText="Graph cleared.";
+}
+
+/*]]>*/
+</script>
+
+</body>
+</html>

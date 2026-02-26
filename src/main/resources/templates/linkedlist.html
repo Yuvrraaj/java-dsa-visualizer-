@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linked List — Complete Understanding</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .code-block {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Linked List</h2>
+    <a href="/topics">Back to Topics</a>
+</div>
+
+<div class="container">
+
+    <div class="intro-card">
+        <h1>Linked List — Complete Conceptual Understanding</h1>
+        <p>A Linked List is a dynamic linear data structure where elements are stored in separate memory locations and connected using references called links. Unlike arrays or ArrayLists, elements are <strong>NOT</strong> stored in contiguous memory.</p>
+        <p>Each element is called a <strong>Node</strong>. Every node stores data and a reference pointing to the next node. This creates a flexible, chain-like structure that can grow and shrink dynamically at runtime without the need for memory reallocation.</p>
+        [Image of a singly linked list data structure]
+    </div>
+
+    <div class="card">
+        <h3>Node Structure</h3>
+        <p>A node is the fundamental building block of a linked list. It contains two primary components:</p>
+        <ul>
+            <li><strong>Data Field:</strong> Stores the actual value or payload (integer, string, object, etc.).</li>
+            <li><strong>Next Pointer:</strong> A reference (or memory address) pointing to the very next node in the sequence.</li>
+        </ul>
+        <div class="code-block">
+class Node {
+    int data;
+    Node next;
+
+    public Node(int data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Memory Representation</h3>
+        <p>Because arrays require contiguous memory, allocating a massive array might fail if a single large block of memory isn't available. Linked List nodes, however, can exist <strong>anywhere</strong> in the heap memory. The connection between nodes is maintained purely using references rather than physical adjacency.</p>
+        <p>A special pointer called the <strong>Head</strong> always stores the address of the first node. If the Head is <code>null</code>, the list is empty. The last node in the list always has its next pointer set to <code>null</code>, indicating the end of the chain.</p>
+    </div>
+
+    <div class="card">
+        <h3>Types of Linked Lists</h3>
+        <ul>
+            <li><strong>Singly Linked List:</strong> Traversal is unidirectional. Nodes only point forward.</li>
+            <li><strong>Doubly Linked List:</strong> Nodes contain a <code>prev</code> pointer as well as a <code>next</code> pointer. Allows bidirectional traversal but consumes more memory.</li>
+            <li><strong>Circular Linked List:</strong> The tail node points back to the head node instead of <code>null</code>, forming an infinite loop.</li>
+            <li><strong>Circular Doubly Linked List:</strong> Combines the properties of both Doubly and Circular lists.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Why Linked Lists Are Needed (Pros vs Cons)</h3>
+        <p><strong>Advantages:</strong></p>
+        <ul>
+            <li><strong>Dynamic Size:</strong> They expand and shrink seamlessly.</li>
+            <li><strong>Fast Insertions/Deletions:</strong> Adding or removing an element at the head (or at a known node) takes $\mathcal{O}(1)$ time because no elements need to be shifted.</li>
+            <li><strong>Implementation Base:</strong> They are the underlying architecture for complex data structures like Stacks, Queues, and Graphs (Adjacency Lists).</li>
+        </ul>
+        <p><strong>Disadvantages:</strong></p>
+        <ul>
+            <li><strong>No Random Access:</strong> You cannot instantly access the $i^{th}$ element. You must traverse from the head, resulting in $\mathcal{O}(n)$ access time.</li>
+            <li><strong>Memory Overhead:</strong> Every piece of data requires extra memory to store the pointer(s).</li>
+        </ul>
+    </div>
+<div class="card">
+    <h3>Time Complexity Analysis</h3>
+    <ul>
+        <li><strong>Accessing an element:</strong> O(n) — elements must be traversed sequentially from the head.</li>
+        <li><strong>Insertion at the head:</strong> O(1) — the new node is directly linked to the current head.</li>
+        <li><strong>Insertion at the tail:</strong> O(n) — traversal is required to reach the last node (O(1) if a tail pointer is maintained).</li>
+        <li><strong>Deleting a node:</strong> O(n) to locate the node, and O(1) to remove it once found.</li>
+        <li><strong>Searching for an element:</strong> O(n) — nodes are checked sequentially.</li>
+    </ul>
+    <p>
+        Unlike arrays, linked lists do not allow direct index-based access. 
+        However, they provide efficient insertions and deletions because elements 
+        do not need to be shifted in memory. This makes linked lists particularly 
+        useful for applications involving frequent structural modifications.
+    </p>
+</div>
+
+    <h2>Explore Linked List</h2>
+    <div class="module-grid">
+        <a href="/linkedlist/operations" class="module-card">
+            <h3>Operations Laboratory</h3>
+            <p>Perform insertions, deletions, and traversal visually.</p>
+        </a>
+        <a href="/linkedlist/techniques" class="module-card">
+            <h3>Algorithms &amp; Techniques</h3>
+            <p>Pointer manipulation strategies used in software engineering.</p>
+        </a>
+        <a href="/linkedlist/patterns" class="module-card">
+            <h3>Problem Patterns</h3>
+            <p>Common interview questions and algorithmic approaches.</p>
+        </a>
+    </div>
+
+</div>
+</body>
+</html>

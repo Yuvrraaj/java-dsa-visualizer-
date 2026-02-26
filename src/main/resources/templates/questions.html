@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Practice Questions</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .question-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            transition: 0.3s;
+        }
+        .question-row:hover { background: #f8fafc; }
+        .diff-easy { color: #22c55e; font-weight: bold; }
+        .diff-medium { color: #eab308; font-weight: bold; }
+        .diff-hard { color: #ef4444; font-weight: bold; }
+        .solve-btn { 
+            background: #0f172a; 
+            padding: 8px 15px; 
+            text-decoration: none; 
+            border-radius: 6px; 
+            color: white; 
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+        .solve-btn:hover { background: var(--accent); }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2><span th:text="${topicName}"></span> Practice</h2>
+    <a href="/topics">Back to Topics</a>
+</div>
+
+<div class="container">
+    <div class="intro-card" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div style="flex: 1;">
+            <h1 th:text="${topicName} + ' Problem Set'">Topic Problem Set</h1>
+            <p>Apply what you've visualized. Solve curated interview questions or practice freely in the sandbox.</p>
+        </div>
+        <div>
+            <a href="/solve" class="solve-btn" style="background: #22c55e; font-size: 1rem; padding: 12px 24px;">Open Compiler Sandbox ➔</a>
+        </div>
+    </div>
+
+    <div class="card" style="padding: 0; overflow: hidden; margin-top: 30px;">
+        
+        <div th:if="${#lists.isEmpty(questions)}" style="padding: 40px; text-align: center; color: #94a3b8;">
+            <h3 style="color: #0f172a; margin-bottom: 10px;">No Database Questions Found</h3>
+            <p style="margin-bottom: 25px;">You haven't added any specific questions for this topic yet, but you can still use the live editor to practice!</p>
+            <a href="/solve" class="solve-btn" style="display: inline-block; font-size: 1rem; padding: 10px 25px;">Go to Live Editor</a>
+        </div>
+
+        <div class="question-row" th:each="q : ${questions}">
+            <div>
+                <h3 th:text="${q.title}" style="margin-bottom: 5px;">Question Title</h3>
+                <span th:class="'diff-' + ${#strings.toLowerCase(q.difficulty)}" th:text="${q.difficulty}">Difficulty</span>
+                <span style="color: #94a3b8; margin-left: 10px; font-size: 0.9rem;" th:text="'Topic: ' + ${q.topic}"></span>
+            </div>
+            <a th:href="@{/solve/{id}(id=${q.id})}" class="solve-btn">
+                Solve Problem ➔
+            </a>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

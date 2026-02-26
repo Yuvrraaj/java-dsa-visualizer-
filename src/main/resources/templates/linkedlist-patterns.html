@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linked List Patterns</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .code-block { background: #0f172a; color: #f8fafc; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Linked List Problem Patterns</h2>
+    <a href="/linkedlist">Back to Linked List</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Common Problem Patterns</h1>
+        <p>Almost all tech interview questions involving Linked Lists can be solved by recognizing one of three core patterns. Once you understand these, you won't need to memorize solutions.</p>
+    </div>
+
+    <div class="card">
+        <h3>1. Fast &amp; Slow Pointers (Floyd's Cycle Algorithm)</h3>
+        <p>Also known as the "Tortoise and Hare" pattern. You initialize two pointers at the head. The <code>slow</code> pointer moves 1 step at a time, while the <code>fast</code> pointer moves 2 steps at a time.</p>
+        
+        <p><strong>Common Uses:</strong></p>
+        <ul>
+            <li><strong>Find the Middle:</strong> When <code>fast</code> reaches the end (<code>null</code>), <code>slow</code> will be exactly in the middle of the list.</li>
+            <li><strong>Detect Cycles:</strong> If the list contains a loop, the <code>fast</code> pointer will eventually "lap" the <code>slow</code> pointer, and they will point to the exact same node.</li>
+        </ul>
+        <div class="code-block">
+public boolean hasCycle(ListNode head) {
+    if (head == null) return false;
+    
+    ListNode slow = head;
+    ListNode fast = head;
+    
+    while (fast != null &amp;&amp; fast.next != null) {
+        slow = slow.next;          // Move 1 step
+        fast = fast.next.next;     // Move 2 steps
+        
+        if (slow == fast) {
+            return true;           // Collision! Cycle exists.
+        }
+    }
+    return false; // Fast reached the end, no cycle.
+}
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>2. In-Place Reversal Pattern</h3>
+        <p>Reversing a Linked List without creating a new list (using $\mathcal{O}(1)$ space) is a staple question. It requires three pointers (<code>prev</code>, <code>curr</code>, <code>nextTemp</code>) to flip the direction of the arrows one by one.</p>
+        <div class="code-block">
+public ListNode reverseList(ListNode head) {
+    ListNode prev = null;
+    ListNode curr = head;
+    
+    while (curr != null) {
+        ListNode nextTemp = curr.next; // 1. Save the next node
+        curr.next = prev;              // 2. Reverse the arrow
+        prev = curr;                   // 3. Move prev forward
+        curr = nextTemp;               // 4. Move curr forward
+    }
+    return prev; // prev is the new head of the reversed list
+}
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>3. Two-Pointer Merging</h3>
+        <p>Used when you are given two separate Linked Lists (often sorted) and need to combine them into one. You use a dummy node to anchor the new list, and two pointers to traverse the separate lists, comparing values as you go.</p>
+        <div class="code-block">
+public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+    ListNode dummy = new ListNode(-1);
+    ListNode tail = dummy;
+    
+    while (l1 != null && l2 != null) {
+        if (l1.val < l2.val) {
+            tail.next = l1;
+            l1 = l1.next;
+        } else {
+            tail.next = l2;
+            l2 = l2.next;
+        }
+        tail = tail.next;
+    }
+    
+    // Attach whatever is left over
+    tail.next = (l1 != null) ? l1 : l2;
+    
+    return dummy.next;
+}
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

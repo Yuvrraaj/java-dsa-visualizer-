@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Java Compiler & Solver</title>
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+
+    <style>
+        .solve-container { display: flex; height: calc(100vh - 70px); background: #0f172a; color: #f8fafc; }
+        .question-panel { flex: 1; padding: 30px; overflow-y: auto; border-right: 1px solid #334155; background: #1e293b; }
+        .badge { display: inline-block; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: bold; background: #2563eb; }
+        .editor-panel { flex: 1.5; display: flex; flex-direction: column; }
+        .editor-header { padding: 10px 20px; background: #020617; border-bottom: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+        #editor-container { flex: 1; width: 100%; }
+        .output-panel { height: 250px; background: #020617; border-top: 2px solid #334155; padding: 15px; display: flex; flex-direction: column; }
+        .output-box { flex: 1; background: #0f172a; border: 1px solid #334155; border-radius: 6px; padding: 10px; font-family: 'Courier New', Courier, monospace; overflow-y: auto; white-space: pre-wrap; }
+        .run-btn { background: #22c55e; color: white; padding: 8px 20px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .run-btn:hover { background: #16a34a; }
+    </style>
+</head>
+<body style="margin: 0; overflow: hidden;">
+
+<div class="navbar">
+    <h2><a href="/questions" style="color: white; text-decoration: none;">&larr; Back to Questions</a></h2>
+    <span>DSA Practice Lab</span>
+</div>
+
+<div class="solve-container">
+    
+    <div class="question-panel">
+        
+        <div th:if="${question != null}">
+            <span class="badge" th:text="${question.difficulty}" 
+                  th:style="${question.difficulty == 'Easy' ? 'background: #22c55e;' : (question.difficulty == 'Medium' ? 'background: #eab308;' : 'background: #ef4444;')}">
+                Difficulty
+            </span>
+            <span style="color: #94a3b8; margin-left: 10px; font-size: 0.9rem;" th:text="'Topic: ' + ${question.topic}"></span>
+            <h1 style="color: white; margin-top: 15px;" th:text="${question.title}">Problem Title</h1>
+            
+            <div style="color: #cbd5e1; line-height: 1.6; margin-top: 20px; font-size: 1.05rem;" th:utext="${question.description}">
+                Problem description...
+            </div>
+        </div>
+
+        <div th:if="${question == null}">
+            <span class="badge" style="background: #8b5cf6;">Sandbox Mode</span>
+            <h1 style="color: white; margin-top: 15px;">Java Open Compiler</h1>
+            <p style="color: #cbd5e1; line-height: 1.6; margin-top: 20px; font-size: 1.05rem;">
+                Welcome to the free-play sandbox! You can write, compile, and run any Java code here without the constraints of a specific problem. Test your data structure theories safely.
+            </p>
+        </div>
+
+    </div>
+
+    <div class="editor-panel">
+        <div class="editor-header">
+            <span style="font-family: monospace; color: #94a3b8;">Main.java</span>
+            <button class="run-btn" onclick="runCode()" id="runBtn">▶ Run Code</button>
+        </div>
+        
+        <div id="editor-container"></div>
+
+        <div class="output-panel">
+            <h3 style="margin: 0 0 10px 0; font-size: 1rem; color: #cbd5e1;">Console Output</h3>
+            <div class="output-box" id="outputBox">Run your code to see the output here...</div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    let editor;
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' }});
+    require(['vs/editor/editor.main'], function() {
+        editor = monaco.editor.create(document.getElementById('editor-container'), {
+            value: [
+                'import java.util.*;',
+                '',
+                'public class Main {',
+                '    public static void main(String[] args) {',
+                '        System.out.println("Hello, DSA Visualizer!");',
+                '        // Write your test cases here',
+                '    }',
+                '}'
+            ].join('\n'),
+            language: 'java',
+            theme: 'vs-dark',
+            automaticLayout: true,
+            fontSize: 16,
+            minimap: { enabled: false }
+        });
+    });
+
+    async function runCode() {
+        const runBtn = document.getElementById('runBtn');
+        const outputBox = document.getElementById('outputBox');
+        const code = editor.getValue();
+        
+        runBtn.innerText = "⏳ Compiling...";
+        runBtn.style.background = "#eab308";
+        outputBox.innerHTML = "<span style='color: #94a3b8;'>Compiling and executing...</span>";
+
+        try {
+            const response = await fetch('/api/code/run', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: code })
+            });
+
+            const result = await response.json();
+
+            if (result.error) {
+                outputBox.innerHTML = `<span style="color: #ef4444;">${result.error.replace(/\n/g, '<br>')}</span>`;
+            } else {
+                outputBox.innerHTML = `<span style="color: #22c55e;">Process finished successfully.</span><br><br>${result.output.replace(/\n/g, '<br>')}`;
+            }
+        } catch (error) {
+            outputBox.innerHTML = `<span style="color: #ef4444;">Server Error: ${error.message}</span>`;
+        } finally {
+            runBtn.innerText = "▶ Run Code";
+            runBtn.style.background = "#22c55e";
+        }
+    }
+</script>
+
+</body>
+</html>

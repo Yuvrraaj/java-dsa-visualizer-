@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Array Operations Visualizer</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Array Visualizer</h2>
+    <a href="/arrays">Back to Theory</a>
+</div>
+
+<div class="container">
+
+<div class="intro-card">
+    <h1>Interactive Array Lab</h1>
+    <p>
+        Arrays store elements in <strong>contiguous memory locations</strong>.
+        Inserting or removing elements from the middle requires shifting,
+        resulting in O(n) time complexity.
+    </p>
+</div>
+
+<div class="card">
+    <h2>Visualizer Board</h2>
+
+    <div class="controls">
+        <input id="arrValue" placeholder="Value (e.g. 42)" type="number">
+        <input id="arrIndex" placeholder="Index (optional)" type="number" min="0">
+        <button onclick="addArrayElement()">Add / Insert</button>
+        <button class="danger" onclick="removeArrayElement()">Remove by Index</button>
+        <button onclick="searchArrayElement()" style="background: var(--success);">Search</button>
+    </div>
+
+    <p id="arrMessage"
+       style="margin-top:15px;font-weight:600;color:var(--accent);"></p>
+
+    <div class="visualizer-container" id="array-container"></div>
+</div>
+
+</div>
+
+<script>
+
+let arr = [10, 20, 30];
+
+const container = document.getElementById('array-container');
+const msg = document.getElementById('arrMessage');
+
+function renderArray(highlightIndex = -1, activeIndex = -1) {
+
+    container.innerHTML = '';
+
+    arr.forEach((val, i) => {
+
+        const cell = document.createElement('div');
+        cell.className = 'cell';
+
+        if (i === highlightIndex) cell.classList.add('highlight');
+        if (i === activeIndex) cell.classList.add('active');
+
+        cell.innerHTML = `
+            ${val}
+            <div class="cell-index">Index ${i}</div>
+        `;
+
+        container.appendChild(cell);
+    });
+}
+
+function addArrayElement() {
+
+    const val = document.getElementById('arrValue').value;
+    const indexInput = document.getElementById('arrIndex').value;
+
+    if (!val) {
+        msg.innerText = "Please provide a value to add.";
+        return;
+    }
+
+    if (indexInput !== "") {
+
+        const idx = parseInt(indexInput);
+
+        if (idx > arr.length || idx < 0) {
+            msg.innerText = "Index out of bounds!";
+            return;
+        }
+
+        arr.splice(idx, 0, parseInt(val));
+        msg.innerText = `Inserted ${val} at index ${idx}. Elements shifted right.`;
+        renderArray(idx);
+
+    } else {
+
+        arr.push(parseInt(val));
+        msg.innerText = `Appended ${val} to the end of the array.`;
+        renderArray(arr.length - 1);
+    }
+}
+
+function removeArrayElement() {
+
+    const indexInput = document.getElementById('arrIndex').value;
+
+    if (indexInput === "") {
+        msg.innerText = "Provide an index to remove.";
+        return;
+    }
+
+    const idx = parseInt(indexInput);
+
+    if (idx >= arr.length || idx < 0) {
+        msg.innerText = "Index out of bounds!";
+        return;
+    }
+
+    renderArray(-1, idx);
+    msg.innerText = `Removing element at index ${idx}...`;
+
+    setTimeout(() => {
+
+        arr.splice(idx, 1);
+        msg.innerText = `Removed element. Elements shifted left.`;
+        renderArray();
+
+    }, 600);
+}
+
+async function searchArrayElement() {
+
+    const val = parseInt(document.getElementById('arrValue').value);
+
+    if (!val && val !== 0) {
+        msg.innerText = "Enter a value to search.";
+        return;
+    }
+
+    msg.innerText = `Searching for ${val} (Linear Search)...`;
+
+    for (let i = 0; i < arr.length; i++) {
+
+        renderArray(-1, i);
+        await new Promise(r => setTimeout(r, 500));
+
+        if (arr[i] === val) {
+            renderArray(i, -1);
+            msg.innerText = `Value ${val} found at index ${i}!`;
+            return;
+        }
+    }
+
+    renderArray();
+    msg.innerText = `Value ${val} not found in the array.`;
+}
+
+renderArray();
+
+</script>
+
+</body>
+</html>

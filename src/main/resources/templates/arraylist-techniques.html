@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+<h2>ArrayList Techniques</h2>
+<a href="/arraylist">Back</a>
+</div>
+
+<div class="container">
+
+<div class="intro-card">
+<h1>Techniques Used With ArrayList</h1>
+
+<p>
+ArrayList is not just a container for storing data. It becomes powerful
+when combined with algorithmic techniques. These approaches help reduce
+time complexity, improve readability, and solve interview-level problems efficiently.
+</p>
+
+</div>
+
+<!-- ITERATION TECHNIQUES -->
+<div class="card">
+<h3>1. Traversal Techniques</h3>
+
+<p>Different ways to iterate through an ArrayList:</p>
+
+<h4>Index Based Loop</h4>
+<div class="code-block">
+for(int i=0;i&lt;list.size();i++){
+    System.out.println(list.get(i));
+}
+</div>
+
+<h4>Enhanced For Loop</h4>
+<div class="code-block">
+for(Integer value : list){
+    System.out.println(value);
+}
+</div>
+
+<h4>Iterator (Safe Modification)</h4>
+<div class="code-block">
+Iterator&lt;Integer&gt; it = list.iterator();
+
+while(it.hasNext()){
+    System.out.println(it.next());
+}
+</div>
+
+</div>
+
+<!-- SAFE REMOVAL -->
+<div class="card">
+<h3>2. Safe Removal While Iterating</h3>
+
+<p>
+Removing elements directly inside loops may cause
+ConcurrentModificationException. Use Iterator instead.
+</p>
+
+<div class="code-block">
+Iterator&lt;Integer&gt; it = list.iterator();
+
+while(it.hasNext()){
+    if(it.next()%2==0){
+        it.remove();
+    }
+}
+</div>
+
+</div>
+
+<!-- TWO POINTER -->
+<div class="card">
+<h3>3. Two Pointer Technique</h3>
+
+<p>
+Used when working with sorted lists to reduce nested loops.
+Time complexity improves from O(n²) to O(n).
+</p>
+
+<div class="code-block">
+boolean hasPair(ArrayList&lt;Integer&gt; list,int target){
+
+    int left=0;
+    int right=list.size()-1;
+
+    while(left &lt; right){
+
+        int sum=list.get(left)+list.get(right);
+
+        if(sum==target) return true;
+        else if(sum &lt; target)
+            left++;
+        else
+            right--;
+    }
+
+    return false;
+}
+</div>
+
+</div>
+
+<!-- SLIDING WINDOW -->
+<div class="card">
+<h3>4. Sliding Window Technique</h3>
+
+<p>
+Used for contiguous sublist problems such as maximum sum,
+average, or fixed window computations.
+</p>
+
+<div class="code-block">
+int maxSum(ArrayList&lt;Integer&gt; list,int k){
+
+    int windowSum=0;
+
+    for(int i=0;i&lt;k;i++)
+        windowSum+=list.get(i);
+
+    int max=windowSum;
+
+    for(int i=k;i&lt;list.size();i++){
+
+        windowSum+=list.get(i);
+        windowSum-=list.get(i-k);
+
+        max=Math.max(max,windowSum);
+    }
+
+    return max;
+}
+</div>
+
+</div>
+
+<!-- SORTING -->
+<div class="card">
+<h3>5. Sorting Techniques</h3>
+
+<h4>Ascending Order</h4>
+
+<div class="code-block">
+Collections.sort(list);
+</div>
+
+<h4>Descending Order</h4>
+
+<div class="code-block">
+Collections.sort(list, Collections.reverseOrder());
+</div>
+
+<h4>Custom Comparator</h4>
+
+<div class="code-block">
+Collections.sort(list,(a,b) -&gt; a-b);
+</div>
+
+</div>
+
+<!-- SEARCHING -->
+<div class="card">
+<h3>6. Searching Techniques</h3>
+
+<div class="code-block">
+if(list.contains(20)){
+    System.out.println("Found");
+}
+
+int index = list.indexOf(20);
+</div>
+
+<p>
+Searching in ArrayList is linear because elements are checked sequentially.
+</p>
+
+</div>
+
+<!-- FREQUENCY COUNT -->
+<div class="card">
+<h3>7. Frequency Counting</h3>
+
+<div class="code-block">
+HashMap&lt;Integer,Integer&gt; map = new HashMap&lt;&gt;();
+
+for(Integer x : list){
+    map.put(x, map.getOrDefault(x,0)+1);
+}
+</div>
+
+</div>
+
+<!-- CONVERSION -->
+<div class="card">
+<h3>8. Conversion Techniques</h3>
+
+<h4>ArrayList to Array</h4>
+
+<div class="code-block">
+Integer[] arr = list.toArray(new Integer[0]);
+</div>
+
+<h4>Array to ArrayList</h4>
+
+<div class="code-block">
+ArrayList&lt;Integer&gt; list =
+new ArrayList&lt;&gt;(Arrays.asList(arr));
+</div>
+
+</div>
+
+</div>
+</body>
+</html>

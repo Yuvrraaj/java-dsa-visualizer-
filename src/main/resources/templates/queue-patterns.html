@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Queue Problem Patterns</title>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Queue Problem Patterns</h2>
+    <a href="/queue">Back</a>
+</div>
+
+<div class="container">
+
+<!-- ================= INTRO ================= -->
+<div class="intro-card">
+<h1>Common Queue Interview Patterns</h1>
+
+<p>
+Many interview problems reuse similar queue-based thinking patterns.
+Queues are primarily used when processing elements in the order they
+arrive (FIFO — First In, First Out). Recognizing these patterns helps
+you quickly identify when BFS or sequential processing is required.
+</p>
+</div>
+
+<!-- ================= BFS ================= -->
+<div class="card">
+<h3>1. Breadth-First Search (BFS)</h3>
+
+<p>
+BFS explores nodes level by level. It is commonly used in trees,
+graphs, and shortest-path problems where each step has equal cost.
+</p>
+
+<pre class="code-block"><code>
+import java.util.*;
+
+public void bfs(int start, List&lt;List&lt;Integer&gt;&gt; graph) {
+
+    Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+    boolean[] visited = new boolean[graph.size()];
+
+    queue.offer(start);
+    visited[start] = true;
+
+    while(!queue.isEmpty()) {
+
+        int node = queue.poll();
+        System.out.println(node);
+
+        for(int neighbor : graph.get(node)) {
+            if(!visited[neighbor]) {
+                visited[neighbor] = true;
+                queue.offer(neighbor);
+            }
+        }
+    }
+}
+</code></pre>
+
+<p><strong>Use When:</strong> Level traversal, shortest path in unweighted graphs.</p>
+</div>
+
+<!-- ================= MULTI SOURCE BFS ================= -->
+<div class="card">
+<h3>2. Multi-Source BFS</h3>
+
+<p>
+Instead of starting from one node, multiple starting points are pushed
+into the queue initially. This is useful when distance spreads from
+many sources simultaneously (e.g., Rotten Oranges problem).
+</p>
+
+<pre class="code-block"><code>
+Queue&lt;int[]&gt; queue = new LinkedList&lt;&gt;();
+
+// Add all initial sources
+for(int i = 0; i &lt; rows; i++) {
+    for(int j = 0; j &lt; cols; j++) {
+        if(grid[i][j] == 2) {
+            queue.offer(new int[]{i, j});
+        }
+    }
+}
+
+while(!queue.isEmpty()) {
+
+    int[] cell = queue.poll();
+
+    // explore neighbors
+}
+</code></pre>
+
+<p>
+All sources expand simultaneously, giving minimum distance automatically.
+</p>
+</div>
+
+<!-- ================= MONOTONIC QUEUE ================= -->
+<div class="card">
+<h3>3. Monotonic Queue (Sliding Window Maximum)</h3>
+
+<p>
+A deque maintains elements in decreasing order so the maximum element
+is always available at the front. This reduces time complexity from
+O(nk) to O(n).
+</p>
+
+<pre class="code-block"><code>
+import java.util.*;
+
+public int[] maxSlidingWindow(int[] nums, int k) {
+
+    Deque&lt;Integer&gt; dq = new LinkedList&lt;&gt;();
+    int[] result = new int[nums.length - k + 1];
+
+    for(int i = 0; i &lt; nums.length; i++) {
+
+        // Remove elements outside window
+        if(!dq.isEmpty() &amp;&amp; dq.peekFirst() &lt;= i - k) {
+            dq.pollFirst();
+        }
+
+        // Maintain decreasing order
+        while(!dq.isEmpty() &amp;&amp; nums[dq.peekLast()] &lt; nums[i]) {
+            dq.pollLast();
+        }
+
+        dq.offerLast(i);
+
+        if(i &gt;= k - 1) {
+            result[i - k + 1] = nums[dq.peekFirst()];
+        }
+    }
+
+    return result;
+}
+</code></pre>
+</div>
+
+<!-- ================= CIRCULAR QUEUE ================= -->
+<div class="card">
+<h3>4. Circular Queue Pattern</h3>
+
+<p>
+A circular queue reuses empty spaces by wrapping indices around using
+modulo arithmetic. This avoids wasted memory.
+</p>
+
+<pre class="code-block"><code>
+class CircularQueue {
+
+    int[] arr;
+    int front = 0, rear = 0, size = 0;
+
+    CircularQueue(int capacity) {
+        arr = new int[capacity];
+    }
+
+    void enqueue(int val) {
+        if(size == arr.length) return;
+
+        arr[rear] = val;
+        rear = (rear + 1) % arr.length;
+        size++;
+    }
+
+    int dequeue() {
+        if(size == 0) return -1;
+
+        int val = arr[front];
+        front = (front + 1) % arr.length;
+        size--;
+        return val;
+    }
+}
+</code></pre>
+</div>
+
+<!-- ================= SIMULATION ================= -->
+<div class="card">
+<h3>5. Queue Simulation Problems</h3>
+
+<p>
+Queues are ideal for real-world simulations where events occur in
+arrival order.
+</p>
+
+<ul>
+<li>Task scheduling systems</li>
+<li>CPU process queues</li>
+<li>Network packet buffering</li>
+<li>Ticket booking systems</li>
+<li>Customer service systems</li>
+</ul>
+
+</div>
+
+<!-- ================= INTERVIEW TIPS ================= -->
+<div class="card">
+<h3>Interview Recognition Tips</h3>
+
+<ul>
+<li>If a problem mentions <strong>levels</strong> → Think BFS.</li>
+<li>If shortest steps in an unweighted graph → Use Queue.</li>
+<li>If processing happens in arrival order → Queue.</li>
+<li>If expansion spreads step-by-step → Multi-source BFS.</li>
+<li>If sliding window maximum/minimum → Monotonic Queue.</li>
+</ul>
+
+<p>
+Whenever problems require fair, ordered processing without skipping
+elements, queues are usually the optimal choice.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Queue Operations Visualizer</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Queue Operations</h2>
+    <a href="/queue">Back to Queue Theory</a>
+</div>
+
+<div class="container">
+
+<div class="intro-card">
+    <h1>Interactive Queue Lab</h1>
+    <p>
+        A Queue follows the <strong>FIFO (First In, First Out)</strong>
+        principle. The first element inserted is the first one removed,
+        similar to people standing in a line.
+    </p>
+
+    <h3>Time Complexities</h3>
+    <ul>
+        <li><strong>Enqueue:</strong> O(1) — Insert at rear</li>
+        <li><strong>Dequeue:</strong> O(1) — Remove from front</li>
+    </ul>
+</div>
+
+<div class="card">
+    <h2>Visualizer</h2>
+
+    <div class="controls">
+        <input type="text" id="queueInput" placeholder="Enter a value" maxlength="4">
+        <button onclick="enqueueElement()">Enqueue (Add)</button>
+        <button class="danger" onclick="dequeueElement()">Dequeue (Remove)</button>
+    </div>
+
+    <p id="queueMessage" style="margin-top:1rem;font-weight:bold;"></p>
+
+    <div class="visualizer-container"
+         id="queue-container"
+         style="flex-direction:row;justify-content:flex-start;gap:10px;overflow-x:auto;">
+    </div>
+</div>
+
+</div>
+
+<script>
+
+const queue = [];
+const qContainer = document.getElementById('queue-container');
+const qMsg = document.getElementById('queueMessage');
+
+function renderQueue() {
+
+    qContainer.innerHTML = '';
+
+    queue.forEach((val, index) => {
+
+        const node = document.createElement('div');
+        node.className = 'node';
+        node.innerText = val;
+
+        // Front element
+        if (index === 0) {
+            node.style.border = "4px solid var(--danger)";
+            node.title = "Front of Queue";
+        }
+        // Rear element
+        else if (index === queue.length - 1) {
+            node.style.border = "4px solid var(--success)";
+            node.title = "Rear of Queue";
+        }
+
+        qContainer.appendChild(node);
+    });
+}
+
+function enqueueElement() {
+
+    const input = document.getElementById('queueInput');
+    const val = input.value.trim();
+
+    if (!val) {
+        qMsg.innerText = "Please enter a value!";
+        return;
+    }
+
+    if (queue.length >= 8) {
+        qMsg.innerText = "Queue is visually full!";
+        return;
+    }
+
+    queue.push(val);
+    input.value = '';
+
+    qMsg.innerText = `Enqueued ${val} at the rear.`;
+    renderQueue();
+
+    // Entry animation
+    const nodes = document.querySelectorAll('.node');
+    const newNode = nodes[nodes.length - 1];
+
+    if (newNode) {
+        newNode.classList.add('hidden');
+        setTimeout(() => newNode.classList.remove('hidden'), 50);
+    }
+}
+
+function dequeueElement() {
+
+    if (queue.length === 0) {
+        qMsg.innerText = "Queue is empty!";
+        return;
+    }
+
+    const nodes = document.querySelectorAll('.node');
+    const frontNode = nodes[0];
+
+    if (frontNode) {
+        frontNode.style.transform = "translateX(-100px) scale(0.5)";
+        frontNode.style.opacity = "0";
+    }
+
+    setTimeout(() => {
+
+        const val = queue.shift();
+        qMsg.innerText = `Dequeued ${val} from the front.`;
+        renderQueue();
+
+    }, 400);
+}
+
+renderQueue();
+
+</script>
+
+</body>
+</html>

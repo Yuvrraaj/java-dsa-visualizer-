@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Techniques</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Graph Techniques</h2>
+    <a href="/graph">Back to Graphs</a>
+</div>
+
+<div class="container">
+
+<div class="intro-card">
+    <h1>Graph Implementation &amp; Traversals</h1>
+    <p>
+        Graphs are usually implemented using adjacency lists and explored
+        using BFS and DFS traversal algorithms.
+    </p>
+</div>
+
+<!-- ================= ADJ LIST ================= -->
+<div class="card">
+    <h3>1. Building an Adjacency List</h3>
+
+<pre class="code-block"><code>
+public List&lt;List&lt;Integer&gt;&gt; buildGraph(int n, int[][] edges) {
+
+    List&lt;List&lt;Integer&gt;&gt; adjList = new ArrayList&lt;&gt;();
+
+    // Initialize empty lists for all nodes
+    for (int i = 0; i &lt; n; i++) {
+        adjList.add(new ArrayList&lt;&gt;());
+    }
+
+    // Add edges (Undirected Graph)
+    for (int[] edge : edges) {
+        int u = edge[0];
+        int v = edge[1];
+
+        adjList.get(u).add(v);
+        adjList.get(v).add(u);
+    }
+
+    return adjList;
+}
+</code></pre>
+
+</div>
+
+<!-- ================= BFS ================= -->
+<div class="card">
+<h3>2. Breadth-First Search (BFS)</h3>
+
+<pre class="code-block"><code>
+public void bfs(List&lt;List&lt;Integer&gt;&gt; adjList, int startNode) {
+
+    boolean[] visited = new boolean[adjList.size()];
+    Queue&lt;Integer&gt; queue = new LinkedList&lt;&gt;();
+
+    visited[startNode] = true;
+    queue.add(startNode);
+
+    while (!queue.isEmpty()) {
+        int curr = queue.poll();
+        System.out.println("Visited: " + curr);
+
+        for (int neighbor : adjList.get(curr)) {
+            if (!visited[neighbor]) {
+                visited[neighbor] = true;
+                queue.add(neighbor);
+            }
+        }
+    }
+}
+</code></pre>
+
+</div>
+
+<!-- ================= DFS ================= -->
+<div class="card">
+    <h3>3. Depth-First Search (DFS)</h3>
+
+<pre class="code-block"><code>
+public void dfs(List&lt;List&lt;Integer&gt;&gt; adjList,
+                int curr,
+                boolean[] visited) {
+
+    visited[curr] = true;
+    System.out.println("Visited: " + curr);
+
+    // Explore all neighbors recursively
+    for (int neighbor : adjList.get(curr)) {
+        if (!visited[neighbor]) {
+            dfs(adjList, neighbor, visited);
+        }
+    }
+}
+</code></pre>
+
+</div>
+
+</div>
+
+</body>
+</html>

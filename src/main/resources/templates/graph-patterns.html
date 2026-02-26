@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graph Patterns</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Graph Problem Patterns</h2>
+    <a href="/graph">Back to Graphs</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Advanced Graph Algorithms</h1>
+        <p>Graphs feature the most famous named algorithms in computer science. Recognizing which algorithm applies to your problem is the key to passing advanced tech interviews.</p>
+    </div>
+
+    <div class="card">
+        <h3>1. Shortest Path in Weighted Graphs (Dijkstra's Algorithm)</h3>
+        <p>If edges have different weights (e.g., travel times), standard BFS fails. <strong>Dijkstra's Algorithm</strong> uses a <strong>PriorityQueue (Min-Heap)</strong> to always explore the cheapest path available first. It guarantees the absolute shortest path from a starting node to all other nodes.</p>
+        <pre class="code-block"><code>// PriorityQueue stores arrays: [node_id, distance_from_source]
+// ESCAPED LAMBDA ARROW (-&gt;) HERE:
+PriorityQueue&lt;int[]&gt; pq = new PriorityQueue&lt;&gt;((a, b) -&gt; a[1] - b[1]);
+int[] dist = new int[n];
+Arrays.fill(dist, Integer.MAX_VALUE);
+
+dist[start] = 0;
+pq.add(new int[]{start, 0});
+
+while (!pq.isEmpty()) {
+    int[] curr = pq.poll();
+    int u = curr[0];
+    int currentDist = curr[1];
+    
+    // Optimization: Skip if we found a better path earlier
+    // ESCAPED GREATER-THAN SYMBOL HERE:
+    if (currentDist &gt; dist[u]) continue;
+    
+    for (int[] edge : adjList.get(u)) {
+        int v = edge[0]; // neighbor
+        int weight = edge[1];
+        
+        // Relaxation Step
+        // ESCAPED LESS-THAN SYMBOL HERE:
+        if (dist[u] + weight &lt; dist[v]) {
+            dist[v] = dist[u] + weight;
+            pq.add(new int[]{v, dist[v]});
+        }
+    }
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <h3>2. Dependency Resolution (Topological Sorting)</h3>
+        <p>If you have a Directed Acyclic Graph (DAG) representing tasks with prerequisites (e.g., "Course B requires Course A"), you must use <strong>Topological Sort (Kahn's Algorithm)</strong>. It outputs a linear ordering of vertices where for every directed edge <code>u -&gt; v</code>, vertex <code>u</code> comes before <code>v</code>.</p>
+        <p><strong>The Pattern:</strong></p>
+        <ol>
+            <li>Calculate the "In-Degree" (number of incoming edges) for every node.</li>
+            <li>Add all nodes with an In-Degree of `0` (no prerequisites) to a Queue.</li>
+            <li>While the Queue is not empty, pop a node, add it to your result, and reduce the In-Degree of all its neighbors by 1.</li>
+            <li>If a neighbor's In-Degree hits `0`, add it to the Queue.</li>
+        </ol>
+    </div>
+
+    <div class="card">
+        <h3>3. Connected Components &amp; Cycle Detection (Union-Find)</h3>
+        <p>While DFS can detect cycles, the <strong>Disjoint Set (Union-Find)</strong> structure is highly optimized for answering two queries instantly: <em>"Are Node A and Node B in the same network?"</em> and <em>"Connect Network A and Network B."</em></p>
+        <p>It maintains an array of "parents". If two nodes share the same absolute root parent, they are in the same component. If you try to connect two nodes that already share the same parent, you have found a cycle!</p>
+    </div>
+
+</div>
+</body>
+</html>

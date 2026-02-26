@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linked List Visualizer</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Linked List Visualizer</h2>
+    <a href="/linkedlist">Back to Theory</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Interactive Singly Linked List</h1>
+        <p>Unlike Arrays, Linked Lists are not stored contiguously. Each element is a <strong>Node</strong> containing data and a reference (pointer) to the next node. This allows for O(1) insertions at the head!</p>
+    </div>
+
+    <div class="card">
+        <h2>Visualizer Board</h2>
+        
+        <div class="controls">
+            <input id="llValue" placeholder="Node Value (e.g. 8)" type="number">
+            <button onclick="insertHead()">Insert at Head</button>
+            <button onclick="insertTail()">Insert at Tail</button>
+            <button class="danger" onclick="deleteHead()">Delete Head</button>
+        </div>
+        
+        <p id="llMessage" style="margin-top: 15px; font-weight: 600; color: var(--accent);"></p>
+
+        <div class="visualizer-container" id="ll-container" style="justify-content: flex-start;">
+            </div>
+    </div>
+</div>
+
+<script>
+    class Node {
+        constructor(value) {
+            this.value = value;
+            this.next = null;
+        }
+    }
+
+    let head = new Node(10);
+    head.next = new Node(20); // Initial state
+    
+    const container = document.getElementById('ll-container');
+    const msg = document.getElementById('llMessage');
+
+    function renderLinkedList() {
+        container.innerHTML = '';
+        let current = head;
+        
+        if (!current) {
+            container.innerHTML = '<p style="color: var(--text-muted)">List is empty (Head -> null)</p>';
+            return;
+        }
+
+        while (current !== null) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'll-node-wrapper';
+            
+            wrapper.innerHTML = `
+                <div class="ll-node">
+                    <div class="ll-data">${current.value}</div>
+                    <div class="ll-next">Next</div>
+                </div>
+                ${current.next ? '<div class="ll-arrow">➔</div>' : '<div class="ll-arrow" style="color:#94a3b8">➔ null</div>'}
+            `;
+            container.appendChild(wrapper);
+            current = current.next;
+        }
+    }
+
+    function insertHead() {
+        const val = document.getElementById('llValue').value;
+        if (!val) return (msg.innerText = "Please provide a value.");
+
+        const newNode = new Node(val);
+        newNode.next = head;
+        head = newNode;
+        
+        msg.innerText = `Inserted ${val} at the Head in O(1) time.`;
+        renderLinkedList();
+    }
+
+    function insertTail() {
+        const val = document.getElementById('llValue').value;
+        if (!val) return (msg.innerText = "Please provide a value.");
+
+        const newNode = new Node(val);
+        if (!head) {
+            head = newNode;
+        } else {
+            let current = head;
+            while (current.next !== null) {
+                current = current.next;
+            }
+            current.next = newNode;
+        }
+        
+        msg.innerText = `Traversed to the end and inserted ${val} at the Tail.`;
+        renderLinkedList();
+    }
+
+    function deleteHead() {
+        if (!head) return (msg.innerText = "List is already empty!");
+        
+        const oldVal = head.value;
+        head = head.next; // Move head pointer
+        
+        msg.innerText = `Deleted Head (${oldVal}). The next node is now the Head.`;
+        renderLinkedList();
+    }
+
+    // Initial render
+    renderLinkedList();
+</script>
+
+</body>
+</html>

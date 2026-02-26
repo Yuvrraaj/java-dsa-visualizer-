@@ -1,0 +1,9 @@
+INSERT INTO questions (title, topic, difficulty, problem_link, description) VALUES ('Two Sum', 'Arrays', 'Easy', '/solve', 'Given an array of integers <code>nums</code> and an integer <code>target</code>, return indices of the two numbers such that they add up to <code>target</code>.<br><br><strong>Example:</strong><br>Input: nums = [2,7,11,15], target = 9<br>Output: [0,1]');
+
+INSERT INTO questions (title, topic, difficulty, problem_link, description) VALUES ('Best Time to Buy and Sell Stock', 'Arrays', 'Easy', '/solve', 'You are given an array <code>prices</code> where <code>prices[i]</code> is the price of a given stock on the ith day. Return the maximum profit you can achieve from this transaction.<br><br><strong>Example:</strong><br>Input: prices = [7,1,5,3,6,4]<br>Output: 5');
+
+INSERT INTO questions (title, topic, difficulty, problem_link, description) VALUES ('Valid Parentheses', 'Stack', 'Easy', '/solve', 'Given a string <code>s</code> containing just the characters (, ), {, }, [ and ], determine if the input string is valid.<br><br><strong>Example:</strong><br>Input: s = "()[]{}"<br>Output: true');
+
+INSERT INTO questions (title, topic, difficulty, problem_link, description) VALUES ('Reverse Linked List', 'LinkedList', 'Easy', '/solve', 'Given the <code>head</code> of a singly linked list, reverse the list, and return the reversed list.<br><br><strong>Example:</strong><br>Input: head = [1,2,3,4,5]<br>Output: [5,4,3,2,1]');
+
+INSERT INTO questions (title, topic, difficulty, problem_link, description) VALUES ('Number of Islands', 'Graph', 'Medium', '/solve', 'Given an <code>m x n</code> 2D binary grid <code>grid</code> which represents a map of 1s (land) and 0s (water), return the number of islands.<br><br><strong>Example:</strong><br>Input: grid = [["1","1","0","0","0"],["1","1","0","0","0"],["0","0","1","0","0"],["0","0","0","1","1"]]<br>Output: 3');

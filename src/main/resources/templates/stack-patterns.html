@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack Problem Patterns</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Stack Problem Patterns</h2>
+    <a href="/stack">Back to Stack</a>
+</div>
+
+<div class="container">
+
+    <!-- INTRO -->
+    <div class="intro-card">
+        <h1>Common Stack Patterns</h1>
+        <p>
+            Stack-based problems usually involve ordering, nesting,
+            or processing elements in reverse order. Whenever a problem
+            requires tracking the <strong>most recent unfinished task</strong>,
+            a stack is often the correct data structure.
+        </p>
+    </div>
+
+    <!-- PATTERN 1 -->
+    <div class="card">
+        <h3>1. Balanced Symbols / Parentheses Validation</h3>
+
+        <p>
+            This is the most fundamental stack pattern. Opening symbols are pushed
+            onto the stack, and closing symbols verify whether the most recent
+            opening symbol matches correctly.
+        </p>
+
+<pre class="code-block"><code>
+import java.util.Stack;
+
+public boolean isValid(String s) {
+
+    Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
+
+    for(char c : s.toCharArray()) {
+
+        if(c == '(' || c == '{' || c == '[') {
+            stack.push(c);
+        }
+        else {
+
+            if(stack.isEmpty())
+                return false;
+
+            char top = stack.pop();
+
+            if((c == ')' &amp;&amp; top != '(') ||
+               (c == '}' &amp;&amp; top != '{') ||
+               (c == ']' &amp;&amp; top != '[')) {
+                return false;
+            }
+        }
+    }
+
+    return stack.isEmpty();
+}
+</code></pre>
+
+        <p><strong>Time Complexity:</strong> O(n)</p>
+    </div>
+
+    <!-- PATTERN 2 -->
+    <div class="card">
+        <h3>2. Monotonic Stack (Next Greater Element)</h3>
+
+        <p>
+            A monotonic stack maintains elements in sorted order while scanning
+            an array. It allows solving “next greater/smaller element” problems
+            efficiently in linear time.
+        </p>
+
+<pre class="code-block"><code>
+import java.util.*;
+
+public int[] nextGreaterElement(int[] nums) {
+
+    int n = nums.length;
+    int[] result = new int[n];
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+    for(int i = n - 1; i &gt;= 0; i--) {
+
+        while(!stack.isEmpty() &amp;&amp; stack.peek() &lt;= nums[i]) {
+            stack.pop();
+        }
+
+        result[i] = stack.isEmpty() ? -1 : stack.peek();
+        stack.push(nums[i]);
+    }
+
+    return result;
+}
+</code></pre>
+
+        <p>
+            Each element is pushed and popped at most once,
+            resulting in <strong>O(n)</strong> complexity.
+        </p>
+    </div>
+
+    <!-- PATTERN 3 -->
+    <div class="card">
+        <h3>3. Expression Evaluation (Postfix / Reverse Polish Notation)</h3>
+
+        <p>
+            Stacks are commonly used to evaluate mathematical expressions.
+            Numbers are pushed onto the stack, and operators combine
+            the most recent operands.
+        </p>
+
+<pre class="code-block"><code>
+import java.util.Stack;
+
+public int evalPostfix(String[] tokens) {
+
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+    for(String token : tokens) {
+
+        if(token.equals("+")) {
+            stack.push(stack.pop() + stack.pop());
+        }
+        else if(token.equals("-")) {
+            int b = stack.pop();
+            int a = stack.pop();
+            stack.push(a - b);
+        }
+        else if(token.equals("*")) {
+            stack.push(stack.pop() * stack.pop());
+        }
+        else if(token.equals("/")) {
+            int b = stack.pop();
+            int a = stack.pop();
+            stack.push(a / b);
+        }
+        else {
+            stack.push(Integer.parseInt(token));
+        }
+    }
+
+    return stack.pop();
+}
+</code></pre>
+    </div>
+
+    <!-- PATTERN 4 -->
+    <div class="card">
+        <h3>4. Minimum Stack (Design Pattern)</h3>
+
+        <p>
+            A common interview problem asks you to design a stack that can
+            return the minimum element in constant time. This is achieved
+            using an auxiliary stack.
+        </p>
+
+<pre class="code-block"><code>
+import java.util.Stack;
+
+class MinStack {
+
+    Stack&lt;Integer&gt; mainStack = new Stack&lt;&gt;();
+    Stack&lt;Integer&gt; minStack = new Stack&lt;&gt;();
+
+    public void push(int val) {
+
+        mainStack.push(val);
+
+        if(minStack.isEmpty() || val &lt;= minStack.peek()) {
+            minStack.push(val);
+        }
+    }
+
+    public void pop() {
+
+        if(mainStack.pop().equals(minStack.peek())) {
+            minStack.pop();
+        }
+    }
+
+    public int getMin() {
+        return minStack.peek();
+    }
+}
+</code></pre>
+
+        <p><strong>All operations run in O(1) time.</strong></p>
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card">
+        <h3>When Should You Think of Using a Stack?</h3>
+
+        <ul>
+            <li>Nested structures (parentheses, HTML tags)</li>
+            <li>Undo / redo operations</li>
+            <li>Expression parsing</li>
+            <li>Next greater/smaller element problems</li>
+            <li>Backtracking and recursion simulation</li>
+        </ul>
+
+        <p>
+            If a problem requires remembering the most recent unfinished
+            operation, a stack is usually the correct data structure.
+        </p>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ArrayList — Complete Understanding</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .code-block { background: #0f172a; color: #f8fafc; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>ArrayList</h2>
+    <a href="/topics">Back to Topics</a>
+</div>
+
+<div class="container">
+
+    <div class="intro-card">
+        <h1>ArrayList (Dynamic Array) — Conceptual Understanding</h1>
+        <p>An ArrayList is a dynamic resizable array provided by the Java Collections Framework (similar to <code>std::vector</code> in C++ or standard lists in Python). Unlike traditional arrays that have a strict, unchangeable capacity, an ArrayList automatically grows or shrinks as elements are added or removed.</p>
+        <p>This provides the perfect balance: you get the blazing-fast index access of an array, combined with the flexible memory sizing of a linked list.</p>
+    </div>
+
+    <div class="card">
+        <h3>How It Works Under the Hood</h3>
+        <p>An ArrayList doesn't possess magical memory powers. <strong>Internally, it is just a standard, fixed-size array.</strong></p>
+        <p>When you create an ArrayList, Java creates a normal array behind the scenes (usually with an initial capacity of 10). When you keep adding elements and that internal array becomes full, the ArrayList performs a <strong>Resizing Operation</strong>:</p>
+        <ol>
+            <li>It creates a brand new, larger array in memory (typically 1.5x or 2x the size of the old one).</li>
+            <li>It copies all existing elements from the old array into the new array.</li>
+            <li>It updates its internal reference to point to the new array, and the Garbage Collector deletes the old one.</li>
+        </ol>
+        [Image of dynamic array resizing process]
+    </div>
+
+    <div class="card">
+        <h3>Why ArrayLists Are Needed (Pros vs Cons)</h3>
+        <p><strong>Advantages:</strong></p>
+        <ul>
+            <li><strong>Dynamic Growth:</strong> No need to guess the size of your data beforehand.</li>
+            <li><strong>Random Access:</strong> Fetching elements via index is instant, just like standard arrays.</li>
+            <li><strong>Rich API:</strong> Comes with built-in methods for sorting, reversing, checking if it contains an item, and removing items, saving you from writing boilerplate loops.</li>
+        </ul>
+        <p><strong>Disadvantages:</strong></p>
+        <ul>
+            <li><strong>Resizing Overhead:</strong> The moment the array gets full, the next <code>add()</code> operation will be very slow because it has to copy every single element to a new memory block.</li>
+            <li><strong>Primitive Types:</strong> In Java, ArrayLists can only store Objects (like <code>Integer</code>, <code>String</code>), not primitive types (like <code>int</code>, <code>double</code>). This causes memory overhead due to "Auto-boxing".</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Time Complexity Analysis</h3>
+        <ul>
+            <li><strong>Access element (<code>get(i)</code>):</strong> O(1)</li>
+            <li><strong>Add at end (<code>add(val)</code>):</strong> O(1) <em>Amortized</em> (Usually instant, but occasionally O(n) when resizing triggers).</li>
+            <li><strong>Insert at middle (<code>add(i, val)</code>):</strong> O(n) (Requires shifting elements right).</li>
+            <li><strong>Delete at middle (<code>remove(i)</code>):</strong> O(n) (Requires shifting elements left).</li>
+        </ul>
+    </div>
+
+    <h2>Explore ArrayList</h2>
+    <div class="module-grid">
+        <a href="/arraylist/operations" class="module-card">
+            <h3>Operations Laboratory</h3>
+            <p>Perform insertions, deletions, and observe resizing limits.</p>
+        </a>
+        <a href="/arraylist/techniques" class="module-card">
+            <h3>Algorithms &amp; Techniques</h3>
+            <p>Capacity management and safe iteration strategies.</p>
+        </a>
+        <a href="/arraylist/patterns" class="module-card">
+            <h3>Problem Patterns</h3>
+            <p>Amortized analysis and 2D dynamic grid problems.</p>
+        </a>
+    </div>
+
+</div>
+</body>
+</html>

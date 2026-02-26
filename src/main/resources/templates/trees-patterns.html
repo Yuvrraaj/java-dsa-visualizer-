@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree Patterns</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Tree Problem Patterns</h2>
+    <a href="/trees">Back to Trees</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Common Tree Problem Patterns</h1>
+        <p>Tree questions test your ability to think recursively. Almost all tree problems can be mapped to one of these core structural patterns.</p>
+    </div>
+
+    <div class="card">
+        <h3>1. Bottom-Up Recursion (Post-Order Pattern)</h3>
+        <p>In this pattern, you ask your children for information first, and then use their answers to calculate your own answer. This is the secret to solving "Height", "Depth", and "Diameter" problems.</p>
+        <pre class="code-block"><code>// Problem: Find the Maximum Depth of a Binary Tree
+public int maxDepth(TreeNode root) {
+    if (root == null) return 0; // Base Case
+    
+    // 1. Ask left child for its depth
+    int leftDepth = maxDepth(root.left);
+    
+    // 2. Ask right child for its depth
+    int rightDepth = maxDepth(root.right);
+    
+    // 3. Parent calculates its own depth
+    return Math.max(leftDepth, rightDepth) + 1;
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <h3>2. Top-Down Recursion (Pre-Order Pattern)</h3>
+        <p>In this pattern, the Parent node possesses some state or information, and it passes that information down to its children. This is used heavily in "Path Sum" or "Validate BST" problems.</p>
+        <pre class="code-block"><code>// Problem: Check if a Binary Tree is a Valid Binary Search Tree
+public boolean isValidBST(TreeNode root) {
+    // Pass Long boundaries to handle Integer.MAX_VALUE edge cases
+    return validate(root, Long.MIN_VALUE, Long.MAX_VALUE);
+}
+
+private boolean validate(TreeNode node, long min, long max) {
+    if (node == null) return true;
+    
+    // ESCAPED LESS-THAN SYMBOLS HERE:
+    if (node.val &lt;= min || node.val &gt;= max) return false;
+    
+    // Pass updated boundaries down to the children
+    return validate(node.left, min, node.val) &amp;&amp; 
+           validate(node.right, node.val, max);
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <h3>3. Level-by-Level State (BFS Pattern)</h3>
+        <p>If a problem asks for the "Right side view of a tree", "Level Averages", or "Zig-Zag traversal", you must use BFS. The trick is to capture the <code>size</code> of the queue at the start of the while loop to process exactly one "level" at a time.</p>
+        <pre class="code-block"><code>// Problem: Return a list containing the right-most node of each level
+public List&lt;Integer&gt; rightSideView(TreeNode root) {
+    List&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+    if (root == null) return result;
+    
+    Queue&lt;TreeNode&gt; queue = new LinkedList&lt;&gt;();
+    queue.add(root);
+    
+    while (!queue.isEmpty()) {
+        int levelSize = queue.size(); // Lock in the number of nodes on this level
+        
+        // ESCAPED LESS-THAN SYMBOL HERE:
+        for (int i = 0; i &lt; levelSize; i++) {
+            TreeNode current = queue.poll();
+            
+            // If it's the very last node in this level's loop, add to result
+            if (i == levelSize - 1) {
+                result.add(current.val);
+            }
+            
+            if (current.left != null) queue.add(current.left);
+            if (current.right != null) queue.add(current.right);
+        }
+    }
+    return result;
+}</code></pre>
+    </div>
+
+    <div class="card">
+        <h3>4. Lowest Common Ancestor (LCA)</h3>
+        <p>A classic pattern. To find the Lowest Common Ancestor of nodes `p` and `q` in a BST, you use the sorting property. If both `p` and `q` are smaller than the root, the LCA must be in the left subtree. If both are greater, it's in the right. The moment they split (one is smaller, one is greater), you have found the LCA.</p>
+    </div>
+
+</div>
+</body>
+</html>

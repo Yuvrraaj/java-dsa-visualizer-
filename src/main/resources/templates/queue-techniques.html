@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Queue Techniques</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Queue Techniques</h2>
+    <a href="/queue">Back to Queue</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Implementation Techniques</h1>
+        <p>Queues are rarely used as just simple arrays in production. Here are the advanced techniques used to implement highly efficient queues.</p>
+    </div>
+
+    <div class="card">
+        <h3>1. The Circular Array Technique</h3>
+        <p>To prevent O(n) shifting when dequeuing from an array, we use two pointers (`front` and `rear`) and the modulo operator to wrap around the array.</p>
+        <pre style="background: #0f172a; color: #f8fafc; padding: 15px; border-radius: 8px;">
+int front = 0, rear = -1, size = 0;
+int capacity = arr.length;
+
+void enqueue(int item) {
+    if (size == capacity) return; // Full
+    rear = (rear + 1) % capacity; // Wrap around
+    arr[rear] = item;
+    size++;
+}
+
+int dequeue() {
+    if (size == 0) return -1; // Empty
+    int item = arr[front];
+    front = (front + 1) % capacity; // Wrap around
+    size--;
+    return item;
+}</pre>
+    </div>
+
+    <div class="card">
+        <h3>2. Implementing a Queue using Two Stacks</h3>
+        <p>A classic interview question. You maintain an `inputStack` and an `outputStack`. You push to the input stack. When a dequeue is requested, if the output stack is empty, you pop everything from the input stack and push it to the output stack (reversing the order to achieve FIFO).</p>
+    </div>
+
+    <div class="card">
+        <h3>3. Linked List Implementation</h3>
+        <p>To achieve pure O(1) dynamic queuing without array resizing, maintain a `head` (front) and `tail` (rear) pointer in a singly linked list. Insertions happen at the `tail.next`, and deletions happen by moving the `head` pointer.</p>
+    </div>
+</div>
+
+</body>
+</html>

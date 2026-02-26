@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Graphs — Complete Understanding</title>
+    <link rel="stylesheet" href="/css/style.css">
+
+    <style>
+        .code-block {
+            background: #0f172a;
+            color: #f8fafc;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: monospace;
+            overflow-x: auto;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            margin-top: 10px;
+            color: var(--accent);
+        }
+
+        .info-note {
+            background: #f1f5f9;
+            padding: 12px;
+            border-left: 4px solid var(--accent);
+            border-radius: 6px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Graphs</h2>
+    <a href="/topics">Back to Topics</a>
+</div>
+
+<div class="container">
+
+<!-- ================= INTRO ================= -->
+<div class="intro-card">
+    <h1>Graphs — Network Data Structures</h1>
+
+    <p>
+        A <strong>Graph</strong> is a non-linear data structure made up of
+        <strong>Vertices (Nodes)</strong> and <strong>Edges (Connections)</strong>.
+        Unlike Trees, which follow a strict hierarchy, graphs allow any node
+        to connect with any other node, forming complex networks.
+    </p>
+
+    <p>
+        Formally, a graph is represented as:
+        <strong>G = (V, E)</strong>,
+        where <strong>V</strong> represents vertices and
+        <strong>E</strong> represents edges.
+    </p>
+
+    <div class="info-note">
+        Graphs model real-world systems such as social networks,
+        road maps, airline routes, and computer networks.
+    </div>
+</div>
+
+<!-- ================= TYPES ================= -->
+<div class="card">
+<h3>Types of Graphs</h3>
+
+<ul>
+    <li>
+        <strong>Undirected Graph:</strong>
+        Connections work both ways. If A connects to B,
+        you can travel from A → B and B → A.
+    </li>
+
+    <li>
+        <strong>Directed Graph (Digraph):</strong>
+        Edges have direction. Movement is allowed only
+        along the arrow direction.
+    </li>
+
+    <li>
+        <strong>Weighted Graph:</strong>
+        Each edge stores a cost or distance.
+        Used in GPS navigation and routing algorithms.
+    </li>
+
+    <li>
+        <strong>Unweighted Graph:</strong>
+        All edges are treated equally (weight = 1).
+    </li>
+
+    <li>
+        <strong>Cyclic vs Acyclic:</strong>
+        A cyclic graph contains loops.
+        A <strong>Directed Acyclic Graph (DAG)</strong>
+        has no cycles and is widely used in task scheduling
+        and dependency resolution.
+    </li>
+</ul>
+</div>
+
+<!-- ================= REPRESENTATION ================= -->
+<div class="card">
+<h3>Memory Representation of Graphs</h3>
+
+<p>
+Graphs do not follow linear memory layouts, so special
+representations are used to store connections efficiently.
+</p>
+
+<h4 class="section-title">1. Adjacency Matrix</h4>
+
+<p>
+A 2D array of size <strong>V × V</strong>.
+If an edge exists from vertex <em>i</em> to vertex <em>j</em>,
+then <code>matrix[i][j] = 1</code> (or stores the edge weight).
+Otherwise it remains <code>0</code>.
+</p>
+
+<ul>
+    <li><strong>Edge lookup:</strong> O(1)</li>
+    <li><strong>Space usage:</strong> O(V²)</li>
+    <li><strong>Best for:</strong> Dense graphs</li>
+</ul>
+
+<h4 class="section-title">2. Adjacency List</h4>
+
+<p>
+Each vertex stores a list of its neighbors.
+Usually implemented using an ArrayList or HashMap.
+</p>
+
+<div class="code-block">
+List&lt;List&lt;Integer&gt;&gt; graph = new ArrayList&lt;&gt;();
+</div>
+
+<ul>
+    <li><strong>Space usage:</strong> O(V + E)</li>
+    <li><strong>Efficient for:</strong> Sparse graphs</li>
+    <li><strong>Neighbor traversal:</strong> Very fast</li>
+</ul>
+
+<div class="info-note">
+Adjacency Lists are the most commonly used representation
+in coding interviews and competitive programming.
+</div>
+
+</div>
+
+<!-- ================= WHY GRAPHS IMPORTANT ================= -->
+<div class="card">
+<h3>Why Graphs Are Important</h3>
+
+<ul>
+    <li>Social network recommendations</li>
+    <li>Navigation and shortest path systems</li>
+    <li>Internet routing protocols</li>
+    <li>Dependency resolution (build systems)</li>
+    <li>AI search and game pathfinding</li>
+</ul>
+</div>
+
+<!-- ================= NAVIGATION ================= -->
+<h2>Explore Graph Modules</h2>
+
+<div class="module-grid">
+
+    <a href="/graph/operations" class="module-card">
+        <h3>Operations Laboratory</h3>
+        <p>Build graphs interactively and visualize BFS traversal.</p>
+    </a>
+
+    <a href="/graph/techniques" class="module-card">
+        <h3>Algorithms &amp; Techniques</h3>
+        <p>Learn adjacency lists, BFS, DFS, and implementation details.</p>
+    </a>
+
+    <a href="/graph/patterns" class="module-card">
+        <h3>Problem Patterns</h3>
+        <p>Shortest paths, cycle detection, and topological sorting.</p>
+    </a>
+
+</div>
+
+</div>
+
+</body>
+</html>

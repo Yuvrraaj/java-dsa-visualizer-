@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Queue - Deep Dive</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Queue Operations &amp; Theory</h2>
+    <a href="/topics">Back to Topics</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Queue — Deep Dive</h1>
+        <p>A Queue is a linear data structure that models real-world lines. It enforces a strict <strong>First In, First Out (FIFO)</strong> policy. The element that has been in the queue the longest is the first one to be removed.</p>
+        <p>Elements are added at the <strong>Rear (Tail)</strong> and removed from the <strong>Front (Head)</strong>. Think of a printer queue, web server request handling, or customers waiting at a checkout.</p>
+    </div>
+
+    <div class="feature-grid">
+        <div class="feature">
+            <h3>FIFO Architecture</h3>
+            <p>Guarantees order of processing. Essential for fair scheduling algorithms.</p>
+        </div>
+        <div class="feature">
+            <h3>Memory Implementations</h3>
+            <p>Can be implemented via Arrays (requires shifting or circular logic) or Linked Lists (O(1) dynamic scaling).</p>
+        </div>
+        <div class="feature">
+            <h3>Time Complexity</h3>
+            <p>Enqueue (Add): O(1)<br>Dequeue (Remove): O(1)<br>Peek: O(1)</p>
+        </div>
+    </div>
+
+    <h2>Types of Queues</h2>
+    <div class="card">
+        <h3>1. Standard / Linear Queue</h3>
+        <p>The basic FIFO structure. A major drawback when implemented with simple arrays is that once the rear reaches the end of the array, you cannot add new elements even if there is empty space at the front (caused by previous dequeues).</p>
+        
+        <h3 style="margin-top: 20px;">2. Circular Queue</h3>
+        <p>Solves the memory waste of linear array queues. The last position is connected back to the first position to make a circle. It uses the modulo operator <code>(rear + 1) % size</code> to wrap around.</p>
+
+        <h3 style="margin-top: 20px;">3. Priority Queue</h3>
+        <p>Elements are dequeued based on a priority weight rather than strict FIFO order. Usually implemented internally using a Heap data structure.</p>
+    </div>
+
+    <div class="module-grid">
+        <a href="/queue/operations" class="module-card"><h3>Visualizer Lab</h3><p>Animate Enqueue and Dequeue</p></a>
+        <a href="/queue/techniques" class="module-card"><h3>Techniques</h3><p>Circular arrays and Stack-Queues</p></a>
+        <a href="/queue/patterns" class="module-card"><h3>Problem Patterns</h3><p>BFS and Sliding Windows</p></a>
+        <a href="/practice/queue" class="module-card" style="border-color: #22c55e;"><h3>Practice Queue</h3><p>Solve database questions</p></a>
+    </div>
+</div>
+
+</body>
+</html>

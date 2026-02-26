@@ -1,0 +1,64 @@
+body{
+    margin:0;
+    font-family:Inter, sans-serif;
+    background:#a7c7d7;
+    overflow:hidden;
+}
+
+/* NAV */
+.hero-nav{
+    display:flex;
+    justify-content:space-between;
+    padding:25px 60px;
+    color:white;
+}
+
+.enter-btn{
+    background:#ff5a5a;
+    padding:10px 18px;
+    border-radius:6px;
+    color:white;
+    text-decoration:none;
+}
+
+/* HERO */
+.hero{
+    text-align:center;
+    margin-top:80px;
+}
+
+.hero h1{
+    color:white;
+    letter-spacing:3px;
+}
+
+.hero span{
+    font-size:70px;
+    color:#ff5a5a;
+}
+
+/* FLOATING DS OBJECTS */
+.ds-visual{
+    margin-top:80px;
+    display:flex;
+    justify-content:center;
+    gap:40px;
+}
+
+.node{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 10px 20px rgba(0,0,0,.2);
+    animation:float 4s ease-in-out infinite;
+}
+
+.node:nth-child(2){animation-delay:.5s;}
+.node:nth-child(3){animation-delay:1s;}
+.node:nth-child(4){animation-delay:1.5s;}
+.node:nth-child(5){animation-delay:2s;}
+
+@keyframes float{
+    0%,100%{transform:translateY(0)}
+    50%{transform:translateY(-15px)}
+}

@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Tree Visualizer</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .canvas-container {
+            width: 100%;
+            overflow-x: auto;
+            background: #f8fafc;
+            border: 2px dashed #cbd5e1;
+            border-radius: 12px;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        canvas {
+            background-color: transparent;
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Tree Visualizer</h2>
+    <a href="/trees">Back to Theory</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Interactive Binary Search Tree (BST)</h1>
+        <p>A BST is a node-based binary tree where the left child contains a value less than the parent, and the right child contains a value greater than the parent.</p>
+    </div>
+
+    <div class="card">
+        <h2>Visualizer Board</h2>
+        <div class="controls">
+            <input id="treeValue" placeholder="Node Value (e.g. 50)" type="number">
+            <button onclick="insertNode()">Insert</button>
+            <button onclick="searchNode()" style="background: var(--success);">Search</button>
+            <button class="danger" onclick="clearTree()">Clear Tree</button>
+        </div>
+        
+        <p id="treeMessage" style="margin-top: 15px; font-weight: 600; color: var(--accent);"></p>
+
+        <div class="canvas-container">
+            <canvas id="treeCanvas" width="800" height="500"></canvas>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+/*<![CDATA[*/
+    const canvas = document.getElementById('treeCanvas');
+    const ctx = canvas.getContext('2d');
+    const msg = document.getElementById('treeMessage');
+
+    class TreeNode {
+        constructor(value) {
+            this.value = value;
+            this.left = null;
+            this.right = null;
+            this.x = 0;
+            this.y = 0;
+        }
+    }
+
+    let root = null;
+    const nodeRadius = 20;
+
+    const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+    function calculatePositions(node, x, y, horizontalOffset) {
+        if (!node) return;
+        node.x = x;
+        node.y = y;
+        calculatePositions(node.left, x - horizontalOffset, y + 60, horizontalOffset / 2);
+        calculatePositions(node.right, x + horizontalOffset, y + 60, horizontalOffset / 2);
+    }
+
+    function drawTree(highlightNode = null, searchPath = []) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (!root) return;
+        drawEdges(root);
+        drawNodes(root, highlightNode, searchPath);
+    }
+
+    function drawEdges(node) {
+        if (!node) return;
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#94a3b8';
+
+        if (node.left) {
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(node.left.x, node.left.y);
+            ctx.stroke();
+            drawEdges(node.left);
+        }
+        if (node.right) {
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(node.right.x, node.right.y);
+            ctx.stroke();
+            drawEdges(node.right);
+        }
+    }
+
+    function drawNodes(node, highlightNode, searchPath) {
+        if (!node) return;
+
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, nodeRadius, 0, 2 * Math.PI);
+        
+        if (node === highlightNode) {
+            ctx.fillStyle = '#22c55e';
+        } else if (searchPath.includes(node)) {
+            ctx.fillStyle = '#ef4444'; 
+        } else {
+            ctx.fillStyle = '#ffffff'; 
+        }
+        
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = '#2563eb';
+        ctx.stroke();
+
+        ctx.fillStyle = (node === highlightNode || searchPath.includes(node)) ? '#ffffff' : '#0f172a';
+        ctx.font = 'bold 14px Inter';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(node.value, node.x, node.y);
+
+        drawNodes(node.left, highlightNode, searchPath);
+        drawNodes(node.right, highlightNode, searchPath);
+    }
+
+    async function insertNode() {
+        const valInput = document.getElementById('treeValue');
+        const val = parseInt(valInput.value);
+        if (isNaN(val)) return (msg.innerText = "Please enter a valid number.");
+        valInput.value = '';
+
+        if (!root) {
+            root = new TreeNode(val);
+            root.x = canvas.width / 2;
+            root.y = 50;
+            msg.innerText = `Inserted ${val} as the root.`;
+            drawTree(root);
+            return;
+        }
+
+        let current = root;
+        let path = [];
+        
+        while (true) {
+            path.push(current);
+            drawTree(null, path); 
+            await sleep(500);
+
+            if (val === current.value) {
+                msg.innerText = `${val} is already in the tree!`;
+                drawTree(current);
+                return;
+            }
+
+            if (val < current.value) {
+                if (!current.left) {
+                    current.left = new TreeNode(val);
+                    msg.innerText = `Inserted ${val} to the left of ${current.value}.`;
+                    break;
+                }
+                current = current.left;
+            } else {
+                if (!current.right) {
+                    current.right = new TreeNode(val);
+                    msg.innerText = `Inserted ${val} to the right of ${current.value}.`;
+                    break;
+                }
+                current = current.right;
+            }
+        }
+
+        calculatePositions(root, canvas.width / 2, 50, canvas.width / 4);
+        drawTree(current.left || current.right); 
+    }
+
+    async function searchNode() {
+        const valInput = document.getElementById('treeValue');
+        const val = parseInt(valInput.value);
+        if (isNaN(val)) return (msg.innerText = "Please enter a valid number.");
+        
+        if (!root) return (msg.innerText = "Tree is empty.");
+
+        let current = root;
+        let path = [];
+        msg.innerText = `Searching for ${val}...`;
+
+        while (current !== null) {
+            path.push(current);
+            drawTree(null, path);
+            await sleep(600);
+
+            if (val === current.value) {
+                msg.innerText = `Found ${val} in the tree!`;
+                drawTree(current); 
+                return;
+            } else if (val < current.value) {
+                current = current.left;
+            } else {
+                current = current.right;
+            }
+        }
+
+        msg.innerText = `${val} not found in the tree.`;
+        drawTree(); 
+    }
+
+    function clearTree() {
+        root = null;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        msg.innerText = "Tree cleared.";
+    }
+
+    root = new TreeNode(50);
+    root.left = new TreeNode(30);
+    root.right = new TreeNode(70);
+    root.left.left = new TreeNode(20);
+    root.left.right = new TreeNode(40);
+    
+    calculatePositions(root, canvas.width / 2, 50, canvas.width / 4);
+    drawTree();
+    msg.innerText = "Ready. Try inserting or searching for a value.";
+/*]]>*/
+</script>
+</body>
+</html>

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/css/style.css">
+<script src="/js/arraylist.js"></script>
+</head>
+
+<body>
+
+<div class="navbar">
+<h2>ArrayList Operations</h2>
+<a href="/arraylist">Back</a>
+</div>
+
+<div class="container">
+
+<div class="intro-card">
+<h2>Interactive ArrayList Lab</h2>
+<p>
+Perform operations and observe how indexing and element shifting works internally.
+</p>
+</div>
+
+<!-- ADD -->
+<div class="card">
+<h3>Add Element (End)</h3>
+<input id="addValue" placeholder="Enter value">
+<button onclick="add()">Add</button>
+</div>
+
+<!-- INSERT -->
+<div class="card">
+<h3>Insert At Index</h3>
+<input id="insertIndex" placeholder="Index">
+<input id="insertValue" placeholder="Value">
+<button onclick="insertAt()">Insert</button>
+</div>
+
+<!-- UPDATE -->
+<div class="card">
+<h3>Update Element</h3>
+<input id="updateIndex" placeholder="Index">
+<input id="updateValue" placeholder="New Value">
+<button onclick="update()">Update</button>
+</div>
+
+<!-- REMOVE -->
+<div class="card">
+<h3>Remove Element</h3>
+<input id="removeIndex" placeholder="Index">
+<button onclick="removeAt()">Remove</button>
+</div>
+
+<!-- SEARCH -->
+<div class="card">
+<h3>Search Element</h3>
+<input id="searchValue" placeholder="Value">
+<button onclick="search()">Search</button>
+</div>
+
+<!-- TRAVERSE -->
+<div class="card">
+<h3>Traversal Visualization</h3>
+<button onclick="traverse()">Traverse</button>
+</div>
+
+<!-- SIZE -->
+<div class="card">
+<h3>Total Elements</h3>
+<p id="sizeDisplay"></p>
+</div>
+
+<div id="memory"></div>
+
+<h4>Java Example</h4>
+
+<div class="code-block">
+ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();
+
+list.add(10);
+list.add(1, 50);
+list.set(0, 99);
+list.remove(1);
+int size = list.size();
+</div>
+
+</div>
+</body>
+</html>

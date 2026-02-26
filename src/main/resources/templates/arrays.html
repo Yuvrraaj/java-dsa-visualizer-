@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arrays — Complete Understanding</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .code-block { background: #0f172a; color: #f8fafc; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Arrays</h2>
+    <a href="/topics">Back to Topics</a>
+</div>
+
+<div class="container">
+
+    <div class="intro-card">
+        <h1>Arrays — Complete Conceptual Understanding</h1>
+        <p>An Array is the simplest and most widely used linear data structure. It is a collection of items stored at <strong>contiguous (adjacent) memory locations</strong>. The idea is to store multiple items of the same data type together.</p>
+        <p>Because the memory is contiguous, the computer can calculate the exact memory address of any element instantly using a simple mathematical formula, making data retrieval incredibly fast.</p>
+        
+    </div>
+
+    <div class="card">
+        <h3>Memory Representation &amp; Indexing</h3>
+        <p>Arrays are <strong>zero-indexed</strong> in almost all modern programming languages. This means the first element is at index <code>0</code>, not <code>1</code>. Why? Because the index actually represents the <em>offset</em> from the starting memory address.</p>
+        <p>If an integer takes 4 bytes, and the array starts at memory address <code>1000</code>, the element at index <code>2</code> is located at: <code>1000 + (2 * 4) = 1008</code>.</p>
+        <div class="code-block">
+// Declaring an array of fixed size 5
+int[] numbers = new int[5];
+
+// Memory is allocated contiguously for 5 integers.
+// Indices available: 0, 1, 2, 3, 4
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Types of Arrays</h3>
+        <ul>
+            <li><strong>One-Dimensional (1D) Arrays:</strong> A simple linear list of elements.</li>
+            <li><strong>Multi-Dimensional Arrays (e.g., 2D Matrix):</strong> Arrays of arrays. A 2D array forms a grid or table with rows and columns. In memory, it is still stored as a single contiguous block (row-major or column-major order).</li>
+        </ul>
+        
+    </div>
+
+    <div class="card">
+        <h3>Why Arrays Are Needed (Pros vs Cons)</h3>
+        <p><strong>Advantages:</strong></p>
+        <ul>
+            <li><strong>Instant Random Access:</strong> Fetching any element by its index takes O(1) time.</li>
+            <li><strong>Cache Friendliness:</strong> Because elements are contiguous, CPU caching is highly efficient, making array iteration faster than linked lists in practice.</li>
+        </ul>
+        <p><strong>Disadvantages:</strong></p>
+        <ul>
+            <li><strong>Fixed Size:</strong> In languages like Java or C++, standard arrays have a fixed size upon creation. You cannot add more elements than the allocated size without creating a brand new array.</li>
+            <li><strong>Costly Insertions/Deletions:</strong> Inserting or deleting an element in the middle requires shifting all subsequent elements over, taking O(n) time.</li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>Time Complexity Analysis</h3>
+        <ul>
+            <li><strong>Access (Read/Write via index):</strong> O(1)</li>
+            <li><strong>Insert at End (if space exists):</strong> O(1)</li>
+            <li><strong>Insert at Middle/Beginning:</strong> O(n) due to shifting</li>
+            <li><strong>Delete at Middle/Beginning:</strong> O(n) due to shifting</li>
+            <li><strong>Search (Unsorted):</strong> O(n)</li>
+        </ul>
+    </div>
+
+    <h2>Explore Arrays</h2>
+    <div class="module-grid">
+        <a href="/arrays/operations" class="module-card">
+            <h3>Operations Laboratory</h3>
+            <p>Visually add, remove, and shift elements.</p>
+        </a>
+        <a href="/arrays/techniques" class="module-card">
+            <h3>Algorithms &amp; Techniques</h3>
+            <p>Traversal methods and boundary management.</p>
+        </a>
+        <a href="/arrays/patterns" class="module-card">
+            <h3>Problem Patterns</h3>
+            <p>Two Pointers, Sliding Window, and Prefix Sum.</p>
+        </a>
+    </div>
+
+</div>
+</body>
+</html>

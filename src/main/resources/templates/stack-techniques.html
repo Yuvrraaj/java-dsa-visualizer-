@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Stack Techniques</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+    <h2>Stack Techniques</h2>
+    <a href="/stack">Back to Stack</a>
+</div>
+
+<div class="container">
+
+<!-- ================= INTRO ================= -->
+<div class="intro-card">
+    <h1>Stack Problem Solving Techniques</h1>
+    <p>
+        A stack follows the <strong>Last-In-First-Out (LIFO)</strong> principle.
+        The most recently inserted element is removed first. Stacks are widely
+        used in parsing expressions, recursion handling, undo operations,
+        and solving many interview problems efficiently.
+    </p>
+</div>
+
+<!-- ================= BASIC OPERATIONS ================= -->
+<div class="card">
+<h3>1. Basic Stack Operations</h3>
+
+<pre class="code-block"><code>
+import java.util.Stack;
+
+public class StackExample {
+
+    public static void main(String[] args) {
+
+        Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+
+        System.out.println(stack.peek());
+
+        stack.pop();
+
+        System.out.println(stack);
+    }
+}
+</code></pre>
+
+<p>
+Push, Pop, and Peek operations all execute in <strong>O(1)</strong> time.
+</p>
+</div>
+
+<!-- ================= VALID PARENTHESES ================= -->
+<div class="card">
+<h3>2. Balanced Parentheses (Classic Stack Problem)</h3>
+
+<p>
+The stack stores opening brackets. Whenever a closing bracket appears,
+we verify whether it matches the most recent opening bracket.
+</p>
+
+<pre class="code-block"><code>
+import java.util.Stack;
+
+public boolean isValid(String s) {
+
+    Stack&lt;Character&gt; stack = new Stack&lt;&gt;();
+
+    for(char c : s.toCharArray()) {
+
+        if(c == '(' || c == '{' || c == '[') {
+            stack.push(c);
+        }
+        else {
+
+            if(stack.isEmpty())
+                return false;
+
+            char top = stack.pop();
+
+            if((c == ')' &amp;&amp; top != '(') ||
+               (c == '}' &amp;&amp; top != '{') ||
+               (c == ']' &amp;&amp; top != '[')) {
+                return false;
+            }
+        }
+    }
+
+    return stack.isEmpty();
+}
+</code></pre>
+
+<p><strong>Time Complexity:</strong> O(n)</p>
+</div>
+
+<!-- ================= MONOTONIC STACK ================= -->
+<div class="card">
+<h3>3. Monotonic Stack (Next Greater Element)</h3>
+
+<p>
+A monotonic stack maintains elements in sorted order while processing
+an array. It is heavily used in problems like Next Greater Element,
+Daily Temperatures, and Histogram Area.
+</p>
+
+<pre class="code-block"><code>
+import java.util.*;
+
+public int[] nextGreaterElement(int[] nums) {
+
+    int n = nums.length;
+    int[] result = new int[n];
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+    for(int i = n - 1; i &gt;= 0; i--) {
+
+        while(!stack.isEmpty() &amp;&amp; stack.peek() &lt;= nums[i]) {
+            stack.pop();
+        }
+
+        result[i] = stack.isEmpty() ? -1 : stack.peek();
+        stack.push(nums[i]);
+    }
+
+    return result;
+}
+</code></pre>
+
+<p>
+Each element is pushed and popped at most once, giving an overall
+time complexity of <strong>O(n)</strong>.
+</p>
+</div>
+
+<!-- ================= POSTFIX EVALUATION ================= -->
+<div class="card">
+<h3>4. Expression Evaluation (Postfix Notation)</h3>
+
+<p>
+Stacks are commonly used to evaluate mathematical expressions.
+Operands are pushed onto the stack, and operators compute results.
+</p>
+
+<pre class="code-block"><code>
+import java.util.Stack;
+
+public int evaluatePostfix(String[] tokens) {
+
+    Stack&lt;Integer&gt; stack = new Stack&lt;&gt;();
+
+    for(String token : tokens) {
+
+        if(token.equals("+")) {
+            stack.push(stack.pop() + stack.pop());
+        }
+        else if(token.equals("-")) {
+            int b = stack.pop();
+            int a = stack.pop();
+            stack.push(a - b);
+        }
+        else if(token.equals("*")) {
+            stack.push(stack.pop() * stack.pop());
+        }
+        else if(token.equals("/")) {
+            int b = stack.pop();
+            int a = stack.pop();
+            stack.push(a / b);
+        }
+        else {
+            stack.push(Integer.parseInt(token));
+        }
+    }
+
+    return stack.pop();
+}
+</code></pre>
+</div>
+
+<!-- ================= COMPLEXITY ================= -->
+<div class="card">
+<h3>Time Complexity Summary</h3>
+
+<ul>
+    <li><strong>Push:</strong> O(1)</li>
+    <li><strong>Pop:</strong> O(1)</li>
+    <li><strong>Peek:</strong> O(1)</li>
+    <li><strong>Search:</strong> O(n)</li>
+</ul>
+
+<p>
+Stacks provide constant-time insertion and deletion because all operations
+occur at one end of the structure. This makes them ideal for problems
+involving reversal, recursion simulation, and nested validations.
+</p>
+
+</div>
+
+</div>
+
+</body>
+</html>

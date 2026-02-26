@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Linked List Techniques</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <style>
+        .code-block { background: #0f172a; color: #f8fafc; padding: 15px; border-radius: 8px; font-family: monospace; overflow-x: auto; margin-top: 10px; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <h2>Linked List Techniques</h2>
+    <a href="/linkedlist">Back to Linked List</a>
+</div>
+
+<div class="container">
+    <div class="intro-card">
+        <h1>Linked List Manipulation Techniques</h1>
+        <p>Linked Lists are notorious for causing <code>NullPointerException</code>s and infinite loops. Mastering these specific coding techniques will make writing Linked List algorithms much safer and cleaner.</p>
+    </div>
+
+    <div class="card">
+        <h3>1. The Dummy Head (Sentinel Node) Technique</h3>
+        <p>Often, operations might result in the <strong>Head</strong> of the list being modified or deleted. To avoid writing messy <code>if (head == null)</code> edge cases, we create a fake "Dummy" node that points to the actual head.</p>
+        <p>This ensures that the list is never truly empty during our logic, and we simply return <code>dummy.next</code> at the end.</p>
+        <div class="code-block">
+public ListNode removeElements(ListNode head, int val) {
+    ListNode dummy = new ListNode(-1); // Create Sentinel
+    dummy.next = head;                 // Point to real head
+    
+    ListNode curr = dummy;             // Start iterating from dummy
+    
+    while (curr.next != null) {
+        if (curr.next.val == val) {
+            curr.next = curr.next.next; // Bypass the target node
+        } else {
+            curr = curr.next;           // Move forward safely
+        }
+    }
+    return dummy.next; // Return the actual head
+}
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>2. Order of Pointer Reassignment</h3>
+        <p>When inserting a node in the middle of a list, the order in which you update pointers is critical. If you overwrite the current node's <code>next</code> pointer too early, you sever the rest of the list and cause a memory leak.</p>
+        <p><strong>Rule of thumb:</strong> Always connect the NEW node to the REST of the list first, before connecting the CURRENT node to the NEW node.</p>
+        <div class="code-block">
+// Inserting 'newNode' between 'curr' and 'curr.next'
+
+// CORRECT:
+newNode.next = curr.next; // Step 1: Secure the rest of the list
+curr.next = newNode;      // Step 2: Link current to the new node
+
+// WRONG (Causes data loss):
+curr.next = newNode;      // The original curr.next is lost!
+newNode.next = curr.next; // newNode now points to itself or null!
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>3. Multi-Pointer Tracking</h3>
+        <p>Because Linked Lists don't have backward traversal (unless Doubly Linked), you frequently need to track the <code>previous</code> node alongside the <code>current</code> node. This is essential for deletion and reversal operations.</p>
+        <div class="code-block">
+ListNode prev = null;
+ListNode curr = head;
+
+while (curr != null) {
+    // Perform logic here...
+    
+    // Move both pointers forward
+    prev = curr;
+    curr = curr.next;
+}
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

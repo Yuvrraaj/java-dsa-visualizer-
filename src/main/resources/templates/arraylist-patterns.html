@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+
+<div class="navbar">
+<h2>ArrayList Problem Patterns</h2>
+<a href="/arraylist">Back</a>
+</div>
+
+<div class="container">
+
+<div class="intro-card">
+<h1>Common ArrayList Problem Patterns</h1>
+
+<p>
+Most coding interview problems using ArrayList follow recurring patterns.
+Understanding these patterns allows faster problem solving instead of memorizing solutions.
+</p>
+
+</div>
+
+<!-- REMOVE DUPLICATES -->
+<div class="card">
+<h3>1. Remove Duplicates</h3>
+
+<div class="code-block">
+ArrayList&lt;Integer&gt; unique = new ArrayList&lt;&gt;();
+
+for(Integer x : list){
+    if(!unique.contains(x))
+        unique.add(x);
+}
+</div>
+
+<p>
+Used when maintaining only distinct elements.
+</p>
+
+</div>
+
+<!-- REVERSAL -->
+<div class="card">
+<h3>2. Reverse Elements</h3>
+
+<div class="code-block">
+Collections.reverse(list);
+</div>
+
+<p>
+Often used in stack simulation and backtracking problems.
+</p>
+
+</div>
+
+<!-- FILTERING -->
+<div class="card">
+<h3>3. Filtering Pattern</h3>
+
+<div class="code-block">
+ArrayList&lt;Integer&gt; result = new ArrayList&lt;&gt;();
+
+for(Integer x : list){
+    if(x &gt; 10)
+        result.add(x);
+}
+</div>
+
+<p>
+Create a new list based on conditions.
+</p>
+
+</div>
+
+<!-- FREQUENCY -->
+<div class="card">
+<h3>4. Frequency Based Problems</h3>
+
+<div class="code-block">
+HashMap&lt;Integer,Integer&gt; freq = new HashMap&lt;&gt;();
+
+for(Integer x : list){
+    freq.put(x,freq.getOrDefault(x,0)+1);
+}
+</div>
+
+</div>
+
+<!-- TWO POINTER -->
+<div class="card">
+<h3>5. Two Pointer Pattern</h3>
+
+<p>
+Common in sorted ArrayList problems like pair sum or removing duplicates.
+</p>
+
+<div class="code-block">
+int left=0;
+int right=list.size()-1;
+</div>
+
+</div>
+
+<!-- SLIDING WINDOW -->
+<div class="card">
+<h3>6. Sliding Window Pattern</h3>
+
+<p>
+Used for sublist sums and maximum/minimum window problems.
+</p>
+
+<div class="code-block">
+for(int i=k;i&lt;list.size();i++){
+    windowSum+=list.get(i);
+    windowSum-=list.get(i-k);
+}
+</div>
+
+</div>
+
+<!-- SIMULATION -->
+<div class="card">
+<h3>7. Simulation Problems</h3>
+
+<p>
+ArrayList is heavily used when problems require dynamic insertion
+and removal during execution.
+</p>
+
+Examples:
+<ul>
+<li>Josephus Problem</li>
+<li>Game simulations</li>
+<li>Task scheduling</li>
+</ul>
+
+</div>
+
+<!-- INTERVIEW GUIDE -->
+<div class="card">
+<h3>Interview Tips</h3>
+
+<ul>
+<li>Prefer ArrayList when frequent access is needed.</li>
+<li>Avoid middle insertions in large datasets.</li>
+<li>Use Iterator for safe deletion.</li>
+<li>Combine with HashMap for optimization.</li>
+</ul>
+
+</div>
+
+</div>
+</body>
+</html>
