@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>All-in-One Visualizer Lab</title>
     <link rel="stylesheet" href="/css/style.css">
+
     <style>
         .lab-grid {
             display: grid;
@@ -29,6 +30,7 @@
         }
     </style>
 </head>
+
 <body>
 
 <div class="navbar">
@@ -37,471 +39,230 @@
 </div>
 
 <div class="container">
+<div class="intro-card">
+    <h1>Interactive Quick Lab</h1>
+    <p>Test, compare, and traverse all major data structures side-by-side.</p>
+</div>
 
-    <div class="intro-card">
-        <h1>Interactive Quick Lab</h1>
-        <p>Test, compare, and traverse all major data structures side-by-side. Use the controls to trigger real-time structural changes and algorithmic animations.</p>
-    </div>
+<div class="lab-grid">
 
-    <div class="lab-grid">
+<!-- ================= ARRAY ================= -->
+<div class="card">
+<h2>Array / ArrayList Visualizer</h2>
+<div class="controls">
+<input id="arrValue" type="number" placeholder="Value">
+<input id="arrIndex" type="number" placeholder="Index (optional)">
+<button onclick="arrInsert()">Insert</button>
+<button class="danger" onclick="arrDelete()">Delete</button>
+<button onclick="arrSearch()" style="background: var(--success);">Linear Search</button>
+</div>
+<div id="arrMsg" class="message">Ready.</div>
+<div class="visualizer-container mini-visualizer" id="arr-container"></div>
+</div>
 
-        <div class="card">
-            <h2>Array / ArrayList Visualizer</h2>
-            <div class="controls">
-                <input id="arrValue" type="number" placeholder="Value">
-                <input id="arrIndex" type="number" placeholder="Index (optional)">
-                <button onclick="arrInsert()">Insert</button>
-                <button class="danger" onclick="arrDelete()">Delete at Index</button>
-                <button onclick="arrSearch()" style="background: var(--success);">Linear Search</button>
-            </div>
-            <div id="arrMsg" class="message">Ready.</div>
-            <div class="visualizer-container mini-visualizer" id="arr-container" style="justify-content: flex-start;"></div>
-        </div>
+<!-- ================= STACK ================= -->
+<div class="card">
+<h2>Stack Visualizer</h2>
+<div class="controls">
+<input id="stackValue" type="text" placeholder="Value">
+<button onclick="stackPush()">Push</button>
+<button class="danger" onclick="stackPop()">Pop</button>
+<button onclick="stackPeek()" style="background: var(--success);">Peek</button>
+</div>
+<div id="stackMsg" class="message">Ready.</div>
+<div id="stack-container" class="visualizer-container mini-visualizer"
+     style="flex-direction: column-reverse;"></div>
+</div>
 
-        <div class="card">
-            <h2>Stack Visualizer (LIFO)</h2>
-            <div class="controls">
-                <input id="stackValue" type="text" placeholder="Value" maxlength="4">
-                <button onclick="stackPush()">Push</button>
-                <button class="danger" onclick="stackPop()">Pop</button>
-                <button onclick="stackPeek()" style="background: var(--success);">Peek Top</button>
-            </div>
-            <div id="stackMsg" class="message">Ready.</div>
-            <div class="visualizer-container mini-visualizer" id="stack-container" style="flex-direction: column-reverse; justify-content: flex-start; gap: 5px;"></div>
-        </div>
+<!-- ================= QUEUE ================= -->
+<div class="card">
+<h2>Queue Visualizer</h2>
+<div class="controls">
+<input id="queueValue" type="text" placeholder="Value">
+<button onclick="queueEnqueue()">Enqueue</button>
+<button class="danger" onclick="queueDequeue()">Dequeue</button>
+<button onclick="queuePeek()" style="background: var(--success);">Peek</button>
+</div>
+<div id="queueMsg" class="message">Ready.</div>
+<div id="queue-container" class="visualizer-container mini-visualizer"></div>
+</div>
 
-        <div class="card">
-            <h2>Queue Visualizer (FIFO)</h2>
-            <div class="controls">
-                <input id="queueValue" type="text" placeholder="Value" maxlength="4">
-                <button onclick="queueEnqueue()">Enqueue</button>
-                <button class="danger" onclick="queueDequeue()">Dequeue</button>
-                <button onclick="queuePeek()" style="background: var(--success);">Peek Front</button>
-            </div>
-            <div id="queueMsg" class="message">Ready.</div>
-            <div class="visualizer-container mini-visualizer" id="queue-container" style="flex-direction: row; justify-content: flex-start; gap: 10px;"></div>
-        </div>
+<!-- ================= LINKED LIST ================= -->
+<div class="card">
+<h2>Singly Linked List</h2>
+<div class="controls">
+<input id="llValue" type="number" placeholder="Value">
+<button onclick="llInsertHead()">Insert Head</button>
+<button onclick="llInsertTail()">Insert Tail</button>
+<button class="danger" onclick="llDeleteHead()">Del Head</button>
+<button class="danger" onclick="llDeleteTail()">Del Tail</button>
+<button onclick="llSearch()" style="background: var(--success);">Search</button>
+</div>
+<div id="llMsg" class="message">Ready.</div>
+<div id="ll-container" class="visualizer-container mini-visualizer"></div>
+</div>
 
-        <div class="card">
-            <h2>Singly Linked List Visualizer</h2>
-            <div class="controls">
-                <input id="llValue" type="number" placeholder="Value">
-                <button onclick="llInsertHead()">Insert Head</button>
-                <button onclick="llInsertTail()">Insert Tail</button>
-                <button class="danger" onclick="llDeleteHead()">Del Head</button>
-                <button class="danger" onclick="llDeleteTail()">Del Tail</button>
-                <button onclick="llSearch()" style="background: var(--success);">Search/Traverse</button>
-            </div>
-            <div id="llMsg" class="message">Ready.</div>
-            <div class="visualizer-container mini-visualizer" id="ll-container" style="justify-content: flex-start;"></div>
-        </div>
+<!-- ================= TREE ================= -->
+<div class="card">
+<h2>Binary Search Tree</h2>
+<div class="controls">
+<input id="treeValue" type="number" placeholder="Value">
+<button onclick="treeInsert()">Insert</button>
+<button onclick="treeSearch()" style="background: var(--success);">Search</button>
+<button class="danger" onclick="treeClear()">Clear</button>
+</div>
+<div id="treeMsg" class="message">Ready.</div>
+<canvas id="treeCanvas" width="800" height="300"></canvas>
+</div>
 
-        <div class="card">
-            <h2>Binary Search Tree (BST) Visualizer</h2>
-            <p>Values smaller than the parent go left, larger go right. 
+<!-- ================= GRAPH ================= -->
+<div class="card">
+<h2>Graph Visualizer</h2>
+<div class="controls">
+<input id="graphU" type="number" placeholder="Node A">
+<input id="graphV" type="number" placeholder="Node B">
+<button onclick="graphAddEdge()">Connect</button>
+<input id="graphStart" type="number" placeholder="Start">
+<button onclick="graphBFS()" style="background: var(--success);">BFS</button>
+<button class="danger" onclick="graphClear()">Clear</button>
+</div>
+<div id="graphMsg" class="message">Click canvas to add nodes.</div>
+<canvas id="graphCanvas" width="800" height="300"></canvas>
+</div>
 
-[Image of Binary Search Tree data structure]
-</p>
-            <div class="controls">
-                <input id="treeValue" type="number" placeholder="Value">
-                <button onclick="treeInsert()">Insert Node</button>
-                <button onclick="treeSearch()" style="background: var(--success);">Search Path</button>
-                <button class="danger" onclick="treeClear()">Clear Tree</button>
-            </div>
-            <div id="treeMsg" class="message">Ready.</div>
-            <div class="visualizer-container mini-visualizer" style="padding: 0;">
-                <canvas id="treeCanvas" width="800" height="300"></canvas>
-            </div>
-        </div>
-
-        <div class="card">
-            <h2>Graph Visualizer</h2>
-            <p>Click on the dashed canvas area below to drop nodes. </p>
-            <div class="controls">
-                <input id="graphU" type="number" placeholder="Node A ID" style="width: 100px;">
-                <input id="graphV" type="number" placeholder="Node B ID" style="width: 100px;">
-                <button onclick="graphAddEdge()">Connect Nodes</button>
-                <input id="graphStart" type="number" placeholder="Start ID" style="width: 100px; margin-left:15px;">
-                <button onclick="graphBFS()" style="background: var(--success);">Run BFS</button>
-                <button class="danger" onclick="graphClear()">Clear Graph</button>
-            </div>
-            <div id="graphMsg" class="message">Click canvas to add nodes.</div>
-            <div class="visualizer-container mini-visualizer" style="padding: 0; cursor: crosshair;" id="graphWrapper">
-                <canvas id="graphCanvas" width="800" height="300"></canvas>
-            </div>
-        </div>
-
-    </div>
+</div>
 </div>
 
 <script>
-    // Shared Utility
-    const sleep = (ms) = &gt; new Promise(resolve = &gt; setTimeout(resolve, ms));
+/* ================= SHARED ================= */
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-    // ================= ARRAY =================
-    let arrayData = [10, 20, 30];
-    const arrContainer = document.getElementById('arr-container');
-    const arrMsg = document.getElementById('arrMsg');
+/* ================= ARRAY ================= */
+let arrayData = [10,20,30];
+const arrContainer=document.getElementById('arr-container');
+const arrMsg=document.getElementById('arrMsg');
 
-    function renderArray(activeIdx = -1, foundIdx = -1) {
-        arrContainer.innerHTML = '';
-        arrayData.forEach((val, i) = &gt; {
-            const cell = document.createElement('div');
-            cell.className = 'cell';
-            if (i === activeIdx) cell.style.background = 'var(--danger)';
-            if (i === foundIdx) cell.style.background = 'var(--success)';
-            if (i === activeIdx || i === foundIdx) cell.style.color = 'white';
-            cell.innerHTML = `${val} <div class="cell-index" style="color:${(i === activeIdx || i === foundIdx) ? 'white' : 'var(--text-muted)'}">Idx ${i}</div>`;
-            arrContainer.appendChild(cell);
-        });
-    }
+function renderArray(active=-1,found=-1){
+arrContainer.innerHTML='';
+arrayData.forEach((v,i)=>{
+const d=document.createElement('div');
+d.className='cell';
+if(i===active)d.style.background='var(--danger)';
+if(i===found)d.style.background='var(--success)';
+d.innerHTML=v;
+arrContainer.appendChild(d);
+});
+}
 
-    function arrInsert() {
-        const val = document.getElementById('arrValue').value;
-        const idxStr = document.getElementById('arrIndex').value;
-        if (!val) return arrMsg.innerText = "Please enter a value.";
-        if (idxStr !== "") {
-            const idx = parseInt(idxStr);
-            if (idx < 0 || idx > arrayData.length) return arrMsg.innerText = "Index out of bounds!";
-            arrayData.splice(idx, 0, parseInt(val));
-            arrMsg.innerText = `Inserted ${val} at index ${idx}.`;
-        } else {
-            arrayData.push(parseInt(val));
-            arrMsg.innerText = `Appended ${val} to the end.`;
-        }
-        renderArray();
-    }
+function arrInsert(){
+const val=document.getElementById('arrValue').value;
+if(!val)return;
+arrayData.push(parseInt(val));
+renderArray();
+}
 
-    function arrDelete() {
-        const idxStr = document.getElementById('arrIndex').value;
-        if (idxStr === "") return arrMsg.innerText = "Enter index to delete.";
-        const idx = parseInt(idxStr);
-        if (idx < 0 || idx >= arrayData.length) return arrMsg.innerText = "Index out of bounds!";
-        arrayData.splice(idx, 1);
-        arrMsg.innerText = `Deleted element at index ${idx}.`;
-        renderArray();
-    }
+function arrDelete(){
+arrayData.pop();
+renderArray();
+}
 
-    async function arrSearch() {
-        const val = parseInt(document.getElementById('arrValue').value);
-        if (isNaN(val)) return arrMsg.innerText = "Enter value to search.";
-        arrMsg.innerText = `Linear Searching for ${val}...`;
-        for (let i = 0; i &lt; arrayData.length; i++) {
-            renderArray(i, -1);
-            await sleep(400);
-            if (arrayData[i] === val) {
-                renderArray(-1, i);
-                return arrMsg.innerText = `Found ${val} at index ${i}!`;
-            }
-        }
-        renderArray();
-        arrMsg.innerText = `${val} not found.`;
-    }
+async function arrSearch(){
+const val=parseInt(document.getElementById('arrValue').value);
+for(let i=0;i<arrayData.length;i++){
+renderArray(i);
+await sleep(400);
+if(arrayData[i]===val){renderArray(-1,i);return;}
+}
+renderArray();
+}
 
+/* ================= STACK ================= */
+let stackData=["A","B"];
+const stackContainer=document.getElementById('stack-container');
 
-    // ================= STACK =================
-    let stackData = ["A", "B"];
-    const stackContainer = document.getElementById('stack-container');
-    const stackMsg = document.getElementById('stackMsg');
+function renderStack(){
+stackContainer.innerHTML='';
+stackData.forEach(v=>{
+const n=document.createElement('div');
+n.className='node';
+n.innerText=v;
+stackContainer.appendChild(n);
+});
+}
 
-    function renderStack(highlightTop = false) {
-        stackContainer.innerHTML = '';
-        stackData.forEach((val, i) = &gt; {
-            const node = document.createElement('div');
-            node.className = 'node';
-            node.innerText = val;
-            if (i === stackData.length - 1) node.style.border = "3px solid var(--accent)";
-            if (highlightTop && i === stackData.length - 1) node.style.background = 'var(--success)';
-            stackContainer.appendChild(node);
-        });
-    }
+function stackPush(){
+const v=document.getElementById('stackValue').value;
+if(v)stackData.push(v);
+renderStack();
+}
 
-    function stackPush() {
-        const val = document.getElementById('stackValue').value.trim();
-        if (!val) return stackMsg.innerText = "Enter a value.";
-        if (stackData.length &gt;= 6) return stackMsg.innerText = "Stack visually full.";
-        stackData.push(val);
-        stackMsg.innerText = `Pushed ${val}.`;
-        renderStack();
-    }
+function stackPop(){stackData.pop();renderStack();}
+function stackPeek(){}
 
-    function stackPop() {
-        if (stackData.length === 0) return stackMsg.innerText = "Stack Underflow!";
-        const val = stackData.pop();
-        stackMsg.innerText = `Popped ${val}.`;
-        renderStack();
-    }
-    
-    function stackPeek() {
-        if (stackData.length === 0) return stackMsg.innerText = "Stack is empty.";
-        stackMsg.innerText = `Top element is ${stackData[stackData.length - 1]}.`;
-        renderStack(true);
-        setTimeout(() = &gt; renderStack(), 1000);
-    }
+/* ================= QUEUE ================= */
+let queueData=["Q1","Q2"];
+const queueContainer=document.getElementById('queue-container');
 
+function renderQueue(){
+queueContainer.innerHTML='';
+queueData.forEach(v=>{
+const n=document.createElement('div');
+n.className='node';
+n.innerText=v;
+queueContainer.appendChild(n);
+});
+}
 
-    // ================= QUEUE =================
-    let queueData = ["Q1", "Q2"];
-    const queueContainer = document.getElementById('queue-container');
-    const queueMsg = document.getElementById('queueMsg');
+function queueEnqueue(){
+const v=document.getElementById('queueValue').value;
+if(v)queueData.push(v);
+renderQueue();
+}
+function queueDequeue(){queueData.shift();renderQueue();}
+function queuePeek(){}
 
-    function renderQueue(highlightFront = false) {
-        queueContainer.innerHTML = '';
-        queueData.forEach((val, i) = &gt; {
-            const node = document.createElement('div');
-            node.className = 'node';
-            node.innerText = val;
-            if (i === 0) {
-                node.style.border = "3px solid var(--danger)";
-                if (highlightFront) node.style.background = 'var(--success)';
-            }
-            if (i === queueData.length - 1 && queueData.length &gt; 1) node.style.border = "3px solid var(--accent)";
-            queueContainer.appendChild(node);
-        });
-    }
+/* ================= LINKED LIST ================= */
+class LLNode{constructor(v){this.val=v;this.next=null;}}
+let head=new LLNode(5);head.next=new LLNode(10);
+const llContainer=document.getElementById('ll-container');
 
-    function queueEnqueue() {
-        const val = document.getElementById('queueValue').value.trim();
-        if (!val) return queueMsg.innerText = "Enter a value.";
-        if (queueData.length &gt; = 8) return queueMsg.innerText = "Queue visually full.";
-        queueData.push(val);
-        queueMsg.innerText = `Enqueued ${val} at rear.`;
-        renderQueue();
-    }
+function renderLL(){
+llContainer.innerHTML='';
+let c=head;
+while(c){
+const n=document.createElement('div');
+n.className='node';
+n.innerText=c.val;
+llContainer.appendChild(n);
+c=c.next;
+}
+}
 
-    function queueDequeue() {
-        if (queueData.length === 0) return queueMsg.innerText = "Queue is empty!";
-        const val = queueData.shift();
-        queueMsg.innerText = `Dequeued ${val} from front.`;
-        renderQueue();
-    }
-    
-    function queuePeek() {
-        if (queueData.length === 0) return queueMsg.innerText = "Queue is empty.";
-        queueMsg.innerText = `Front element is ${queueData[0]}.`;
-        renderQueue(true);
-        setTimeout(() = &gt; renderQueue(), 1000);
-    }
+function llInsertHead(){
+const v=document.getElementById('llValue').value;
+const n=new LLNode(v);n.next=head;head=n;renderLL();
+}
 
+function llInsertTail(){
+const v=document.getElementById('llValue').value;
+let c=head;while(c.next)c=c.next;
+c.next=new LLNode(v);renderLL();
+}
 
-    // ================= LINKED LIST =================
-    class LLNode { constructor(val) { this.val = val; this.next = null; } }
-    let head = new LLNode(5); head.next = new LLNode(10);
-    const llContainer = document.getElementById('ll-container');
-    const llMsg = document.getElementById('llMsg');
+function llDeleteHead(){if(head)head=head.next;renderLL();}
+function llDeleteTail(){
+let c=head;
+while(c.next&&c.next.next)c=c.next;
+if(c.next)c.next=null;
+renderLL();
+}
+function llSearch(){}
 
-    function renderLL(activeIndex = -1, foundIndex = -1) {
-        llContainer.innerHTML = '';
-        let curr = head;
-        let idx = 0;
-        if (!curr) { llContainer.innerHTML = '<p style="color:var(--text-muted)">List is empty</p>'; return; }
-        
-        while (curr) {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'll-node-wrapper';
-            
-            let bg = 'white';
-            let color = 'black';
-            if (idx === activeIndex) { bg = 'var(--danger)'; color = 'white'; }
-            if (idx === foundIndex) { bg = 'var(--success)'; color = 'white'; }
-
-            wrapper.innerHTML = `
-                <div class="ll-node" style="background:${bg}; color:${color}">
-                    <div class="ll-data">${curr.val}</div>
-                    <div class="ll-next" style="border-left: 1px solid #ccc">Next</div>
-                </div>
-                ${curr.next ? '<div class="ll-arrow">➔</div>' : '<div class="ll-arrow" style="color:#94a3b8">➔ null</div>'}
-            `;
-            llContainer.appendChild(wrapper);
-            curr = curr.next;
-            idx++;
-        }
-    }
-
-    function llInsertHead() {
-        const val = document.getElementById('llValue').value;
-        if (!val) return llMsg.innerText = "Enter a value.";
-        let newNode = new LLNode(val); newNode.next = head; head = newNode;
-        llMsg.innerText = `Inserted ${val} at Head.`; renderLL();
-    }
-
-    function llInsertTail() {
-        const val = document.getElementById('llValue').value;
-        if (!val) return llMsg.innerText = "Enter a value.";
-        let newNode = new LLNode(val);
-        if (!head) { head = newNode; } else {
-            let curr = head; while (curr.next) curr = curr.next; curr.next = newNode;
-        }
-        llMsg.innerText = `Inserted ${val} at Tail.`; renderLL();
-    }
-
-    function llDeleteHead() {
-        if (!head) return llMsg.innerText = "List is empty.";
-        head = head.next; llMsg.innerText = `Deleted Head node.`; renderLL();
-    }
-
-    function llDeleteTail() {
-        if (!head) return llMsg.innerText = "List is empty.";
-        if (!head.next) { head = null; return renderLL(); }
-        let curr = head;
-        while (curr.next && curr.next.next) curr = curr.next;
-        curr.next = null;
-        llMsg.innerText = "Deleted Tail node."; renderLL();
-    }
-
-    async function llSearch() {
-        const val = document.getElementById('llValue').value;
-        if (!val) return llMsg.innerText = "Enter value to search.";
-        llMsg.innerText = `Traversing list for ${val}...`;
-        let curr = head;
-        let idx = 0;
-        while (curr) {
-            renderLL(idx, -1);
-            await sleep(500);
-            if (curr.val == val) {
-                renderLL(-1, idx);
-                return llMsg.innerText = `Found ${val} at node ${idx}!`;
-            }
-            curr = curr.next;
-            idx++;
-        }
-        renderLL();
-        llMsg.innerText = `${val} not found in the list.`;
-    }
-
-
-    // ================= TREE =================
-    const tCanvas = document.getElementById('treeCanvas');
-    const tCtx = tCanvas.getContext('2d');
-    const treeMsg = document.getElementById('treeMsg');
-    class TreeNode { constructor(v) { this.val = v; this.left = this.right = null; this.x = this.y = 0; } }
-    let treeRoot = new TreeNode(50); treeRoot.left = new TreeNode(30); treeRoot.right = new TreeNode(70);
-
-    function calcTreePos(node, x, y, offset) {
-        if (!node) return;
-        node.x = x; node.y = y;
-        calcTreePos(node.left, x - offset, y + 60, offset / 2);
-        calcTreePos(node.right, x + offset, y + 60, offset / 2);
-    }
-
-    function drawTreeEdges(node) {
-        if (!node) return;
-        tCtx.lineWidth = 2; tCtx.strokeStyle = '#94a3b8';
-        if (node.left) { tCtx.beginPath(); tCtx.moveTo(node.x, node.y); tCtx.lineTo(node.left.x, node.left.y); tCtx.stroke(); drawTreeEdges(node.left); }
-        if (node.right) { tCtx.beginPath(); tCtx.moveTo(node.x, node.y); tCtx.lineTo(node.right.x, node.right.y); tCtx.stroke(); drawTreeEdges(node.right); }
-    }
-
-    function drawTreeNodes(node, activePath, foundNode) {
-        if (!node) return;
-        tCtx.beginPath(); tCtx.arc(node.x, node.y, 18, 0, 2 * Math.PI);
-        tCtx.fillStyle = (node === foundNode) ? '#22c55e' : (activePath.includes(node) ? '#ef4444' : 'white');
-        tCtx.fill(); tCtx.lineWidth = 2; tCtx.strokeStyle = '#2563eb'; tCtx.stroke();
-        tCtx.fillStyle = (node === foundNode || activePath.includes(node)) ? 'white' : 'black';
-        tCtx.font = 'bold 12px Arial'; tCtx.textAlign = 'center'; tCtx.textBaseline = 'middle';
-        tCtx.fillText(node.val, node.x, node.y);
-        drawTreeNodes(node.left, activePath, foundNode);
-        drawTreeNodes(node.right, activePath, foundNode);
-    }
-
-    function renderTree(activePath = [], foundNode = null) {
-        tCtx.clearRect(0, 0, tCanvas.width, tCanvas.height);
-        if (!treeRoot) return;
-        calcTreePos(treeRoot, tCanvas.width / 2, 40, tCanvas.width / 4);
-        drawTreeEdges(treeRoot);
-        drawTreeNodes(treeRoot, activePath, foundNode);
-    }
-
-    async function treeInsert() {
-        const val = parseInt(document.getElementById('treeValue').value);
-        if (isNaN(val)) return treeMsg.innerText = "Enter valid number.";
-        if (!treeRoot) { treeRoot = new TreeNode(val); treeMsg.innerText = "Inserted Root."; return renderTree(); }
-        let curr = treeRoot, path = [];
-        while (true) {
-            path.push(curr); renderTree(path); await sleep(400);
-            if (val === curr.val) return treeMsg.innerText = "Value exists.";
-            if (val &lt; curr.val) {
-                if (!curr.left) { curr.left = new TreeNode(val); break; }
-                curr = curr.left;
-            } else {
-                if (!curr.right) { curr.right = new TreeNode(val); break; }
-                curr = curr.right;
-            }
-        }
-        treeMsg.innerText = `Inserted ${val}.`; renderTree([], curr.left || curr.right);
-    }
-
-    async function treeSearch() {
-        const val = parseInt(document.getElementById('treeValue').value);
-        if (isNaN(val)) return treeMsg.innerText = "Enter valid number.";
-        let curr = treeRoot, path = [];
-        treeMsg.innerText = `Searching BST for ${val}...`;
-        while (curr) {
-            path.push(curr); renderTree(path); await sleep(500);
-            if (val === curr.val) { treeMsg.innerText = `Found ${val}!`; return renderTree([], curr); }
-            curr = (val &lt; curr.val) ? curr.left : curr.right;
-        }
-        treeMsg.innerText = "Not found."; renderTree();
-    }
-    
-    function treeClear() { treeRoot = null; renderTree(); treeMsg.innerText = "Tree Cleared."; }
-
-
-    // ================= GRAPH =================
-    const gCanvas = document.getElementById('graphCanvas');
-    const gCtx = gCanvas.getContext('2d');
-    const graphMsg = document.getElementById('graphMsg');
-    let gNodes = [], gEdges = [], gAdj = new Map(), gNextId = 0;
-
-    gCanvas.addEventListener('click', (e) = &gt; {
-        const rect = gCanvas.getBoundingClientRect();
-        const x = e.clientX - rect.left, y = e.clientY - rect.top;
-        gNodes.push({ id: gNextId, x, y }); gAdj.set(gNextId, []);
-        graphMsg.innerText = `Added Node ${gNextId}`; gNextId++;
-        renderGraph();
-    });
-
-    function graphAddEdge() {
-        const u = parseInt(document.getElementById('graphU').value), v = parseInt(document.getElementById('graphV').value);
-        if (isNaN(u) || isNaN(v) || !gAdj.has(u) || !gAdj.has(v)) return graphMsg.innerText = "Invalid IDs.";
-        gEdges.push({u, v}); gAdj.get(u).push(v); gAdj.get(v).push(u);
-        graphMsg.innerText = `Connected ${u} and ${v}.`; renderGraph();
-    }
-
-    function renderGraph(visited = new Set(), queue = []) {
-        gCtx.clearRect(0, 0, gCanvas.width, gCanvas.height);
-        gCtx.lineWidth = 2; gCtx.strokeStyle = '#94a3b8';
-        gEdges.forEach(e = &gt; {
-            const n1 = gNodes.find(n = &gt; n.id === e.u), n2 = gNodes.find(n = &gt; n.id === e.v);
-            gCtx.beginPath(); gCtx.moveTo(n1.x, n1.y); gCtx.lineTo(n2.x, n2.y); gCtx.stroke();
-        });
-        gNodes.forEach(n = &gt; {
-            gCtx.beginPath(); gCtx.arc(n.x, n.y, 18, 0, 2 * Math.PI);
-            gCtx.fillStyle = queue.includes(n.id) ? '#ef4444' : (visited.has(n.id) ? '#22c55e' : 'white');
-            gCtx.fill(); gCtx.lineWidth = 2; gCtx.strokeStyle = 'black'; gCtx.stroke();
-            gCtx.fillStyle = (queue.includes(n.id) || visited.has(n.id)) ? 'white' : 'black';
-            gCtx.font = 'bold 12px Arial'; gCtx.textAlign = 'center'; gCtx.textBaseline = 'middle';
-            gCtx.fillText(n.id, n.x, n.y);
-        });
-    }
-
-    async function graphBFS() {
-        const start = parseInt(document.getElementById('graphStart').value);
-        if (isNaN(start) || !gAdj.has(start)) return graphMsg.innerText = "Invalid Start ID.";
-        let vis = new Set(), q = [start]; vis.add(start);
-        graphMsg.innerText = `BFS from ${start}...`;
-        while (q.length &gt; 0) {
-            let curr = q.shift(); renderGraph(vis, [curr]); await sleep(600);
-            for (let nei of gAdj.get(curr)) {
-                if (!vis.has(nei)) { vis.add(nei); q.push(nei); renderGraph(vis, [curr, nei]); await sleep(400); }
-            }
-        }
-        renderGraph(vis, []); graphMsg.innerText = "BFS Complete!";
-    }
-
-    function graphClear() { gNodes = []; gEdges = []; gAdj.clear(); gNextId = 0; renderGraph(); graphMsg.innerText = "Graph Cleared."; }
-
-    // Initial Renders
-    renderArray(); renderStack(); renderQueue(); renderLL(); renderTree(); renderGraph();
+/* Initial Render */
+renderArray();
+renderStack();
+renderQueue();
+renderLL();
 </script>
 
 </body>
