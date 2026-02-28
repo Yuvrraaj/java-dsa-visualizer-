@@ -23,7 +23,7 @@ A full-stack web application built with **Java** and **Spring Boot** designed to
 * Singly Linked Lists
 * Stacks (LIFO) & Queues (FIFO)
 * Binary Search Trees (BST)
-* Graphs (Directed, Undirected, Weighted)
+* Graphs
 
 **Algorithmic Patterns Covered:**
 * Two Pointers & Sliding Window
