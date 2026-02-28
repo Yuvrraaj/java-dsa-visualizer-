@@ -58,23 +58,26 @@ A full-stack web application built with **Java** and **Spring Boot** designed to
 
 Before running this project locally, ensure you have the **Java Development Kit (JDK) 17+** installed, and that both the `javac` and `java` commands are available in your system's PATH.
 
-**1. Clone the repository**
+### 1. Clone the repository
 ```bash
 git clone [https://github.com/Yuvrraaj/java-dsa-visualizer-.git](https://github.com/Yuvrraaj/java-dsa-visualizer-.git)
 cd java-dsa-visualizer-
 ```
 
-2. Build the project
+### 2. Build the project
+
 mvn clean install
 
-3. Run the application
+### 3. Run the application
 
-Bash
 mvn spring-boot:run
-4. Access the application
+
+### 4. Access the application
+
 Open your web browser and navigate to: http://localhost:8080
 
-Project Architecture
+## Project Architecture
+
 src/main/java/com/dsa/controller: Contains the REST controllers (CodeRunnerController for the compiler) and View controllers (TopicController, QuestionController) that manage the routing and Thymeleaf models.
 
 src/main/java/com/dsa/model: Contains the JPA Entities representing the database schema (e.g., Question).
@@ -89,10 +92,12 @@ src/main/resources/static: Contains the global CSS stylesheets and static assets
 
 src/main/resources/data.sql: Automatically seeds the H2 database with starter practice questions whenever the server boots up.
 
-Security Disclaimer regarding the Live Compiler
+## Security Disclaimer regarding the Live Compiler
+
 The /api/code/run endpoint utilizes Java's ProcessBuilder to compile and execute code directly on the host environment. While this is acceptable for local development, personal learning, and containerized PaaS deployments (like the Render live demo, which runs in an isolated ephemeral container), running raw user code on a server carries inherent risks.
 
 For enterprise-level public deployment, it is highly recommended to implement strict sandboxing, execution timeouts, and resource limitations (e.g., via Docker SDKs or isolated gVisor containers) to prevent arbitrary code execution (RCE) and infinite loop resource exhaustion.
 
-License
+## License
+
 This project is open-source and available under the MIT License.
